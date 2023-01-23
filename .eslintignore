@@ -1,0 +1,13 @@
+node_modules
+out
+./_mocks_
+.github
+.husky
+.next
+.vscode
+cypress
+public
+build
+./tailwind.config.js
+./nextjs.config.js
+./next-env.d.ts
