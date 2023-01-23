@@ -7,7 +7,7 @@ import type {
   IOrder,
 } from "@/types";
 
-const SERVER_URL = "https://macacoloucopizzaria.osc-fr1.scalingo.io:3001";
+const SERVER_URL = "https://macacoloucopizzaria.osc-fr1.scalingo.io";
 
 export const getMenuItemByName = async (name: string) => {
   const response = await fetch(`${SERVER_URL}/menu/item/${name}`, {
