@@ -7,8 +7,10 @@ import type {
   IOrder,
 } from "@/types";
 
+const SERVER_URL = "https://macacoloucopizzaria.osc-fr1.scalingo.io:3001";
+
 export const getMenuItemByName = async (name: string) => {
-  const response = await fetch(`http://localhost:3001/menu/item/${name}`, {
+  const response = await fetch(`${SERVER_URL}/menu/item/${name}`, {
     headers: { "Content-Type": "application/json" },
     method: "GET",
   });
@@ -20,7 +22,7 @@ export const getMenuItemByName = async (name: string) => {
 };
 
 export const getMenuItems = async () => {
-  const response = await fetch("http://localhost:3001/menu", {
+  const response = await fetch(`${SERVER_URL}/menu`, {
     method: "GET",
   });
 
@@ -32,7 +34,7 @@ export const getMenuItems = async () => {
 };
 
 export const getMenuItemsByCategory = async (category: string) => {
-  const response = await fetch(`http://localhost:3001/menu/${category}`, {
+  const response = await fetch(`${SERVER_URL}/menu/${category}`, {
     method: "GET",
   });
 
@@ -44,7 +46,7 @@ export const getMenuItemsByCategory = async (category: string) => {
 };
 
 export const addAddress = async (addressDTO: IAddress) => {
-  const response = await fetch("http://localhost:3001/address", {
+  const response = await fetch(`${SERVER_URL}/address`, {
     headers: { "Content-Type": "application/json" },
     method: "POST",
     body: JSON.stringify(addressDTO),
@@ -58,7 +60,7 @@ export const addAddress = async (addressDTO: IAddress) => {
 };
 
 export const addClient = async (clientDTO: IClient) => {
-  const response = await fetch("http://localhost:3001/client", {
+  const response = await fetch(`${SERVER_URL}/client`, {
     headers: { "Content-Type": "application/json" },
     method: "POST",
     body: JSON.stringify(clientDTO),
@@ -72,14 +74,14 @@ export const addClient = async (clientDTO: IClient) => {
 };
 
 export const updateOrderStatus = async (orderId: string, status: string) => {
-  await fetch(`http://localhost:3001/orders/${orderId}?status=${status}`, {
+  await fetch(`${SERVER_URL}/orders/${orderId}?status=${status}`, {
     headers: { "Content-Type": "application/json" },
     method: "PATCH",
   });
 };
 
 export const addOrder = async (orderDTO: IOrder) => {
-  await fetch("http://localhost:3001/orders", {
+  await fetch(`${SERVER_URL}/orders`, {
     headers: { "Content-Type": "application/json" },
     method: "POST",
     body: JSON.stringify(orderDTO),
@@ -87,7 +89,7 @@ export const addOrder = async (orderDTO: IOrder) => {
 };
 
 export const getOrders = async () => {
-  const response = await fetch("http://localhost:3001/orders/", {
+  const response = await fetch(`${SERVER_URL}/orders/`, {
     headers: { "Content-Type": "application/json" },
     method: "GET",
   });
@@ -100,13 +102,10 @@ export const getOrders = async () => {
 };
 
 export const getClientOrders = async (clientId: string) => {
-  const response = await fetch(
-    `http://localhost:3001/orders/client/${clientId}`,
-    {
-      headers: { "Content-Type": "application/json" },
-      method: "GET",
-    }
-  );
+  const response = await fetch(`${SERVER_URL}/orders/client/${clientId}`, {
+    headers: { "Content-Type": "application/json" },
+    method: "GET",
+  });
 
   if (!response.ok) return null;
 
@@ -116,7 +115,7 @@ export const getClientOrders = async (clientId: string) => {
 };
 
 export const getOrderById = async (orderId: string) => {
-  const response = await fetch(`http://localhost:3001/orders/${orderId}`, {
+  const response = await fetch(`${SERVER_URL}/orders/${orderId}`, {
     headers: { "Content-Type": "application/json" },
     method: "GET",
   });
