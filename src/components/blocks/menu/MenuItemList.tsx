@@ -1,6 +1,5 @@
 import { VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
-import { notFound } from "next/navigation";
 import { useEffect, useState } from "react";
 import MenuItemCardSkeleton from "src/components/skeletons/MenuItemCardSkeleton";
 import { getMenuItemsByCategory } from "src/services/api";
@@ -23,8 +22,6 @@ export default function MenuItemList({ category }: Props) {
   useEffect(() => {
     setMounted(true);
   }, []);
-
-  if (!data) return notFound();
 
   return (
     <>
