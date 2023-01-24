@@ -42,7 +42,6 @@ export const getMenuItemsByCategory = async (category: string) => {
   if (!response.ok) return null;
 
   const data = await response.json();
-  console.log(data);
 
   return data as IMenuItem[];
 };
