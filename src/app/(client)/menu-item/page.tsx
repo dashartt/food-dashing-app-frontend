@@ -43,8 +43,6 @@ export default function MenuItem() {
     getDefaultPrice(item?.price || 0);
   }, []);
 
-  if (!item) return notFound();
-
   return (
     <>
       {" "}
