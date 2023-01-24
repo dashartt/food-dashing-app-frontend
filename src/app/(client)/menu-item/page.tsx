@@ -2,7 +2,7 @@
 
 import { Box, Heading, HStack, Text, Textarea, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
-import { notFound, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import BackPageBtn from "src/components/buttons/BackPageBtn";
 import MenuItemCardSimple from "src/components/cards/MenuItemCardSimple";
