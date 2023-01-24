@@ -8,12 +8,12 @@ import type {
 } from "@/types";
 
 const SERVER_URL = "https://macacoloucopizzaria-backend.vercel.app";
+// const SERVER_URL = "http://localhost:3003";
 
 export const getMenuItemByName = async (name: string) => {
   const response = await fetch(`${SERVER_URL}/menu/item/${name}`, {
     headers: { "Content-Type": "application/json" },
     method: "GET",
-    mode: "no-cors",
   });
 
   if (!response.ok) return null;
@@ -25,7 +25,6 @@ export const getMenuItemByName = async (name: string) => {
 export const getMenuItems = async () => {
   const response = await fetch(`${SERVER_URL}/menu`, {
     method: "GET",
-    mode: "no-cors",
   });
 
   if (!response.ok) return null;
@@ -38,12 +37,12 @@ export const getMenuItems = async () => {
 export const getMenuItemsByCategory = async (category: string) => {
   const response = await fetch(`${SERVER_URL}/menu/${category}`, {
     method: "GET",
-    mode: "no-cors",
   });
 
   if (!response.ok) return null;
 
   const data = await response.json();
+  console.log(data);
 
   return data as IMenuItem[];
 };
@@ -95,7 +94,6 @@ export const getOrders = async () => {
   const response = await fetch(`${SERVER_URL}/orders/`, {
     headers: { "Content-Type": "application/json" },
     method: "GET",
-    mode: "no-cors",
   });
 
   if (!response.ok) return null;
@@ -109,7 +107,6 @@ export const getClientOrders = async (clientId: string) => {
   const response = await fetch(`${SERVER_URL}/orders/client/${clientId}`, {
     headers: { "Content-Type": "application/json" },
     method: "GET",
-    mode: "no-cors",
   });
 
   if (!response.ok) return null;
@@ -123,7 +120,6 @@ export const getOrderById = async (orderId: string) => {
   const response = await fetch(`${SERVER_URL}/orders/${orderId}`, {
     headers: { "Content-Type": "application/json" },
     method: "GET",
-    mode: "no-cors",
   });
 
   if (!response.ok) return null;
