@@ -19,26 +19,32 @@ export default function AdminOrdersToDo() {
 
   useEffect(() => {
     setMounted(true);
+    socket.connect();
     socket.on("new-order", eventHandler);
 
-    return () => {
-      socket.off("new-order");
-    };
+    // return () => {
+    //   socket.off("new-order");
+    //   socket.disconnect();
+    // };
   }, []);
 
   useEffect(() => {
-    api
-      .getOrderById(orderId)
-      .then((data) => {
-        if (!data) {
+    if (orderId !== "") {
+      console.log("orderId is not null");
+
+      api
+        .getOrderById(orderId)
+        .then((data) => {
+          if (!data) {
+            throw new Error("erro ao trazer o pedido pelo id");
+          } else {
+            setOrders(data);
+          }
+        })
+        .catch((_error) => {
           throw new Error("erro ao trazer o pedido pelo id");
-        } else {
-          setOrders(data);
-        }
-      })
-      .catch((_error) => {
-        throw new Error("erro ao trazer o pedido pelo id");
-      });
+        });
+    }
   }, [orderId]);
 
   return (
