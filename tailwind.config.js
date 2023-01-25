@@ -1,10 +1,15 @@
+/* eslint-disable global-require */
 // /** @type {import('tailwindcss').Config} */
 module.exports = {
+  important: true,
+  darkMode: "class",
   content: [
-    "./src/app/*.{js,ts,jsx,tsx}",
-    "./src/app/**/*.{js,ts,jsx,tsx}",
-    "./src/app/**/**/*.{js,ts,jsx,tsx}",
-    "./src/components/**/*.{js,ts,jsx,tsx}",
+    "./src/components/*.{tsx, jsx}",
+    "./src/components/**/*.{tsx, jsx}",
+    "./src/components/**/**/*.{tsx, jsx}",
+    "./src/app/**/*.{tsx}",
+    "./src/app/**/**/*.{tsx, jsx}",
+    "./src/app/**/**/**/*.{tsx, jsx}",
   ],
   theme: {
     fontSize: {
@@ -46,7 +51,7 @@ module.exports = {
       },
     },
   },
-  // eslint-disable-next-line global-require
+
   plugins: [require("@tailwindcss/line-clamp")],
   extends: ["next"],
 };
