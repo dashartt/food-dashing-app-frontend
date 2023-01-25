@@ -17,7 +17,7 @@ import useObservationPizzaState from "@/store/pizza/useObservationPizza";
 
 type Params = {
   params: {
-    item: string;
+    itemName: string;
   };
 };
 
@@ -25,8 +25,8 @@ export default function MenuItem({ params }: Params) {
   const [mounted, setMounted] = useState(false);
 
   const { data: item } = useQuery({
-    queryKey: [`menuItem/${params.item}`],
-    queryFn: () => getMenuItemByName(params.item),
+    queryKey: [`menuItem/${params.itemName}`],
+    queryFn: () => getMenuItemByName(params.itemName),
   });
 
   // zustand states
