@@ -82,11 +82,17 @@ export const updateOrderStatus = async (orderId: string, status: string) => {
 };
 
 export const addOrder = async (orderDTO: IOrder) => {
-  await fetch(`${SERVER_URL}/orders`, {
+  const response = await fetch(`${SERVER_URL}/orders`, {
     headers: { "Content-Type": "application/json" },
     method: "POST",
     body: JSON.stringify(orderDTO),
   });
+
+  if (!response.ok) return null;
+
+  const orders = (await response.json()) as { orderId: string };
+
+  return orders.orderId;
 };
 
 export const getOrders = async () => {
