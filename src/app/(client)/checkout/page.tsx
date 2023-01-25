@@ -57,11 +57,10 @@ export default function Checkout() {
         hasPayBack,
         payback,
       })
+      .then((orderId) => router.push(`/order/${orderId}`))
       .catch((_error) => {
         throw new Error("erro ao cadastrar pedido");
       });
-
-    // router.push('/order',)
   };
 
   useEffect(() => {
