@@ -19,13 +19,7 @@ export default function MenuItemCard({ menuItem }: Props) {
   return (
     <>
       {mounted && (
-        <Link
-          className="w-full"
-          href={{
-            pathname: "/menu-item",
-            query: { q: menuItem.name },
-          }}
-        >
+        <Link className="w-full" href={`/menu/${menuItem.name}`}>
           <Card variant="outline" className="rounded-none">
             <CardBody>
               <Heading size="sm" className="font-medium">

@@ -2,7 +2,6 @@
 
 import { Box, Heading, HStack, Text, Textarea, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
-import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import BackPageBtn from "src/components/buttons/BackPageBtn";
 import MenuItemCardSimple from "src/components/cards/MenuItemCardSimple";
@@ -16,16 +15,18 @@ import usePizzaStuffing from "src/store/pizza/usePizzaStuffing";
 import AddToCart from "@/components/blocks/add-to-cart/AddToCart";
 import useObservationPizzaState from "@/store/pizza/useObservationPizza";
 
-export default function MenuItem() {
+type Params = {
+  params: {
+    item: string;
+  };
+};
+
+export default function MenuItem({ params }: Params) {
   const [mounted, setMounted] = useState(false);
 
-  // next params page
-  const params = useSearchParams();
-  const searchFor = params.get("q") || "";
-
   const { data: item } = useQuery({
-    queryKey: [`menuItem/${searchFor}`],
-    queryFn: () => getMenuItemByName(searchFor),
+    queryKey: [`menuItem/${params.item}`],
+    queryFn: () => getMenuItemByName(params.item),
   });
 
   // zustand states
