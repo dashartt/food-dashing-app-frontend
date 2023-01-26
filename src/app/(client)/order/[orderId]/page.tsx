@@ -6,7 +6,7 @@ import Pusher from "pusher-js";
 import { useEffect, useState } from "react";
 
 import BackPageBtn from "@/components/buttons/BackPageBtn";
-// import OrderCard from "@/components/cards/OrderItemCard";
+import OrderCard from "@/components/cards/OrderItemCard";
 import OrderStatusStepper from "@/components/stepper/OrderStatusStepper";
 import type { IAdminOrder } from "@/types";
 
@@ -66,13 +66,13 @@ export default function OrderPage({ params }: Params) {
               </Box>
             </Box>
 
-            {/* COMANDA BLOCK */}
-            {/* <Box className="w-full space-y-2 px-4">
+            {/* ORDER SHEET BLOCK */}
+            <Box className="w-full space-y-2 px-4">
               <Text className="text-xl font-bold underline underline-offset-4">
                 Comanda
               </Text>
               <OrderCard order={order} />
-            </Box> */}
+            </Box>
           </VStack>
         </VStack>
       )}
