@@ -1,11 +1,13 @@
 "use client";
 
-import { Box, Heading, HStack, VStack } from "@chakra-ui/react";
+import { Box, Heading, HStack, Text, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import Pusher from "pusher-js";
 import { useEffect, useState } from "react";
 
 import BackPageBtn from "@/components/buttons/BackPageBtn";
+// import OrderCard from "@/components/cards/OrderItemCard";
+import OrderStatusStepper from "@/components/stepper/OrderStatusStepper";
 import type { IAdminOrder } from "@/types";
 
 import * as api from "../../../../services/api";
@@ -47,15 +49,31 @@ export default function OrderPage({ params }: Params) {
   return (
     <>
       {mounted && (
-        <VStack>
-          <HStack className=" p-4">
+        <VStack className="items-start">
+          <HStack className="p-4 border-b-2 w-full">
             <BackPageBtn />
             <Heading size="lg">Detalhes do pedido</Heading>
           </HStack>
 
-          <Box>
-            <p>{order?.status}</p>
-          </Box>
+          <VStack className="space-y-8 w-full">
+            {/* STATUS BLOCK */}
+            <Box className="w-full space-y-2 px-4">
+              <Text className="text-xl font-bold underline underline-offset-4">
+                Status
+              </Text>
+              <Box className="border border-gray-400 pt-4 px-4">
+                <OrderStatusStepper status={order?.status || "to-do"} />
+              </Box>
+            </Box>
+
+            {/* COMANDA BLOCK */}
+            {/* <Box className="w-full space-y-2 px-4">
+              <Text className="text-xl font-bold underline underline-offset-4">
+                Comanda
+              </Text>
+              <OrderCard order={order} />
+            </Box> */}
+          </VStack>
         </VStack>
       )}
     </>
