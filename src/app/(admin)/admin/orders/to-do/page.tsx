@@ -1,11 +1,11 @@
 "use client";
 
 import { Box } from "@chakra-ui/react";
+import Pusher from "pusher-js";
 import { useEffect, useState } from "react";
 
 import OrdersList from "@/components/blocks/ordersList/AdminOrdersList";
 import * as api from "@/services/api";
-import { socket } from "@/services/socket";
 import useOrderState from "@/store/useOrder";
 
 export default function AdminOrdersToDo() {
@@ -13,25 +13,23 @@ export default function AdminOrdersToDo() {
   const [orderId, setOrderId] = useState<string>("");
   const { orders, setOrders } = useOrderState();
 
-  const eventHandler = async (orderId_: string) => {
-    setOrderId(orderId_);
-  };
-
   useEffect(() => {
     setMounted(true);
-    socket.connect();
-    socket.on("new-order", eventHandler);
 
-    // return () => {
-    //   socket.off("new-order");
-    //   socket.disconnect();
-    // };
+    const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY as string, {
+      cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER as string,
+    });
+
+    const channel = pusher.subscribe("admin");
+
+    channel.bind("new-order", (orderId_: string) => {
+      setOrderId(orderId_);
+      return orderId_;
+    });
   }, []);
 
   useEffect(() => {
     if (orderId !== "") {
-      console.log("orderId is not null");
-
       api
         .getOrderById(orderId)
         .then((data) => {

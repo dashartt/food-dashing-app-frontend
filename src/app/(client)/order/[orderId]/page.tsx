@@ -1,11 +1,11 @@
 "use client";
 
-import { Box, Heading, HStack, Text, VStack } from "@chakra-ui/react";
+import { Box, Heading, HStack, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
+import Pusher from "pusher-js";
 import { useEffect, useState } from "react";
 
 import BackPageBtn from "@/components/buttons/BackPageBtn";
-import { socket } from "@/services/socket";
 import type { IAdminOrder } from "@/types";
 
 import * as api from "../../../../services/api";
@@ -17,6 +17,7 @@ type Params = {
 };
 
 export default function OrderPage({ params }: Params) {
+  const [mounted, setMounted] = useState(false);
   const [order, setOrder] = useState<IAdminOrder | null>(null);
 
   const { data, isFetched } = useQuery({
@@ -25,15 +26,18 @@ export default function OrderPage({ params }: Params) {
   });
 
   useEffect(() => {
-    socket.connect();
-    socket.on("update-status-order", (status: string) => {
-      setOrder((state) => (state ? { ...state, status } : state));
+    setMounted(true);
+
+    const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY as string, {
+      cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER as string,
     });
 
-    // return () => {
-    //   socket.off("update-status-order");
-    //   socket.disconnect();
-    // };
+    const channel = pusher.subscribe("client");
+
+    channel.bind("update-order-status", (status: string) => {
+      setOrder((state) => (state ? { ...state, status } : state));
+      return status;
+    });
   }, []);
 
   useEffect(() => {
@@ -41,18 +45,19 @@ export default function OrderPage({ params }: Params) {
   }, [isFetched]);
 
   return (
-    <VStack>
-      <HStack className=" p-4">
-        <BackPageBtn />
-        <Heading size="lg">Detalhes do pedido</Heading>
-      </HStack>
+    <>
+      {mounted && (
+        <VStack>
+          <HStack className=" p-4">
+            <BackPageBtn />
+            <Heading size="lg">Detalhes do pedido</Heading>
+          </HStack>
 
-      <VStack>
-        <Box>
-          <Text>Status</Text>
-          <Text>{order?.status}</Text>
-        </Box>
-      </VStack>
-    </VStack>
+          <Box>
+            <p>{order?.status}</p>
+          </Box>
+        </VStack>
+      )}
+    </>
   );
 }
