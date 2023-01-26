@@ -13,8 +13,8 @@ export default function Menu() {
   return (
     <>
       {mounted && (
-        <Tabs className="w-full">
-          <TabList className="bg-[#eaeaeb] font-bold">
+        <Tabs className="w-full mt-0">
+          <TabList className="bg-[#eaeaeb] font-bold top-0 sticky z-10">
             <Tab
               _selected={{
                 color: "#2994f3",
