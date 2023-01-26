@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
+import { Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { BiSearch } from "react-icons/bi";
 
@@ -14,7 +14,7 @@ export default function SearchMenuItems() {
   return (
     <>
       {mounted && (
-        <Box className="my-8 w-full px-9">
+        <>
           <InputGroup>
             <InputLeftElement
               pointerEvents="none"
@@ -26,7 +26,7 @@ export default function SearchMenuItems() {
               className="rounded-none bg-white text-gray-600 placeholder:text-gray-600"
             />
           </InputGroup>
-        </Box>
+        </>
       )}
     </>
   );

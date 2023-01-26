@@ -1,7 +1,7 @@
-import { Avatar, Box, Heading, HStack, Text, VStack } from "@chakra-ui/react";
+import { Avatar, Box, Heading, HStack, VStack } from "@chakra-ui/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { RiArrowRightSLine, RiMoneyDollarCircleLine } from "react-icons/ri";
+import { RiArrowRightSLine } from "react-icons/ri";
 
 export default function PizzariaInfo() {
   const [mounted, setMounted] = useState(false);
@@ -12,7 +12,6 @@ export default function PizzariaInfo() {
 
   return (
     <>
-      {" "}
       {mounted && (
         <Link href="/pizzaria-information">
           <HStack className="justify-between space-x-3">
@@ -29,14 +28,11 @@ export default function PizzariaInfo() {
                   as="h1"
                   className="w-[12rem] truncate text-xl text-white"
                 >
-                  Macaco Louco - Ilha Solteira
+                  Macaco Louco <br />
+                  Pizzaria
                 </Heading>
                 <RiArrowRightSLine className="bg-transparent text-4xl text-white" />
               </HStack>
-              <Box className="flex items-center space-x-1">
-                <RiMoneyDollarCircleLine className="text-gray-600" />
-                <Text className="text-sm text-gray-700">Sem pedido mínimo</Text>
-              </Box>
             </VStack>
           </HStack>
         </Link>
