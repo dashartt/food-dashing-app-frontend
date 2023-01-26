@@ -7,7 +7,7 @@ module.exports = {
     "./src/components/*.{tsx, jsx}",
     "./src/components/**/*.{tsx, jsx}",
     "./src/components/**/**/*.{tsx, jsx}",
-    "./src/app/**/*.{tsx}",
+    "./src/app/**/*.{tsx, jsx}",
     "./src/app/**/**/*.{tsx, jsx}",
     "./src/app/**/**/**/*.{tsx, jsx}",
   ],
