@@ -23,7 +23,7 @@ export default function OrdersList({ orders, status }: Props) {
           {orders
             .filter((order) => order.status === status)
             ?.map((order) => (
-              <OrderCard key={order._id} order={order} />
+              <OrderCard key={order._id} order={order} isAdmin />
             ))}
         </VStack>
       )}

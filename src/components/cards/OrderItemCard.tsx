@@ -7,16 +7,18 @@ import type { IAdminOrder } from "@/types";
 import OrderStatus from "../selects/OrderStatus";
 
 type Props = {
-  order: IAdminOrder;
+  order: IAdminOrder | null;
+  isAdmin?: boolean;
 };
 
-export default function OrderCard({ order }: Props) {
+export default function OrderCard({ order, isAdmin = false }: Props) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
+  if (!order) return null;
   return (
     <>
       {mounted && (
@@ -30,9 +32,11 @@ export default function OrderCard({ order }: Props) {
                     <Text className="font-bold underline">
                       Pedido #{order.orderCount}
                     </Text>
-                    <Box className="w-32">
-                      <OrderStatus orderId={order._id} />
-                    </Box>
+                    {isAdmin && (
+                      <Box className="w-32">
+                        <OrderStatus orderId={order._id} />
+                      </Box>
+                    )}
                   </HStack>
                   <Box className="py-2 w-full">
                     <Box className="border bg-gray-100">
