@@ -2,12 +2,13 @@
 
 import { Box, Heading, HStack, Text, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
-import Pusher from "pusher-js";
 import { useEffect, useState } from "react";
 
 import BackPageBtn from "@/components/buttons/BackPageBtn";
 import OrderCard from "@/components/cards/OrderItemCard";
 import OrderStatusStepper from "@/components/stepper/OrderStatusStepper";
+import Beam from "@/services/Beam";
+import Pusher from "@/services/Pusher";
 import type { IAdminOrder } from "@/types";
 
 import * as api from "../../../../services/api";
@@ -30,16 +31,12 @@ export default function OrderPage({ params }: Params) {
   useEffect(() => {
     setMounted(true);
 
-    const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY as string, {
-      cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER as string,
-    });
+    Pusher.subscribe("client");
+    Beam.subscribe("update-order-status");
 
-    const channel = pusher.subscribe("client");
-
-    channel.bind("update-order-status", (status: string) => {
-      setOrder((state) => (state ? { ...state, status } : state));
-      return status;
-    });
+    Pusher.onEvent("update-order-status", (status: string) =>
+      setOrder((state) => (state ? { ...state, status } : state))
+    );
   }, []);
 
   useEffect(() => {
@@ -50,18 +47,18 @@ export default function OrderPage({ params }: Params) {
     <>
       {mounted && (
         <VStack className="items-start">
-          <HStack className="p-4 border-b-2 w-full">
+          <HStack className="w-full border-b-2 p-4">
             <BackPageBtn />
             <Heading size="lg">Detalhes do pedido</Heading>
           </HStack>
 
-          <VStack className="space-y-8 w-full">
+          <VStack className="w-full space-y-8">
             {/* STATUS BLOCK */}
             <Box className="w-full space-y-2 px-4">
               <Text className="text-xl font-bold underline underline-offset-4">
                 Status
               </Text>
-              <Box className="border border-gray-400 pt-4 px-4">
+              <Box className="border border-gray-400 px-4 pt-4">
                 <OrderStatusStepper status={order?.status || "to-do"} />
               </Box>
             </Box>

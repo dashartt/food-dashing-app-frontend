@@ -1,11 +1,12 @@
 "use client";
 
 import { Box } from "@chakra-ui/react";
-import Pusher from "pusher-js";
 import { useEffect, useState } from "react";
 
 import OrdersList from "@/components/blocks/ordersList/AdminOrdersList";
 import * as api from "@/services/api";
+import Beam from "@/services/Beam";
+import Pusher from "@/services/Pusher";
 import useOrderState from "@/store/useOrder";
 
 export default function AdminOrdersToDo() {
@@ -16,16 +17,10 @@ export default function AdminOrdersToDo() {
   useEffect(() => {
     setMounted(true);
 
-    const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY as string, {
-      cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER as string,
-    });
+    Pusher.subscribe("admin");
+    Beam.subscribe("new-order");
 
-    const channel = pusher.subscribe("admin");
-
-    channel.bind("new-order", (orderId_: string) => {
-      setOrderId(orderId_);
-      return orderId_;
-    });
+    Pusher.onEvent("new-order", (orderId_: string) => setOrderId(orderId_));
   }, []);
 
   useEffect(() => {
