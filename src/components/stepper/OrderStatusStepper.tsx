@@ -16,11 +16,11 @@ const getStepByStatus = (status: string) => {
     [name: string]: number;
   };
   const mapSteps: MapSteps = {
-    // "to-do": 1,
-    "in-progress": 0,
-    oven: 1,
-    delivery: 2,
-    completed: 3,
+    "to-do": 0,
+    "in-progress": 1,
+    oven: 2,
+    delivery: 3,
+    completed: 4,
   };
   return mapSteps[status] || 0;
 };
@@ -36,6 +36,7 @@ export const OrderStatusStepper = ({ status }: Props) => {
 
   useEffect(() => {
     setStep(getStepByStatus(status));
+    console.log(`status: ${status} => step: ${getStepByStatus(status)}`);
   }, [status]);
 
   return (
