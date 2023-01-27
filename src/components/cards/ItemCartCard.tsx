@@ -31,7 +31,7 @@ export default function ItemCartCard({ itemCart }: Props) {
   return (
     <>
       {mounted && (
-        <Card className="w-full rounded-none border border-gray-200">
+        <Card className="w-full shadow-lg  border border-gray-400">
           <CardBody>
             <VStack className="items-start">
               <HStack className="w-full justify-between">
@@ -47,10 +47,9 @@ export default function ItemCartCard({ itemCart }: Props) {
                 </VStack>
                 <IconButton
                   onClick={() => removeItem(itemCart)}
-                  className="rounded-full bg-red-400"
                   size="sm"
                   aria-label="Remover item do pedido"
-                  icon={<RiCloseLine className="text-xl text-white" />}
+                  icon={<RiCloseLine className="text-2xl text-red-500" />}
                 />
               </HStack>
               <HStack>

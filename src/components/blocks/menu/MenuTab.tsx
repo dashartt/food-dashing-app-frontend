@@ -14,35 +14,39 @@ export default function Menu() {
     <>
       {mounted && (
         <Tabs className="w-full mt-0">
-          <TabList className="bg-[#eaeaeb] font-bold top-0 sticky z-10">
+          <TabList className="bg-black font-bold top-0 sticky z-10 pb-3 ">
             <Tab
+              color="gray.400"
               _selected={{
-                color: "#2994f3",
-                borderBottom: "3px solid #2994f3",
+                color: "white",
+                borderBottom: "3px solid white",
               }}
             >
               Pizza salgada
             </Tab>
             <Tab
+              color="gray.400"
               _selected={{
-                color: "#2994f3",
-                borderBottom: "3px solid #2994f3",
+                color: "white",
+                borderBottom: "3px solid white",
               }}
             >
               Pizza doce
             </Tab>
             <Tab
+              color="gray.400"
               _selected={{
-                color: "#2994f3",
-                borderBottom: "3px solid #2994f3",
+                color: "white",
+                borderBottom: "3px solid white",
               }}
             >
               Lanche árabe
             </Tab>
             <Tab
+              color="gray.400"
               _selected={{
-                color: "#2994f3",
-                borderBottom: "3px solid #2994f3",
+                color: "white",
+                borderBottom: "3px solid white",
               }}
             >
               Bebidas

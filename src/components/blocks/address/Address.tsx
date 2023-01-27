@@ -14,14 +14,13 @@ export default function Address() {
 
   return (
     <>
-      {" "}
       {mounted && (
         <Box className="w-full">
-          <HStack className=" bg-[#ebebeb] p-4 justify-between">
-            <Text className="text-md  font-semibold">Endereço de entrega</Text>
+          <HStack className="mx-4 justify-between">
+            <Text className="text-xl font-semibold">Endereço de entrega</Text>
             <Button
               onClick={() => router.push("/address")}
-              className=" bg-[#1a95f3] text-white rounded-none"
+              className=" bg-[#1a95f3] text-white"
             >
               Adicionar
             </Button>

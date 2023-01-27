@@ -23,7 +23,7 @@ export default function OrderCard({ order, isAdmin = false }: Props) {
     <>
       {mounted && (
         <Box className="w-full bg-white">
-          <Card className="rounded-none border border-gray-400">
+          <Card className="shadow-lg border border-gray-400">
             <CardBody className="group m-0">
               <Box>
                 {/*  ITEMS  --------------------------> */}
@@ -39,7 +39,7 @@ export default function OrderCard({ order, isAdmin = false }: Props) {
                     )}
                   </HStack>
                   <Box className="py-2 w-full">
-                    <Box className="border bg-gray-100">
+                    <Box className="border border-gray-400 p-2 rounded-md">
                       {order.orderItemsId.map((order_) => {
                         const canSetOneHalf =
                           order_.itemIds.length > 1 ? "½" : "-";

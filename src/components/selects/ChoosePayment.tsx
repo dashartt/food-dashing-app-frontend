@@ -14,10 +14,9 @@ export default function ListPaymentTypes() {
 
   return (
     <>
-      {" "}
       {mounted && (
         <Select
-          className="rounded-none border border-gray-400"
+          className="border border-gray-400"
           onChange={({ target }) => {
             getPaymentType(target.value);
             if (target.value === "cart") {

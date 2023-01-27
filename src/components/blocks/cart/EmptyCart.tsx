@@ -17,20 +17,18 @@ export default function EmptyCart() {
       {" "}
       {mounted && (
         <VStack>
-          <HStack className="p-4">
+          <HStack className="p-4 border-b-2 w-full border-gray-300 sticky top-0 z-10 bg-white">
             <BackPageBtn />
             <Heading size="lg">Detalhes do pedido</Heading>
           </HStack>
           <Box className="p-4 space-y-8">
-            <Text className="font-bold">
-              Nenhum produto selecionado para comprar
-            </Text>
+            <Text className="font-bold text-xl">Nenhum item no carrinho</Text>
 
             <Button
               onClick={() => router.push("/")}
               className="w-full rounded-none bg-[#1a95f3] text-white"
             >
-              Ver cardápio
+              Voltar para o cardápio
             </Button>
           </Box>
         </VStack>

@@ -31,10 +31,7 @@ export default function ListPizzas() {
     <>
       {mounted && (
         <Box className="mt-4">
-          <Select
-            className="rounded-none border border-gray-400"
-            onChange={handlerPizza}
-          >
+          <Select className="border border-gray-400" onChange={handlerPizza}>
             <option value="" className="hidden">
               Selecione a outra metade
             </option>

@@ -1,6 +1,6 @@
 "use client";
 
-import { HStack, IconButton, Spacer, Text } from "@chakra-ui/react";
+import { HStack, IconButton, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { RiAddLine, RiSubtractLine } from "react-icons/ri";
 import type { ICartItem } from "src/types";
@@ -30,31 +30,32 @@ export default function AddToCart({ orderItem }: Props) {
 
   return (
     <>
-      {" "}
       {mounted && (
-        <HStack className="w-full">
-          {/* Decrement item -----------> */}
-          <IconButton
-            disabled={disableDecrement}
-            onClick={decrementQtd}
-            aria-label="Remover uma quantidade"
-            icon={<RiSubtractLine className="text-2xl text-[#1a95f3]" />}
-          />
-          {/* Item quantity -----------> */}
-          <Text className="text-xl">{quantity}</Text>
+        <HStack className="w-full justify-between">
+          <HStack className="bg-gray-200 py-1 rounded-lg">
+            {/* Decrement item -----------> */}
+            <IconButton
+              disabled={disableDecrement}
+              onClick={decrementQtd}
+              aria-label="Remover uma quantidade"
+              className="text-2xl"
+              icon={<RiSubtractLine />}
+            />
+            {/* Item quantity -----------> */}
+            <Text className="text-xl">{quantity}</Text>
 
-          {/* Increment quantity -----------> */}
-          <IconButton
-            onClick={incrementQtd}
-            aria-label="Adicionar mais uma unidade"
-            className="text-2xl text-[#1a95f3]"
-            icon={<RiAddLine />}
-          />
+            {/* Increment quantity -----------> */}
+            <IconButton
+              onClick={incrementQtd}
+              aria-label="Adicionar mais uma unidade"
+              className="text-2xl"
+              icon={<RiAddLine />}
+            />
+          </HStack>
 
           {/* Continue buying or finish purchase -----------> */}
           <BuyMoreOrFinish orderItem={{ ...orderItem, quantity }}>
             <Text>Adicionar</Text>
-            <Spacer />
             <Text>
               R$ {((orderItem?.item[0]?.price || 0) * quantity).toFixed(2)}
             </Text>

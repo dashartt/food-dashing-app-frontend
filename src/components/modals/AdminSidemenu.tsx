@@ -39,7 +39,7 @@ export default function AdminSidemenu() {
         <>
           <IconButton
             aria-label="ver menu"
-            className="rounded-none"
+            className="rounded-none bg-transparent"
             onClick={onOpen}
             icon={<GiHamburgerMenu className="text-2xl text-white" />}
           />
@@ -52,7 +52,7 @@ export default function AdminSidemenu() {
             <DrawerOverlay />
             <DrawerContent>
               <DrawerCloseButton className="text-md m-4" />
-              <DrawerHeader className="border-b">
+              <DrawerHeader className="border-b-2 border-gray-300">
                 <HStack className="space-x-4">
                   <Avatar
                     name="Pizzaria logo"
@@ -65,14 +65,14 @@ export default function AdminSidemenu() {
                   </VStack>
                 </HStack>
               </DrawerHeader>
-              <DrawerBody>
-                <VStack>
+              <DrawerBody className="my-4">
+                <VStack className="items-start">
                   <Button
                     onClick={() => {
                       onClose();
                       router.push("/admin/orders/to-do");
                     }}
-                    className="flex w-full justify-start space-x-4 rounded-none "
+                    className="flex w-full justify-start space-x-4 bg-transparent"
                   >
                     <Icon className="text-2xl" as={RiFileList3Line} />
                     <Text>Pedidos a fazer</Text>
@@ -83,7 +83,7 @@ export default function AdminSidemenu() {
                       onClose();
                       router.push("/admin/orders/in-progress");
                     }}
-                    className="flex w-full justify-start space-x-4 rounded-none "
+                    className="flex w-full justify-start space-x-4 bg-transparent"
                   >
                     <Icon className="text-2xl" as={RiFileList3Line} />
                     <Text>Pedidos em andamento</Text>
@@ -94,7 +94,7 @@ export default function AdminSidemenu() {
                       onClose();
                       router.push("/admin/oven");
                     }}
-                    className="flex w-full justify-start space-x-4 rounded-none "
+                    className="flex w-full justify-start space-x-4 bg-transparent"
                   >
                     <Icon className="text-2xl" as={GiFireBowl} />
                     <Text>Forno</Text>
@@ -105,7 +105,7 @@ export default function AdminSidemenu() {
                       onClose();
                       router.push("/admin/delivery");
                     }}
-                    className="flex w-full justify-start space-x-4 rounded-none"
+                    className="flex w-full justify-start space-x-4 bg-transparent"
                   >
                     <Icon className="text-2xl" as={MdOutlineDeliveryDining} />
                     <Text>Entregas</Text>
@@ -116,7 +116,7 @@ export default function AdminSidemenu() {
                       onClose();
                       router.push("/admin/history");
                     }}
-                    className="flex w-full justify-start space-x-4 rounded-none"
+                    className="flex w-full justify-start space-x-4 bg-transparent"
                   >
                     <Icon className="text-2xl" as={BsCardChecklist} />
                     <Text>Histórico</Text>

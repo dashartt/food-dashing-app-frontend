@@ -36,7 +36,7 @@ export default function OrderStatus({ orderId }: Props) {
       {mounted && (
         <Select
           onChange={handlerStatus}
-          className="rounded-none"
+          className="border border-gray-400"
           value={status}
         >
           <option value="" className="hidden">

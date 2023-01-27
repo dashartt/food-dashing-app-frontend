@@ -46,22 +46,26 @@ export default function MenuItem({ params }: Params) {
 
   return (
     <>
-      {" "}
       {mounted && (
         <VStack className="items-start space-y-4">
-          <Box className="p-4">
-            {/* Name and back page btn  ----------------> */}
-            <HStack>
-              <BackPageBtn />
-              <Heading size="lg">Detalhes do item</Heading>
-            </HStack>
+          {/* Name and back page btn  ----------------> */}
+          <HStack className="p-4 border-b-2 w-full border-gray-300">
+            <BackPageBtn />
+            <Heading size="lg">Detalhes do item</Heading>
+          </HStack>
 
+          <Box className="mx-4 space-y-4">
             {/* Name and ingredients  ----------------> */}
-            <MenuItemCardSimple menuItem={item || null} />
+            <Box className="w-full">
+              <MenuItemCardSimple menuItem={item || null} />
+            </Box>
 
             {/* Whole or half pizza option and get another half pizza */}
             {item?.category?.name.includes("pizza") && (
-              <WholeOrHalfPizzaOption />
+              <Box className="">
+                <Text>Vou querer:</Text>
+                <WholeOrHalfPizzaOption />
+              </Box>
             )}
             {isHalfPizza && (
               <>
@@ -72,19 +76,19 @@ export default function MenuItem({ params }: Params) {
           </Box>
 
           {/* Observation ----------------> */}
-          <Box className="w-full">
-            <Text className="text-md bg-[#ebebeb] p-4 font-semibold">
-              Observações
-            </Text>
-            <Box className="p-4">
-              <Textarea
-                value={observation}
-                onChange={({ target }) => setObservation(target.value)}
-                placeholder="Ex: tirar cebola, ovo, etc"
-                className="rounded-none border-gray-400"
-              />
+          {item?.category.name !== "drinks" && (
+            <Box className="w-full p-4 space-y-2">
+              <Text className="text-lg  font-semibold">Observações</Text>
+              <Box>
+                <Textarea
+                  value={observation}
+                  onChange={({ target }) => setObservation(target.value)}
+                  placeholder="Ex: tirar cebola, ovo, etc"
+                  className="border-gray-400"
+                />
+              </Box>
             </Box>
-          </Box>
+          )}
 
           {/* Change quantity and add to cart ----------------> */}
           <Box className="w-full px-4">

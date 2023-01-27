@@ -14,7 +14,7 @@ export default function PizzariaInfo() {
     <>
       {mounted && (
         <Link href="/pizzaria-information">
-          <HStack className="justify-between space-x-3">
+          <HStack className="justify-between space-x-3 bg-gray-800 rounded-full">
             <Box className="rounded-full bg-white p-1">
               <Avatar name="Pizzaria logo" size="lg" src="/static/logo.png" />
             </Box>

@@ -17,7 +17,6 @@ export default function Payback() {
 
   return (
     <>
-      {" "}
       {mounted && (
         <Box className="w-36">
           <InputGroup>
@@ -29,7 +28,7 @@ export default function Payback() {
             <Input
               placeholder="20"
               onChange={({ target }) => getPayback(Number(target.value || 0))}
-              className="rounded-none border-gray-400 bg-gray-200"
+              className="border-gray-400 bg-gray-100"
             />
           </InputGroup>
         </Box>

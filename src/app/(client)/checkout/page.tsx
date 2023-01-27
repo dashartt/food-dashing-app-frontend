@@ -5,6 +5,7 @@ import {
   Button,
   Heading,
   HStack,
+  Text,
   useToast,
   VStack,
 } from "@chakra-ui/react";
@@ -20,11 +21,16 @@ import usePaymentState from "src/store/checkout/usePayment";
 import useShoppingCart from "src/store/useShoppingCart";
 import type { IOrderItem } from "src/types";
 
+import DeliveryOrPickup from "@/components/switchs/DeliveryOrPickup";
+import useApplyDeliveryFee from "@/store/useApplyDeliveryFee";
+
 import * as api from "../../../services/api";
 
 export default function Checkout() {
   const [mounted, setMounted] = useState(false);
   const toast = useToast();
+  const { getTotalCart } = useShoppingCart();
+  const { deliveryFee } = useApplyDeliveryFee();
 
   const router = useRouter();
 
@@ -74,19 +80,50 @@ export default function Checkout() {
     <>
       {mounted && (
         <VStack className="items-start">
-          <HStack className=" p-4">
+          <HStack className="sticky top-0 z-10 w-full border-b-2 border-gray-300 bg-white p-4">
             <BackPageBtn />
             <Heading size="lg">Finalizar pedido</Heading>
           </HStack>
 
           <Identification />
           <Address />
+
+          <Box className="mx-4">
+            <VStack className="items-start space-y-0">
+              <Text>Eu vou querer: </Text>
+              <DeliveryOrPickup />
+            </VStack>
+          </Box>
+
+          <Box className="p-4 w-full space-y-2">
+            <Text className="text-xl font-semibold">Total do pedido</Text>
+
+            <Box className="border border-gray-400 p-4 rounded-md">
+              <HStack className="justify-between">
+                <Text>Pedidos</Text>
+                <Text>R$ {getTotalCart()}</Text>
+              </HStack>
+
+              <HStack className="justify-between">
+                <Text>Taxa de entrega</Text>
+                <Text>R$ {deliveryFee}</Text>
+              </HStack>
+
+              <HStack className="justify-between">
+                <Text className="font-semibold">Total</Text>
+                <Text className="font-semibold">
+                  R${getTotalCart() + deliveryFee}
+                </Text>
+              </HStack>
+            </Box>
+          </Box>
+
           <Payment />
 
           <Box className="w-full p-4">
             <Button
               onClick={onConfirmPurchase}
-              className="w-full rounded-none bg-[#1a95f3] text-white"
+              className="w-full bg-[#1a95f3] text-white"
             >
               Confirmar
             </Button>

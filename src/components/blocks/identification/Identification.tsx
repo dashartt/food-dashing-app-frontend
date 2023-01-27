@@ -15,14 +15,13 @@ export default function Identification() {
 
   return (
     <>
-      {" "}
       {mounted && (
         <Box className="w-full">
-          <HStack className="justify-between bg-[#ebebeb] p-4">
-            <Text className="text-md font-semibold">Identificação</Text>
+          <HStack className="sticky top-0 z-10 w-full bg-white px-4 justify-between">
+            <Text className="text-xl font-semibold">Identificação</Text>
             <Button
               onClick={() => router.push("/identification")}
-              className="rounded-none bg-[#1a95f3] text-white"
+              className="bg-[#1a95f3] text-white"
             >
               Editar
             </Button>

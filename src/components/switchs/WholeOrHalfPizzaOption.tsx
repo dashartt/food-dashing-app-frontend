@@ -14,10 +14,8 @@ export default function WholeOrHalfPizzaOption() {
 
   return (
     <>
-      {" "}
       {mounted && (
         <RadioGroup
-          className="mt-4"
           onChange={(value) => {
             setOption(value);
             updateStuffing(value === "half");

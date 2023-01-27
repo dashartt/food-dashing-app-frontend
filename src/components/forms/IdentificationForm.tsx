@@ -21,7 +21,7 @@ export default function IdentificationForm() {
             <Input
               value={name}
               onChange={({ target }) => setName(target.value)}
-              className="rounded-none border border-gray-400 bg-gray-200"
+              className="border border-gray-400 bg-gray-100 border border-gray-400"
               id="fullName"
             />
           </FormControl>
@@ -31,7 +31,7 @@ export default function IdentificationForm() {
             <Input
               value={phone}
               onChange={({ target }) => setPhone(target.value)}
-              className="rounded-none border border-gray-400 bg-gray-200"
+              className="border border-gray-400 bg-gray-100 border border-gray-400"
               id="phone"
             />
           </FormControl>

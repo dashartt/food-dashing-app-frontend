@@ -52,22 +52,18 @@ export default function OrderPage({ params }: Params) {
             <Heading size="lg">Detalhes do pedido</Heading>
           </HStack>
 
-          <VStack className="w-full space-y-8">
+          <VStack className="w-full space-y-8 mb-8">
             {/* STATUS BLOCK */}
             <Box className="w-full space-y-2 px-4">
-              <Text className="text-xl font-bold underline underline-offset-4">
-                Status
-              </Text>
-              <Box className="border border-gray-400 px-4 pt-4">
+              <Text className="text-xl font-bold">Status</Text>
+              <Box className="rounded-md border border-gray-400 px-4 pt-4">
                 <OrderStatusStepper status={order?.status || "to-do"} />
               </Box>
             </Box>
 
             {/* ORDER SHEET BLOCK */}
             <Box className="w-full space-y-2 px-4">
-              <Text className="text-xl font-bold underline underline-offset-4">
-                Comanda
-              </Text>
+              <Text className="text-xl font-bold">Comanda</Text>
               <OrderCard order={order} />
             </Box>
           </VStack>

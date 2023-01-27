@@ -18,7 +18,7 @@ export default function ListAddress() {
       {!mounted && <LoadingSimple />}
       {mounted && (
         <Select
-          className="rounded-none border border-gray-400"
+          className="border border-gray-400"
           placeholder=""
           onChange={({ target }) => setAddress(target.value)}
           value={address?._id}

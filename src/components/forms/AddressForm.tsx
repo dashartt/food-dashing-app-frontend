@@ -1,4 +1,10 @@
-import { Button, FormControl, FormLabel, Input } from "@chakra-ui/react";
+import {
+  Button,
+  FormControl,
+  FormLabel,
+  HStack,
+  Input,
+} from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -49,57 +55,60 @@ export default function AddressForm() {
           <FormControl className="-space-y-2">
             <FormLabel htmlFor="addressName">Logradouro</FormLabel>
             <Input
-              className="rounded-none bg-gray-200 placeholder:text-gray-600"
+              className="bg-gray-100 placeholder:text-gray-600 border border-gray-400"
               {...register("addressName")}
               id="addressName"
-              placeholder="Rua Araras, Passeio Maringá, etc"
+              placeholder="ex: Rua Araras"
             />
           </FormControl>
 
-          <FormControl>
-            <FormLabel htmlFor="addressNumber">Numero da residência</FormLabel>
-            <Input
-              className="rounded-none bg-gray-200 placeholder:text-gray-600"
-              {...register("addressNumber")}
-              id="addressNumber"
-              placeholder="290"
-            />
-          </FormControl>
+          <HStack>
+            <FormControl className="-space-y-2">
+              <FormLabel htmlFor="addressNumber">
+                Numero da residência
+              </FormLabel>
+              <Input
+                className="bg-gray-100 placeholder:text-gray-600 border border-gray-400"
+                {...register("addressNumber")}
+                id="addressNumber"
+                placeholder="ex: 290"
+              />
+            </FormControl>
 
-          <FormControl>
-            <FormLabel htmlFor="complement">Complemento (opcional)</FormLabel>
-            <Input
-              className="rounded-none bg-gray-200 placeholder:text-gray-600"
-              {...register("complement")}
-              id="complement"
-              placeholder="Sala A, Apto 2B"
-            />
-          </FormControl>
-
-          <FormControl>
+            <FormControl className="-space-y-2">
+              <FormLabel htmlFor="complement">Complemento (opcional)</FormLabel>
+              <Input
+                className="bg-gray-100 placeholder:text-gray-600 border border-gray-400"
+                {...register("complement")}
+                id="complement"
+                placeholder="ex: Apto 2B"
+              />
+            </FormControl>
+          </HStack>
+          <FormControl className="-space-y-2">
             <FormLabel htmlFor="districtName">Bairro</FormLabel>
             <Input
-              className="rounded-none bg-gray-200 placeholder:text-gray-600"
+              className="bg-gray-100 placeholder:text-gray-600 border border-gray-400"
               {...register("districtName")}
               id="districtName"
-              placeholder="..."
+              placeholder="ex: Jardim Aeroporto"
             />
           </FormControl>
 
-          <FormControl>
+          <FormControl className="-space-y-2">
             <FormLabel htmlFor="referencePoint">
               Ponto de referência (opcional)
             </FormLabel>
             <Input
-              className="rounded-none bg-gray-200 placeholder:text-gray-600"
+              className="bg-gray-100 placeholder:text-gray-600 border border-gray-400"
               {...register("referencePoint")}
               id="referencePoint"
-              placeholder="perto de, próximo de, etc"
+              placeholder="ex: Perto de, próximo de, ..."
             />
           </FormControl>
 
           <Button
-            className="w-full rounded-none bg-[#1a95f3] py-2 text-center text-white"
+            className="w-full bg-[#1195f3] py-2 text-center text-white"
             type="submit"
           >
             Salvar

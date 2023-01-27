@@ -15,7 +15,10 @@ export default function IdentificationCard() {
     <>
       {!mounted && <IdentificationCardSkeleton />}
       {mounted && (
-        <Card className="m-4 rounded-none" variant="outline">
+        <Card
+          className="m-4 shadow-lg border border-gray-400"
+          variant="outline"
+        >
           <CardBody>
             <VStack className="items-start">
               <Box>

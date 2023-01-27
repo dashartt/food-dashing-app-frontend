@@ -13,14 +13,19 @@ export default function DeliveryOrPickup() {
 
   return (
     <>
-      {" "}
       {mounted && (
-        <RadioGroup className="m-4" onChange={changeOption} value={option}>
+        <RadioGroup onChange={changeOption} value={option}>
           <Stack direction="row">
-            <Radio defaultChecked value="delivery">
+            <Radio
+              className="border border-gray-700"
+              defaultChecked
+              value="delivery"
+            >
               Delivery
             </Radio>
-            <Radio value="pick up">Buscar</Radio>
+            <Radio className="border border-gray-700" value="pick up">
+              Buscar
+            </Radio>
           </Stack>
         </RadioGroup>
       )}

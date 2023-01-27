@@ -61,25 +61,23 @@ export default function Identification() {
       {" "}
       {mounted && (
         <VStack className="items-start">
-          <HStack className=" p-4">
+          <HStack className="sticky top-0 z-10 w-full border-b-2 border-gray-300 bg-white p-4">
             <BackPageBtn />
-            <Heading size="lg">Identifique-se</Heading>
+            <Heading size="lg">Cadastro</Heading>
           </HStack>
 
           <Box className="w-full">
-            <Text className="text-md bg-[#ebebeb] p-4 font-semibold">
-              Identificação
-            </Text>
-            <Box className="m-4 space-y-4">
+            <Text className="text-xl p-4 font-semibold">Identificação</Text>
+            <Box className="mx-4 space-y-4">
               <IdentificationForm />
             </Box>
           </Box>
 
           <Box className="w-full">
-            <HStack className="justify-between bg-[#ebebeb] p-4">
-              <Text className="text-md  font-semibold">Endereço</Text>{" "}
+            <HStack className="justify-between p-4">
+              <Text className="text-xl font-semibold">Endereço</Text>
               <Button
-                className="rounded-none bg-[#1a95f3] text-white "
+                className="bg-[#1a95f3] text-white "
                 onClick={() => router.push("/address")}
               >
                 Adicionar
@@ -100,7 +98,7 @@ export default function Identification() {
           <Box className="w-full p-4">
             <Button
               onClick={onConfirmRegistration}
-              className="w-full rounded-none bg-[#1a95f3] text-white"
+              className="w-full bg-[#1a95f3] text-white"
             >
               Confirmar
             </Button>

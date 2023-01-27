@@ -61,7 +61,7 @@ export default function BuyMoreOrFinish({ children, orderItem }: Props) {
           <Button
             disabled={!anotherHalfPizza && isHalf}
             onClick={onAddItem}
-            className="w-full rounded-none bg-[#1a95f3] py-6 text-white"
+            className="space-x-4 bg-[#1a95f3] py-6 text-white"
           >
             {children}
           </Button>
@@ -69,21 +69,23 @@ export default function BuyMoreOrFinish({ children, orderItem }: Props) {
             <DrawerOverlay />
             <DrawerContent>
               <DrawerCloseButton />
-              <DrawerHeader borderBottomWidth="1px">Você deseja</DrawerHeader>
-              <DrawerBody>
+              <DrawerHeader className="border-b-2 border-gray-300">
+                Item adicionado ao carrinho
+              </DrawerHeader>
+              <DrawerBody className="p-4">
                 {/* Button options -----------> */}
-                <VStack className="py-4">
+                <VStack className="py-4 space-y-4">
                   <Button
                     onClick={() => afterAddGoTo("/")}
-                    className="w-52 rounded-none bg-[#1a95f3] py-2 text-center text-white"
+                    className="w-52 bg-[#1a95f3] py-2 text-center text-white"
                   >
-                    Continuar comprando
+                    Voltar para o cardápio
                   </Button>
                   <Button
                     onClick={() => afterAddGoTo("/cart")}
-                    className="w-52 rounded-none border border-gray-400 bg-[#ebebeb] py-2 text-center"
+                    className="w-52 border border-gray-500 bg-white py-2 text-center"
                   >
-                    Finalizar compra
+                    Finalizar pedido
                   </Button>
                 </VStack>
               </DrawerBody>

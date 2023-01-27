@@ -1,12 +1,10 @@
 "use client";
 
-import { Box, Button, Heading, HStack, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, Heading, HStack, VStack } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import BackPageBtn from "src/components/buttons/BackPageBtn";
 import ItemCartCard from "src/components/cards/ItemCartCard";
-import DeliveryOrPickup from "src/components/switchs/DeliveryOrPickup";
-import useApplyDeliveryFee from "src/store/useApplyDeliveryFee";
 import useShoppingCart from "src/store/useShoppingCart";
 import { v4 as uuid } from "uuid";
 
@@ -17,7 +15,6 @@ export default function ShoppingCart() {
 
   const router = useRouter();
   const { items, getTotalCart } = useShoppingCart();
-  const { deliveryFee } = useApplyDeliveryFee();
 
   useEffect(() => {
     setMounted(true);
@@ -27,10 +24,9 @@ export default function ShoppingCart() {
 
   return (
     <>
-      {" "}
       {mounted && (
-        <VStack className="items-start">
-          <HStack className="p-4">
+        <VStack className="items-start space-y-4">
+          <HStack className="p-4 border-b-2 w-full border-gray-300 sticky top-0 z-10 bg-white">
             <BackPageBtn />
             <Heading size="lg">Detalhes do pedido</Heading>
           </HStack>
@@ -42,39 +38,13 @@ export default function ShoppingCart() {
             ))}
           </VStack>
 
-          <Box className="w-full pt-4">
-            <Text className="bg-[#ebebeb] p-4 text-2xl font-semibold">
-              A pagar
-            </Text>
-
-            {/* Delivery or pickup option ------------> */}
-            <DeliveryOrPickup />
-
-            <Box className="m-4 border border-gray-400 p-4">
-              {/* Order details  ------------> */}
-              <HStack className="justify-between ">
-                <Text>Pedidos</Text>
-                <Text>R$ {getTotalCart()}</Text>
-              </HStack>
-
-              <HStack className="justify-between">
-                <Text>Taxa de entrega</Text>
-                <Text>R$ {deliveryFee}</Text>
-              </HStack>
-
-              <HStack className="justify-between">
-                <Text>Total</Text>
-                <Text>R${getTotalCart() + deliveryFee}</Text>
-              </HStack>
-
-              {/* Confirm order ------------> */}
-              <Button
-                onClick={() => router.push("/checkout")}
-                className="mt-4 w-full rounded-none bg-[#1a95f3] text-white"
-              >
-                Confirmar pedido
-              </Button>
-            </Box>
+          <Box className="w-full p-4 sticky bottom-0 z-10 bg-white border-t-4 border-gray-300">
+            <Button
+              onClick={() => router.push("/checkout")}
+              className="mt-4 w-full rounded-none bg-[#1a95f3] text-white"
+            >
+              Confirmar pedido R$ {getTotalCart()}
+            </Button>
           </Box>
         </VStack>
       )}

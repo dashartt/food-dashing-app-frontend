@@ -13,7 +13,6 @@ export default function NeedPayback() {
 
   return (
     <>
-      {" "}
       {mounted && (
         <RadioGroup
           value={hasPayBack ? "yes" : "no"}
@@ -23,10 +22,12 @@ export default function NeedPayback() {
           }}
         >
           <Stack direction="row">
-            <Radio defaultChecked value="no">
+            <Radio className="border border-gray-700" defaultChecked value="no">
               Não
             </Radio>
-            <Radio value="yes">Sim</Radio>
+            <Radio className="border border-gray-700" value="yes">
+              Sim
+            </Radio>
           </Stack>
         </RadioGroup>
       )}

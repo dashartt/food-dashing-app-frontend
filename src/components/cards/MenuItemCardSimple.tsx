@@ -19,9 +19,12 @@ export default function MenuItemCardSimple({ menuItem }: Props) {
   return (
     <>
       {mounted && (
-        <Card variant="outline" className="mt-4 rounded-none">
+        <Card
+          variant="outline"
+          className="mt-4 shadow-lg border border-gray-400"
+        >
           <CardBody>
-            <Heading size="sm" className="font-medium">
+            <Heading size="md" className="font-medium">
               {menuItem.name}
             </Heading>
             <Text className="line-clamp-3 text-gray-600">
