@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export const setHeaderTitle = (path: string) => {
   const pathAndTitle = [
     {
@@ -28,3 +30,5 @@ export const formatCurrency = (value: number) =>
   value.toLocaleString("pt-BR", {
     minimumFractionDigits: 2,
   });
+
+export const formatDate = (value: string) => moment(value).format("DD/MM/YY");

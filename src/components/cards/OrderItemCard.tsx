@@ -3,15 +3,21 @@ import { useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
 
 import type { IAdminOrder } from "@/types";
+import { formatDate } from "@/utils";
 
 import OrderStatus from "../selects/OrderStatus";
 
 type Props = {
   order: IAdminOrder | null;
   isAdmin?: boolean;
+  date?: boolean;
 };
 
-export default function OrderCard({ order, isAdmin = false }: Props) {
+export default function OrderCard({
+  order,
+  isAdmin = false,
+  date = false,
+}: Props) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -23,23 +29,24 @@ export default function OrderCard({ order, isAdmin = false }: Props) {
     <>
       {mounted && (
         <Box className="w-full bg-white">
-          <Card className="shadow-lg border border-gray-400">
+          <Card className="border border-gray-400 shadow-lg">
             <CardBody className="group m-0">
               <Box>
                 {/*  ITEMS  --------------------------> */}
                 <VStack className="items-start">
                   <HStack className="w-full justify-between">
                     <Text className="font-bold underline">
-                      Pedido #{order.orderCount}
+                      Pedido #{order.orderCount}{" "}
                     </Text>
+                    <Text>{date && formatDate(order.createdAt)}</Text>
                     {isAdmin && (
                       <Box className="w-32">
                         <OrderStatus orderId={order._id} />
                       </Box>
                     )}
                   </HStack>
-                  <Box className="py-2 w-full">
-                    <Box className="border border-gray-400 p-2 rounded-md">
+                  <Box className="w-full py-2">
+                    <Box className="rounded-md border border-gray-400 p-2">
                       {order.orderItemsId.map((order_) => {
                         const canSetOneHalf =
                           order_.itemIds.length > 1 ? "½" : "-";

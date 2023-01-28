@@ -80,7 +80,7 @@ export interface IPaymentType extends String<"card" | "cash"> {}
 
 // ADMIN ORDER TYPE --------------------->
 
-export interface IAdminOrder {
+export interface IAdminOrder extends IDatetime {
   _id: string;
   clientId: {
     _id: string;
@@ -109,4 +109,9 @@ export interface IAdminOrder {
   orderCount: number;
   paymentType: string;
   payback: number;
+}
+
+export interface IDatetime {
+  createdAt: string;
+  updatedAt: string;
 }
