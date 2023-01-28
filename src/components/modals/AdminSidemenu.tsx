@@ -22,6 +22,35 @@ import { BsCardChecklist } from "react-icons/bs";
 import { GiFireBowl, GiHamburgerMenu } from "react-icons/gi";
 import { MdOutlineDeliveryDining } from "react-icons/md";
 import { RiFileList3Line } from "react-icons/ri";
+import { v4 as uuid } from "uuid";
+
+const buttonsMap = [
+  {
+    path: "/admin/orders/to-do",
+    text: "Pedidos a fazer",
+    icon: RiFileList3Line,
+  },
+  {
+    path: "/admin/orders/in-progress",
+    text: "Pedidos em andamento",
+    icon: RiFileList3Line,
+  },
+  {
+    path: "/admin/oven",
+    text: "Forno",
+    icon: GiFireBowl,
+  },
+  {
+    path: "/admin/delivery",
+    text: "Entregas",
+    icon: MdOutlineDeliveryDining,
+  },
+  {
+    path: "/admin/history",
+    text: "Histórico",
+    icon: BsCardChecklist,
+  },
+];
 
 export default function AdminSidemenu() {
   const [mounted, setMounted] = useState(false);
@@ -67,60 +96,19 @@ export default function AdminSidemenu() {
               </DrawerHeader>
               <DrawerBody className="my-4">
                 <VStack className="items-start">
-                  <Button
-                    onClick={() => {
-                      onClose();
-                      router.push("/admin/orders/to-do");
-                    }}
-                    className="flex w-full justify-start space-x-4 bg-transparent"
-                  >
-                    <Icon className="text-2xl" as={RiFileList3Line} />
-                    <Text>Pedidos a fazer</Text>
-                  </Button>
-
-                  <Button
-                    onClick={() => {
-                      onClose();
-                      router.push("/admin/orders/in-progress");
-                    }}
-                    className="flex w-full justify-start space-x-4 bg-transparent"
-                  >
-                    <Icon className="text-2xl" as={RiFileList3Line} />
-                    <Text>Pedidos em andamento</Text>
-                  </Button>
-
-                  <Button
-                    onClick={() => {
-                      onClose();
-                      router.push("/admin/oven");
-                    }}
-                    className="flex w-full justify-start space-x-4 bg-transparent"
-                  >
-                    <Icon className="text-2xl" as={GiFireBowl} />
-                    <Text>Forno</Text>
-                  </Button>
-
-                  <Button
-                    onClick={() => {
-                      onClose();
-                      router.push("/admin/delivery");
-                    }}
-                    className="flex w-full justify-start space-x-4 bg-transparent"
-                  >
-                    <Icon className="text-2xl" as={MdOutlineDeliveryDining} />
-                    <Text>Entregas</Text>
-                  </Button>
-
-                  <Button
-                    onClick={() => {
-                      onClose();
-                      router.push("/admin/history");
-                    }}
-                    className="flex w-full justify-start space-x-4 bg-transparent"
-                  >
-                    <Icon className="text-2xl" as={BsCardChecklist} />
-                    <Text>Histórico</Text>
-                  </Button>
+                  {buttonsMap.map(({ text, path, icon }) => (
+                    <Button
+                      key={uuid()}
+                      onClick={() => {
+                        onClose();
+                        router.push(path);
+                      }}
+                      className="flex w-full justify-start space-x-4 bg-transparent"
+                    >
+                      <Icon className="text-2xl" as={icon} />
+                      <Text>{text}</Text>
+                    </Button>
+                  ))}
                 </VStack>
               </DrawerBody>
             </DrawerContent>

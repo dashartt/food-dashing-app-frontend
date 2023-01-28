@@ -18,7 +18,7 @@ export default function BackPageBtn() {
     <>
       {mounted && (
         <IconButton
-          className="text-3xl text-gray-700"
+          className="text-3xl text-gray-700 bg-transparent"
           onClick={backPage}
           aria-label="Clique para voltar para página anterior"
           icon={<RiArrowLeftSLine />}

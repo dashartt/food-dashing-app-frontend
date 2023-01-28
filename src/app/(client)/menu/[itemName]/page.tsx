@@ -47,7 +47,7 @@ export default function MenuItem({ params }: Params) {
   return (
     <>
       {mounted && (
-        <VStack className="items-start space-y-4">
+        <VStack className="items-start space-y-4 mb-20">
           {/* Name and back page btn  ----------------> */}
           <HStack className="p-4 border-b-2 w-full border-gray-300">
             <BackPageBtn />

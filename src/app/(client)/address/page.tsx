@@ -16,7 +16,7 @@ export default function Address() {
     <>
       {mounted && (
         <VStack className="items-start">
-          <HStack className="p-4 border-b-2 w-full border-gray-300 sticky top-0 z-10 bg-white">
+          <HStack className="p-4 border-b-2 w-full border-gray-300 bg-white">
             <BackPageBtn />
             <Heading size="lg">Cadastrar endereço</Heading>
           </HStack>

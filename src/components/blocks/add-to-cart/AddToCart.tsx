@@ -52,13 +52,12 @@ export default function AddToCart({ orderItem }: Props) {
               icon={<RiAddLine />}
             />
           </HStack>
-
+          <Text className="font-semibold text-xl">
+            R$ {((orderItem?.item[0]?.price || 0) * quantity).toFixed(2)}
+          </Text>
           {/* Continue buying or finish purchase -----------> */}
           <BuyMoreOrFinish orderItem={{ ...orderItem, quantity }}>
             <Text>Adicionar</Text>
-            <Text>
-              R$ {((orderItem?.item[0]?.price || 0) * quantity).toFixed(2)}
-            </Text>
           </BuyMoreOrFinish>
         </HStack>
       )}

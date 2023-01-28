@@ -23,6 +23,7 @@ import type { IOrderItem } from "src/types";
 
 import DeliveryOrPickup from "@/components/switchs/DeliveryOrPickup";
 import useApplyDeliveryFee from "@/store/useApplyDeliveryFee";
+import { formatCurrency } from "@/utils";
 
 import * as api from "../../../services/api";
 
@@ -38,7 +39,7 @@ export default function Checkout() {
   const { name, phone, _id } = useIdentificationState();
   const { address } = useAddressesState();
   const { paymentType, hasPayBack, payback } = usePaymentState();
-  const { items } = useShoppingCart();
+  const { items, emptyCart } = useShoppingCart();
 
   const onConfirmPurchase = async () => {
     if (!address || !paymentType || (hasPayBack && payback === 0)) {
@@ -63,7 +64,10 @@ export default function Checkout() {
         hasPayBack,
         payback,
       })
-      .then((orderId) => router.push(`/order/${orderId}`))
+      .then((orderId) => {
+        emptyCart();
+        router.push(`/order/${orderId}`);
+      })
       .catch((_error) => {
         throw new Error("erro ao cadastrar pedido");
       });
@@ -79,7 +83,7 @@ export default function Checkout() {
   return (
     <>
       {mounted && (
-        <VStack className="items-start">
+        <VStack className="mb-20 items-start">
           <HStack className="sticky top-0 z-10 w-full border-b-2 border-gray-300 bg-white p-4">
             <BackPageBtn />
             <Heading size="lg">Finalizar pedido</Heading>
@@ -95,10 +99,10 @@ export default function Checkout() {
             </VStack>
           </Box>
 
-          <Box className="p-4 w-full space-y-2">
+          <Box className="w-full space-y-2 p-4">
             <Text className="text-xl font-semibold">Total do pedido</Text>
 
-            <Box className="border border-gray-400 p-4 rounded-md">
+            <Box className="rounded-md border border-gray-400 p-4">
               <HStack className="justify-between">
                 <Text>Pedidos</Text>
                 <Text>R$ {getTotalCart()}</Text>
@@ -112,7 +116,7 @@ export default function Checkout() {
               <HStack className="justify-between">
                 <Text className="font-semibold">Total</Text>
                 <Text className="font-semibold">
-                  R${getTotalCart() + deliveryFee}
+                  R${formatCurrency(getTotalCart() + deliveryFee)}
                 </Text>
               </HStack>
             </Box>

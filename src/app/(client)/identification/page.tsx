@@ -61,7 +61,7 @@ export default function Identification() {
       {" "}
       {mounted && (
         <VStack className="items-start">
-          <HStack className="sticky top-0 z-10 w-full border-b-2 border-gray-300 bg-white p-4">
+          <HStack className="w-full border-b-2 border-gray-300 bg-white p-4">
             <BackPageBtn />
             <Heading size="lg">Cadastro</Heading>
           </HStack>

@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Button, Heading, HStack, VStack } from "@chakra-ui/react";
+import { Box, Button, Heading, HStack, Text, VStack } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import BackPageBtn from "src/components/buttons/BackPageBtn";
@@ -9,6 +9,7 @@ import useShoppingCart from "src/store/useShoppingCart";
 import { v4 as uuid } from "uuid";
 
 import EmptyCart from "@/components/blocks/cart/EmptyCart";
+import { formatCurrency } from "@/utils";
 
 export default function ShoppingCart() {
   const [mounted, setMounted] = useState(false);
@@ -25,8 +26,8 @@ export default function ShoppingCart() {
   return (
     <>
       {mounted && (
-        <VStack className="items-start space-y-4">
-          <HStack className="p-4 border-b-2 w-full border-gray-300 sticky top-0 z-10 bg-white">
+        <VStack className="items-start space-y-4 mb-20">
+          <HStack className="p-4 border-b-2 w-full border-gray-300 bg-white">
             <BackPageBtn />
             <Heading size="lg">Detalhes do pedido</Heading>
           </HStack>
@@ -38,13 +39,18 @@ export default function ShoppingCart() {
             ))}
           </VStack>
 
-          <Box className="w-full p-4 sticky bottom-0 z-10 bg-white border-t-4 border-gray-300">
-            <Button
-              onClick={() => router.push("/checkout")}
-              className="mt-4 w-full rounded-none bg-[#1a95f3] text-white"
-            >
-              Confirmar pedido R$ {getTotalCart()}
-            </Button>
+          <Box className="w-full p-4 bg-white">
+            <HStack className="justify-between">
+              <Text className="text-xl font-semibold">
+                Total: R$ {formatCurrency(getTotalCart())}
+              </Text>
+              <Button
+                onClick={() => router.push("/checkout")}
+                className="bg-[#1a95f3] text-white"
+              >
+                Confirmar pedido
+              </Button>
+            </HStack>
           </Box>
         </VStack>
       )}

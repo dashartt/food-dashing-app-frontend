@@ -15,7 +15,7 @@ export default function Home() {
   return (
     <>
       {mounted && (
-        <VStack>
+        <VStack className="mb-16">
           <Box className="bg-black w-full p-8 ">
             <PizzariaInfo />
           </Box>

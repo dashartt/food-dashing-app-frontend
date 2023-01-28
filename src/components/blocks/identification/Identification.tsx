@@ -17,7 +17,7 @@ export default function Identification() {
     <>
       {mounted && (
         <Box className="w-full">
-          <HStack className="sticky top-0 z-10 w-full bg-white px-4 justify-between">
+          <HStack className="w-full bg-white px-4 justify-between">
             <Text className="text-xl font-semibold">Identificação</Text>
             <Button
               onClick={() => router.push("/identification")}

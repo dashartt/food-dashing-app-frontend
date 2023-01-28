@@ -46,8 +46,8 @@ export default function OrderPage({ params }: Params) {
   return (
     <>
       {mounted && (
-        <VStack className="items-start">
-          <HStack className="w-full border-b-2 p-4">
+        <VStack className="items-start mb-20 ">
+          <HStack className="sticky top-0 z-10 w-full border-b-2 p-4 bg-white">
             <BackPageBtn />
             <Heading size="lg">Detalhes do pedido</Heading>
           </HStack>
