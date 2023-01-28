@@ -23,3 +23,8 @@ export const setHeaderTitle = (path: string) => {
   ];
   return pathAndTitle.find((obj) => obj.path === path)?.title;
 };
+
+export const formatCurrency = (value: number) =>
+  value.toLocaleString("pt-BR", {
+    minimumFractionDigits: 2,
+  });
