@@ -9,6 +9,7 @@ interface ShoppingCartState {
   // updateItem: (item: ICartItem) => void;
   removeItem: (itemCart: ICartItem) => void;
   getTotalCart: () => number;
+  emptyCart: () => void;
 }
 
 const useShoppingCart = create<ShoppingCartState>()(
@@ -38,10 +39,10 @@ const useShoppingCart = create<ShoppingCartState>()(
       getTotalCart: () => {
         const updateTotalCart = get().items.reduce((_acc, value) => {
           return _acc + (value.item[0]?.price || 0) * (value.quantity || 1);
-        }, 0);
-
+        }, 0) as number;
         return updateTotalCart;
       },
+      emptyCart: () => set({ items: [] }),
     }),
     {
       name: "shopping-cart-storage", // name of item in the storage (must be unique)
