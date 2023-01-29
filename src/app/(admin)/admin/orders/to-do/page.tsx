@@ -10,11 +10,12 @@ import OrdersList from "@/components/blocks/ordersList/AdminOrdersList";
 import * as api from "@/services/api";
 import Beam from "@/services/Beam";
 import Pusher from "@/services/Pusher";
+import useOrderState from "@/store/useOrder";
 import type { IAdminOrder } from "@/types";
 
 export default function AdminOrdersToDo() {
   // states and vars ----------------------
-  const [orders, setOrders] = useState<IAdminOrder[]>([]);
+  const { orders, setOrders, setOrder } = useOrderState();
   const [mounted, setMounted] = useState(false);
   const [orderId, setOrderId] = useState<string>("");
 
@@ -54,8 +55,7 @@ export default function AdminOrdersToDo() {
 
   // when order fetched, update orders state ---------------------
   useEffect(() => {
-    if (order_.isFetched)
-      setOrders((state) => [...state, order_.data as IAdminOrder]);
+    if (order_.isFetched) setOrder(order_.data as IAdminOrder);
   }, [order_.isFetched]);
 
   // when emit new order, fetch order by id ---------------------
