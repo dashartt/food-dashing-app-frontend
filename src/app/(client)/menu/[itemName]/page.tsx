@@ -13,6 +13,7 @@ import usePizzaPrice from "src/store/pizza/usePizzaPrice";
 import usePizzaStuffing from "src/store/pizza/usePizzaStuffing";
 
 import AddToCart from "@/components/blocks/add-to-cart/AddToCart";
+import MenuItemCardSimpleSkeleton from "@/components/skeletons/MenuItemCardSimpleSkeleton.";
 import useObservationPizzaState from "@/store/pizza/useObservationPizza";
 
 type Params = {
@@ -24,7 +25,7 @@ type Params = {
 export default function MenuItem({ params }: Params) {
   const [mounted, setMounted] = useState(false);
 
-  const { data: item } = useQuery({
+  const { data: item, isLoading } = useQuery({
     queryKey: [`menuItem/${params.itemName}`],
     queryFn: () => getMenuItemByName(params.itemName),
   });
@@ -47,16 +48,17 @@ export default function MenuItem({ params }: Params) {
   return (
     <>
       {mounted && (
-        <VStack className="items-start space-y-4 mb-20">
+        <VStack className="mb-20 items-start space-y-4">
           {/* Name and back page btn  ----------------> */}
-          <HStack className="p-4 border-b-2 w-full border-gray-300">
+          <HStack className="w-full sticky top-0 z-10 border-b-2 bg-white border-gray-300 p-4">
             <BackPageBtn />
             <Heading size="lg">Detalhes do item</Heading>
           </HStack>
 
-          <Box className="mx-4 space-y-4">
+          <Box className="w-full space-y-4 px-4">
             {/* Name and ingredients  ----------------> */}
             <Box className="w-full">
+              {isLoading && <MenuItemCardSimpleSkeleton />}
               <MenuItemCardSimple menuItem={item || null} />
             </Box>
 
@@ -77,7 +79,7 @@ export default function MenuItem({ params }: Params) {
 
           {/* Observation ----------------> */}
           {item?.category.name !== "drinks" && (
-            <Box className="w-full p-4 space-y-2">
+            <Box className="w-full space-y-2 p-4">
               <Text className="text-lg  font-semibold">Observações</Text>
               <Box>
                 <Textarea
