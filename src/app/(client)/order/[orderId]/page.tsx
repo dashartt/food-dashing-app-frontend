@@ -2,6 +2,7 @@
 
 import { Box, Heading, HStack, Text, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
+import { notFound } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import BackPageBtn from "@/components/buttons/BackPageBtn";
@@ -40,19 +41,20 @@ export default function OrderPage({ params }: Params) {
   }, []);
 
   useEffect(() => {
+    if (!data) notFound();
     if (data) setOrder(data);
   }, [isFetched]);
 
   return (
     <>
       {mounted && (
-        <VStack className="items-start mb-20 ">
-          <HStack className="sticky top-0 z-10 w-full border-b-2 p-4 bg-white">
+        <VStack className="mb-20 items-start ">
+          <HStack className="sticky top-0 z-10 w-full border-b-2 bg-white p-4">
             <BackPageBtn />
             <Heading size="lg">Detalhes do pedido</Heading>
           </HStack>
 
-          <VStack className="w-full space-y-8 mb-8">
+          <VStack className="mb-8 w-full space-y-8">
             {/* STATUS BLOCK */}
             <Box className="w-full space-y-2 px-4">
               <Text className="text-xl font-bold">Status</Text>
