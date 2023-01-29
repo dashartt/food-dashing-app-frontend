@@ -41,9 +41,10 @@ export default function OrderPage({ params }: Params) {
   }, []);
 
   useEffect(() => {
-    if (!data) notFound();
     if (data) setOrder(data);
   }, [isFetched]);
+
+  if (isFetched && !data) return notFound();
 
   return (
     <>
