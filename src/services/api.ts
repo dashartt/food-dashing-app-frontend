@@ -5,6 +5,7 @@ import type {
   IMenu,
   IMenuItem,
   IOrder,
+  IOrderSearchParams,
 } from "@/types";
 
 const SERVER_URL = "https://macacoloucopizzaria-backend.vercel.app";
@@ -95,8 +96,10 @@ export const addOrder = async (orderDTO: IOrder) => {
   return orders.orderId;
 };
 
-export const getOrders = async () => {
-  const response = await fetch(`${SERVER_URL}/orders/`, {
+export const getOrders = async ({ today, status }: IOrderSearchParams) => {
+  const params = new URLSearchParams(JSON.stringify({ today, status }));
+
+  const response = await fetch(`${SERVER_URL}/orders?${params}`, {
     headers: { "Content-Type": "application/json" },
     method: "GET",
   });

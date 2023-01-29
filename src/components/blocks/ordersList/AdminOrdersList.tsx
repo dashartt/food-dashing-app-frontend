@@ -22,6 +22,9 @@ export default function OrdersList({ orders, status }: Props) {
         <VStack className="space-y-4">
           {orders
             .filter((order) => order.status === status)
+            .sort(
+              ({ orderCount: current }, { orderCount: next }) => current - next
+            )
             ?.map((order) => (
               <OrderCard key={order._id} order={order} isAdmin />
             ))}
