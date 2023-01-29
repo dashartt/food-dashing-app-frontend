@@ -85,21 +85,21 @@ export default function OrderCard({
                 {/*  ADDRESS NAME  --------------------------> */}
                 <VStack className="mt-2 items-start -space-y-1">
                   <Text className="font-bold">Endereço:</Text>
-                  <Text>{`${order.addressId.addressName}, ${order.addressId.addressNumber} ${order.addressId?.complement}`}</Text>
-                  <Text>{order.addressId.referencePoint}</Text>
+                  <Text>{`${order.addressId?.addressName}, ${order.addressId?.addressNumber} ${order.addressId?.complement} - ${order.addressId?.districtName}`}</Text>
+                  <Text>{order.addressId?.referencePoint}</Text>
                 </VStack>
 
                 {/*  PAYMENT AND PAYBACK --------------------------> */}
                 <HStack className="mt-2">
                   <Text className="font-bold">Pagamento: </Text>
                   <Text>
-                    {order.paymentType === "cart" ? "Cartão" : "Dinheiro"}
+                    {order?.paymentType === "cart" ? "Cartão" : "Dinheiro"}
                   </Text>
                 </HStack>
                 {order.payback > 0 && (
                   <HStack>
                     <Text className="font-bold">Troco para:</Text>
-                    <Text>{order.payback}</Text>
+                    <Text>{order?.payback}</Text>
                   </HStack>
                 )}
               </Box>
