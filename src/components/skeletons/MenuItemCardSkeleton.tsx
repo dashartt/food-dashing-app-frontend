@@ -13,14 +13,14 @@ export default function MenuItemCardSkeleton() {
     <>
       {" "}
       {mounted && (
-        <VStack className="w-full">
+        <VStack className="w-full space-y-4">
           {Array(4)
             .fill(null)
             .map(() => (
               <Card
                 key={uuid()}
                 variant="outline"
-                className="rounded-none w-full p-6"
+                className="w-full p-6 border border-gray-400 shadow-lg"
               >
                 <Skeleton className="w-40 h-4" />
                 <SkeletonText
