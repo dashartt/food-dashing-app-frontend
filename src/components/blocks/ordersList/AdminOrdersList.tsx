@@ -2,6 +2,7 @@ import { VStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
 import OrderCard from "@/components/cards/OrderItemCard";
+import EmptyOrders from "@/components/empty/EmptyOrders";
 import type { IAdminOrder } from "@/types";
 
 type Props = {
@@ -15,6 +16,9 @@ export default function OrdersList({ orders, status }: Props) {
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  if (orders.filter((order) => order.status === status).length === 0)
+    return <EmptyOrders status={status} />;
 
   return (
     <>
