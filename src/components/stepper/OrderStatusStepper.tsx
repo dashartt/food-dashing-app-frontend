@@ -36,7 +36,6 @@ export const OrderStatusStepper = ({ status }: Props) => {
 
   useEffect(() => {
     setStep(getStepByStatus(status));
-    console.log(`status: ${status} => step: ${getStepByStatus(status)}`);
   }, [status]);
 
   return (
