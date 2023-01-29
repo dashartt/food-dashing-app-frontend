@@ -41,7 +41,10 @@ export default function OrderCard({
                     <Text>{date && formatDate(order.createdAt)}</Text>
                     {isAdmin && (
                       <Box className="w-32">
-                        <OrderStatus orderId={order._id} />
+                        <OrderStatus
+                          orderId={order._id}
+                          statusProp={order.status}
+                        />
                       </Box>
                     )}
                   </HStack>

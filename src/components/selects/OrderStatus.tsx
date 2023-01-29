@@ -8,12 +8,14 @@ import * as api from "../../services/api";
 
 type Props = {
   orderId: string;
+  statusProp: string;
 };
 
-export default function OrderStatus({ orderId }: Props) {
+export default function OrderStatus({ orderId, statusProp }: Props) {
   const [mounted, setMounted] = useState(false);
-  const { updateOrderStatus, getOrderStatus } = useOrderState();
-  const [status, setStatus] = useState("to-do");
+  const { updateOrderStatus } = useOrderState();
+  const [status, setStatus] = useState(statusProp);
+
   const handlerStatus: ChangeEventHandler<HTMLSelectElement> = async ({
     target,
   }) => {
@@ -26,7 +28,6 @@ export default function OrderStatus({ orderId }: Props) {
   };
 
   useEffect(() => {
-    setStatus(getOrderStatus(orderId));
     setMounted(true);
   }, []);
 
