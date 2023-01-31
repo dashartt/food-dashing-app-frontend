@@ -9,7 +9,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
     <html lang="en">
       <head />
       <body id="__next" className="bg-gray-100">
-        <ProviderAIO>
+        <ProviderAIO withSession>
           <Header />
           {children}
         </ProviderAIO>
