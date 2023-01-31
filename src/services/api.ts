@@ -100,7 +100,9 @@ export const getOrders = async ({ today, status }: IOrderSearchParams) => {
   const params = new URLSearchParams(JSON.stringify({ today, status }));
 
   const response = await fetch(`${SERVER_URL}/orders?${params}`, {
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+    },
     method: "GET",
   });
 
@@ -126,7 +128,9 @@ export const getClientOrders = async (clientId: string) => {
 
 export const getOrderById = async (orderId: string) => {
   const response = await fetch(`${SERVER_URL}/orders/${orderId}`, {
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+    },
     method: "GET",
   });
 
@@ -135,4 +139,32 @@ export const getOrderById = async (orderId: string) => {
   const order = (await response.json()) as IAdminOrder;
 
   return order;
+};
+
+export const accessAuth = async ({ password }: { password: string }) => {
+  const response = await fetch(`${SERVER_URL}/account/auth`, {
+    headers: { "Content-Type": "application/json" },
+    method: "POST",
+    body: JSON.stringify({ password }),
+  });
+
+  if (!response.ok) return null;
+
+  const token = await response.json();
+  return token;
+};
+
+export const verifyAuth = async ({ token }: { token: string }) => {
+  const response = await fetch(`${SERVER_URL}/account/auth`, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token,
+    },
+    method: "GET",
+  });
+
+  if (!response.ok) return null;
+
+  const session = await response.json();
+  return session;
 };
