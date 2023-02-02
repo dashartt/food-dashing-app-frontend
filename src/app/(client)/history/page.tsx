@@ -2,8 +2,9 @@
 
 "use client";
 
-import { Heading, HStack, VStack } from "@chakra-ui/react";
+import { Button, Heading, HStack, Text, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import BackPageBtn from "@/components/buttons/BackPageBtn";
@@ -35,9 +36,20 @@ export default function History() {
           </HStack>
 
           <VStack className="w-full space-y-4 p-4">
-            {data?.map((order) => (
-              <OrderCard key={order._id} order={order} date />
-            ))}
+            {data && data.length > 0 ? (
+              data?.map((order) => (
+                <OrderCard key={order._id} order={order} date />
+              ))
+            ) : (
+              <VStack className="items-start space-y-4 rounded-md border border-gray-400 p-4 shadow-lg">
+                <Text className="text-xl">Nenhum pedido realizado ainda</Text>
+                <Link className="" href="/">
+                  <Button className="rounded-md bg-gray-900 p-4 text-white">
+                    Ver o cardápio{" "}
+                  </Button>
+                </Link>
+              </VStack>
+            )}
           </VStack>
         </VStack>
       )}
