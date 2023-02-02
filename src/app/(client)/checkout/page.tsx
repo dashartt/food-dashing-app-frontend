@@ -105,7 +105,7 @@ export default function Checkout() {
             <Box className="rounded-md border border-gray-400 p-4">
               <HStack className="justify-between">
                 <Text>Pedidos</Text>
-                <Text>R$ {getTotalCart()}</Text>
+                <Text>R$ {formatCurrency(getTotalCart())}</Text>
               </HStack>
 
               <HStack className="justify-between">
