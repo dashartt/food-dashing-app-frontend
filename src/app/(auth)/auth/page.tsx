@@ -29,7 +29,7 @@ export default function Auth() {
   const query = useQuery({
     queryKey: ["auth"],
     queryFn: () =>
-      api.accessAuth({ password: passwordRef.current?.value || "" }),
+      api.accessAuth({ password: passwordRef?.current?.value || "" }),
     enabled: false,
   });
 
