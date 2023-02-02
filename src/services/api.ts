@@ -47,6 +47,20 @@ export const getMenuItemsByCategory = async (category: string) => {
   return data as IMenuItem[];
 };
 
+export const addClient = async (clientDTO: IClient) => {
+  const response = await fetch(`${SERVER_URL}/client`, {
+    headers: { "Content-Type": "application/json" },
+    method: "POST",
+    body: JSON.stringify(clientDTO),
+  });
+
+  if (!response.ok) return null;
+
+  const client = (await response.json()) as { clientId: string };
+
+  return client.clientId;
+};
+
 export const addAddress = async (addressDTO: IAddress) => {
   const response = await fetch(`${SERVER_URL}/address`, {
     headers: { "Content-Type": "application/json" },
@@ -61,18 +75,41 @@ export const addAddress = async (addressDTO: IAddress) => {
   return address.addressId;
 };
 
-export const addClient = async (clientDTO: IClient) => {
-  const response = await fetch(`${SERVER_URL}/client`, {
+export const removeAddress = async (addressId: string) => {
+  const response = await fetch(`${SERVER_URL}/address/${addressId}`, {
     headers: { "Content-Type": "application/json" },
-    method: "POST",
-    body: JSON.stringify(clientDTO),
+    method: "DELETE",
   });
 
   if (!response.ok) return null;
 
-  const client = (await response.json()) as { clientId: string };
+  const body = (await response.json()) as {
+    isSuccess: boolean;
+    message: string;
+  };
 
-  return client.clientId;
+  return body.message;
+};
+
+export const updateAddress = async (
+  addressId: string,
+  addressDTO: IAddress
+) => {
+  const response = await fetch(`${SERVER_URL}/address/${addressId}`, {
+    headers: { "Content-Type": "application/json" },
+    method: "PUT",
+    body: JSON.stringify(addressDTO),
+  });
+
+  if (!response.ok) return null;
+
+  const body = (await response.json()) as {
+    isSuccess: boolean;
+    message: string;
+    data: IAddress;
+  };
+
+  return body;
 };
 
 export const updateOrderStatus = async (orderId: string, status: string) => {

@@ -6,7 +6,9 @@ import type { IAddress, IAddresses } from "@/types";
 interface AddressesState {
   addresses: IAddresses | [];
   addAddress: (address_: IAddress) => void;
-  removeAddress: (address_: IAddress) => void;
+  updateAddress: (addressId: string, address: IAddress) => void;
+  getAddress: (addressId: string) => IAddress | null;
+  removeAddress: (addressId: string) => void;
 
   address: IAddress | null;
   setAddress: (_id: string) => void;
@@ -15,14 +17,27 @@ interface AddressesState {
 
 const useAddressesState = create<AddressesState>()(
   persist(
-    (set, _get) => ({
+    (set, get) => ({
       addresses: [],
       addAddress: (address_) =>
-        set((state) => ({ addresses: [...state.addresses, address_] })),
-      removeAddress: (address_) =>
         set((state) => ({
+          ...state,
+          addresses: [...state.addresses, address_],
+        })),
+      updateAddress: (addressId, address_) =>
+        set((state) => ({
+          ...state,
+          addresses: state.addresses.map((address__) =>
+            address__._id === addressId ? address_ : address__
+          ),
+        })),
+      getAddress: (addressId) =>
+        get().addresses.find((address_) => address_._id === addressId) || null,
+      removeAddress: (addressId) =>
+        set((state) => ({
+          ...state,
           addresses: state.addresses.filter(
-            (address) => address._id !== address_._id
+            (address) => address._id !== addressId
           ),
         })),
 

@@ -13,31 +13,53 @@ import type { IAddress } from "src/types";
 
 import * as api from "../../services/api";
 
-export default function AddressForm() {
-  const [mounted, setMounted] = useState(false);
+type Props = {
+  addressId?: string;
+};
 
-  const { handleSubmit, register } = useForm<IAddress>();
-
-  const { addAddress, setAddress } = useAddressesState();
+export default function AddressForm({ addressId = "" }: Props) {
   const router = useRouter();
+  const [mounted, setMounted] = useState(false);
+  const { addAddress, setAddress, getAddress, updateAddress } =
+    useAddressesState();
 
-  const onSubmit = async (values: IAddress) => {
-    api
-      .addAddress({
-        ...values,
-      })
-      .then((addressId) => {
-        addAddress({
-          _id: addressId || "",
-          ...values,
+  const initialAddress = getAddress(addressId);
+  const { handleSubmit, register } = useForm<IAddress>({
+    ...(initialAddress && { values: { ...initialAddress } }),
+  });
+
+  const onSubmit = async (adressDTO: IAddress) => {
+    if (addressId !== "") {
+      api
+        .updateAddress(addressId, {
+          ...adressDTO,
+        })
+        .then(() => {
+          updateAddress(addressId, adressDTO);
+          setAddress(addressId);
+          router.back();
+        })
+        .catch((_error) => {
+          throw new Error("erro ao atualizar endereço");
         });
-        setAddress(addressId || "");
+    } else {
+      api
+        .addAddress({
+          ...adressDTO,
+        })
+        .then((addressId_) => {
+          addAddress({
+            _id: addressId_ || "",
+            ...adressDTO,
+          });
+          setAddress(addressId_ || "");
 
-        router.back();
-      })
-      .catch((_error) => {
-        throw new Error("erro ao cadastrar endereço");
-      });
+          router.back();
+        })
+        .catch((_error) => {
+          throw new Error("erro ao cadastrar endereço");
+        });
+    }
   };
 
   useEffect(() => {
@@ -46,7 +68,6 @@ export default function AddressForm() {
 
   return (
     <>
-      {" "}
       {mounted && (
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -99,6 +120,7 @@ export default function AddressForm() {
             <FormLabel htmlFor="referencePoint">
               Ponto de referência (opcional)
             </FormLabel>
+
             <Input
               className="bg-gray-100 placeholder:text-gray-600 border border-gray-400"
               {...register("referencePoint")}

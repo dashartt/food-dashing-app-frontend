@@ -5,12 +5,16 @@ import {
   Button,
   Heading,
   HStack,
+  IconButton,
   Text,
   useToast,
   VStack,
 } from "@chakra-ui/react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { BiEditAlt } from "react-icons/bi";
+import { RiCloseLine } from "react-icons/ri";
 import BackPageBtn from "src/components/buttons/BackPageBtn";
 import IdentificationForm from "src/components/forms/IdentificationForm";
 import useAddressesState from "src/store/checkout/useAddresses";
@@ -23,8 +27,13 @@ export default function Identification() {
 
   const toast = useToast();
   const { name, phone, setId } = useIdentificationState();
-  const { addresses } = useAddressesState();
+  const { addresses, removeAddress } = useAddressesState();
   const router = useRouter();
+
+  const onRemoveAddress = async (_id: string) => {
+    removeAddress(_id);
+    await api.removeAddress(_id);
+  };
 
   const onConfirmRegistration = async () => {
     if (!name || !phone || addresses.length === 0) {
@@ -58,7 +67,6 @@ export default function Identification() {
 
   return (
     <>
-      {" "}
       {mounted && (
         <VStack className="items-start">
           <HStack className="w-full border-b-2 border-gray-300 bg-white p-4">
@@ -73,7 +81,7 @@ export default function Identification() {
             </Box>
           </Box>
 
-          <Box className="w-full">
+          <Box className="w-full space-y-0">
             <HStack className="justify-between p-4">
               <Text className="text-xl font-semibold">Endereço</Text>
               <Button
@@ -88,9 +96,33 @@ export default function Identification() {
                 <Text>Nenhum endereço cadastrado</Text>
               ) : (
                 addresses.map((address_) => (
-                  <Text key={address_._id}>
-                    {`${address_.addressName} - ${address_.addressNumber} ${address_?.complement}, ${address_.districtName}`}
-                  </Text>
+                  <HStack
+                    key={address_?._id}
+                    className="border border-gray-400 justify-between p-2 rounded-md"
+                  >
+                    <Text key={address_._id}>
+                      {`${address_.addressName} - ${address_.addressNumber} ${address_?.complement}`}
+                      <br />
+                      {` ${address_.districtName}`}
+                    </Text>
+                    <HStack className="space-x-2">
+                      <Link
+                        className="bg-transparent border border-gray-300 p-[0.55rem] rounded-md"
+                        href={{
+                          pathname: "/address",
+                          query: { addressId: address_._id },
+                        }}
+                      >
+                        <BiEditAlt className="text-xl" />
+                      </Link>
+                      <IconButton
+                        className="bg-transparent border border-gray-300"
+                        aria-label="Excluir endereço"
+                        onClick={() => onRemoveAddress(address_._id || "")}
+                        icon={<RiCloseLine className="text-xl" />}
+                      />
+                    </HStack>
+                  </HStack>
                 ))
               )}
             </Box>
