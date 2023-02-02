@@ -14,13 +14,13 @@ import type { IAdminOrder } from "@/types";
 
 import * as api from "../../../../services/api";
 
-type Params = {
+type Props = {
   params: {
     orderId: string;
   };
 };
 
-export default function OrderPage({ params }: Params) {
+export default function OrderPage({ params }: Props) {
   const [mounted, setMounted] = useState(false);
   const [order, setOrder] = useState<IAdminOrder | null>(null);
 
