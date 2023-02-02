@@ -20,7 +20,7 @@ export default function Header() {
   return (
     <>
       {mounted && (
-        <Box className="bg-gray-700 p-4 top-0 sticky z-10">
+        <Box className="bg-gray-800 p-4 top-0 sticky z-10">
           <HStack className="items-center">
             <Sidemenu />
             <Text className="text-2xl text-white">{title}</Text>

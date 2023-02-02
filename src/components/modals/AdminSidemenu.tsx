@@ -7,6 +7,7 @@ import {
   DrawerBody,
   DrawerCloseButton,
   DrawerContent,
+  DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
   HStack,
@@ -23,6 +24,8 @@ import { GiFireBowl, GiHamburgerMenu } from "react-icons/gi";
 import { MdOutlineDeliveryDining } from "react-icons/md";
 import { RiFileList3Line } from "react-icons/ri";
 import { v4 as uuid } from "uuid";
+
+import useSessionState from "@/store/useSession";
 
 const buttonsMap = [
   {
@@ -54,9 +57,10 @@ const buttonsMap = [
 
 export default function AdminSidemenu() {
   const [mounted, setMounted] = useState(false);
-
   const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter();
+
+  const { clearSession } = useSessionState();
 
   useEffect(() => {
     setMounted(true);
@@ -111,6 +115,14 @@ export default function AdminSidemenu() {
                   ))}
                 </VStack>
               </DrawerBody>
+              <DrawerFooter className="flex justify-start">
+                <Button
+                  onClick={() => clearSession()}
+                  className="bg-gray-400 px-5"
+                >
+                  Sair
+                </Button>
+              </DrawerFooter>
             </DrawerContent>
           </Drawer>
         </>

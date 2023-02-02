@@ -9,6 +9,7 @@ interface ISession {
 interface SessionState {
   session: ISession | null;
   setSession: (session: ISession) => void;
+  clearSession: () => void;
 
   path: string;
   setPath: (path: string) => void;
@@ -20,6 +21,7 @@ const useSessionState = create<SessionState>()(
       session: null,
       setSession: ({ fullName, token }) =>
         set((state) => ({ ...state, session: { fullName, token } })),
+      clearSession: () => set((state) => ({ ...state, session: null })),
 
       path: "",
       setPath: (path) =>

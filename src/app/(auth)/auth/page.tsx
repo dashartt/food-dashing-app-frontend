@@ -7,6 +7,7 @@ import {
   FormControl,
   FormLabel,
   Heading,
+  HStack,
   Input,
   Text,
   VStack,
@@ -52,8 +53,8 @@ export default function Auth() {
   return (
     <>
       {mounted && (
-        <Box className="h-screen bg-white p-4">
-          <VStack className="w-full space-y-0 rounded-md border border-gray-400 pt-4 shadow-lg">
+        <HStack className="w-full p-5 rounded-md justify-center mt-20">
+          <VStack className="w-fit bg-white space-y-0 rounded-md border border-gray-400 pt-4 shadow-lg">
             <Box className="rounded-full border border-gray-400 bg-white p-1">
               <Avatar name="Pizzaria logo" size="2xl" src="/static/logo.png" />
             </Box>
@@ -85,7 +86,7 @@ export default function Auth() {
               </form>
             </Box>
           </VStack>
-        </Box>
+        </HStack>
       )}
     </>
   );
