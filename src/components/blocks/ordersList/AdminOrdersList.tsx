@@ -1,4 +1,4 @@
-import { VStack } from "@chakra-ui/react";
+import { SimpleGrid } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
 import OrderCard from "@/components/cards/OrderItemCard";
@@ -23,7 +23,11 @@ export default function OrdersList({ orders, status }: Props) {
   return (
     <>
       {mounted && (
-        <VStack className="space-y-4">
+        <SimpleGrid
+          columns={{ base: 1, md: 2, xl: 3, "2xl": 4 }}
+          spacing={10}
+          className="max-w-fit mx-auto"
+        >
           {orders
             .filter((order) => order.status === status)
             .sort(
@@ -32,7 +36,7 @@ export default function OrdersList({ orders, status }: Props) {
             ?.map((order) => (
               <OrderCard key={order._id} order={order} isAdmin />
             ))}
-        </VStack>
+        </SimpleGrid>
       )}
     </>
   );

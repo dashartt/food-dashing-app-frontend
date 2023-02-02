@@ -28,9 +28,9 @@ export default function OrderCard({
   return (
     <>
       {mounted && (
-        <Box className="w-full bg-white">
+        <Box className="bg-white h-fit rounded-md ">
           <Card className="border border-gray-400 shadow-lg">
-            <CardBody className="group m-0">
+            <CardBody className="m-0">
               <Box>
                 {/*  ITEMS  --------------------------> */}
                 <VStack className="items-start">
@@ -77,7 +77,7 @@ export default function OrderCard({
                 </VStack>
               </Box>
 
-              <Box className="hidden group-hover:block">
+              <Box>
                 {/*  CLIENT NAME  --------------------------> */}
                 <HStack>
                   <Text className="font-bold">Cliente:</Text>
@@ -85,11 +85,11 @@ export default function OrderCard({
                 </HStack>
 
                 {/*  ADDRESS NAME  --------------------------> */}
-                {/* <VStack className="mt-2 items-start -space-y-1">
+                <VStack className="mt-2 items-start -space-y-1">
                   <Text className="font-bold">Endereço:</Text>
                   <Text>{`${order?.addressId?.addressName}, ${order?.addressId?.addressNumber} ${order?.addressId?.complement} - ${order?.addressId?.districtName}`}</Text>
                   <Text>{order?.addressId?.referencePoint}</Text>
-                </VStack> */}
+                </VStack>
 
                 {/*  PAYMENT AND PAYBACK --------------------------> */}
                 <HStack className="mt-2">
