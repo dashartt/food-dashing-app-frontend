@@ -71,7 +71,7 @@ export default function Identification() {
         <VStack className="items-start">
           <HStack className="w-full border-b-2 border-gray-300 bg-white p-4">
             <BackPageBtn />
-            <Heading size="lg">Cadastro</Heading>
+            <Heading size="lg">Perfil</Heading>
           </HStack>
 
           <Box className="w-full">
