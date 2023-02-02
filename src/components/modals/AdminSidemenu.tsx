@@ -73,7 +73,7 @@ export default function AdminSidemenu() {
             icon={<GiHamburgerMenu className="text-2xl text-white" />}
           />
           <Drawer
-            size="full"
+            size={{ base: "full", lg: "xs" }}
             placement="left"
             onClose={onClose}
             isOpen={isOpen}
