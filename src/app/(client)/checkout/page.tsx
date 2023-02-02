@@ -58,11 +58,11 @@ export default function Checkout() {
         items: items.map((item_) => ({
           itemIds: item_.item.map((item__) => item__?._id),
           quantity: item_.quantity,
-          observation: item_.observation,
+          ...(item_.observation && { observation: item_.observation }),
         })) as unknown as IOrderItem,
         paymentType,
-        hasPayBack,
-        payback,
+        ...(hasPayBack && { hasPayBack }),
+        ...(payback && { payback }),
       })
       .then((orderId) => {
         emptyCart();
