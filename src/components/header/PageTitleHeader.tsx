@@ -6,24 +6,20 @@ import { setHeaderTitle } from "@/utils";
 import BackPageBtn from "../buttons/BackPageBtn";
 
 type Props = {
-  isSticky?: boolean;
-  hasBorder?: boolean;
-  classess?: string;
+  isResponsive?: boolean;
+  className?: string;
 };
 
 export default function PageTitleHeader({
-  isSticky = false,
-  hasBorder = false,
-  classess = "",
+  className = "",
+  isResponsive = false,
 }: Props) {
   const path = usePathname();
   const title = setHeaderTitle(path || "");
 
   return (
     <HStack
-      className={`${isSticky && "sticky top-0 z-10"} w-full bg-white ${
-        hasBorder && "border-b-4"
-      }${classess}`}
+      className={`w-full ${className} ${isResponsive && "hidden lg:flex"}`}
     >
       {path !== "/" && <BackPageBtn />}
       <Heading size="lg" className="text-black">

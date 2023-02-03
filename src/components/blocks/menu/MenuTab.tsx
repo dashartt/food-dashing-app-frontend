@@ -14,7 +14,7 @@ export default function Menu() {
     <>
       {mounted && (
         <Tabs isFitted className="w-full md:min-w-[32rem] max-w-lg">
-          <TabList className="bg-black font-bold lg:top-0 top-20 fixed md:sticky z-10 pb-3 md:pb-6 border-none">
+          <TabList className="bg-black font-bold sticky top-20 lg:top-0 z-10 pb-3 md:pb-6 border-none">
             <Tab
               color="gray.400"
               _selected={{
@@ -54,7 +54,7 @@ export default function Menu() {
           </TabList>
 
           <TabPanels>
-            <TabPanel className="md:m-0 md:p-0">
+            <TabPanel className="md:m-0 md:p-0 overflow-y-scroll max-h-[85vh]">
               <MenuItemList category="salty pizza" />
             </TabPanel>
             <TabPanel className="md:m-0 md:p-0">
