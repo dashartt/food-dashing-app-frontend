@@ -2,6 +2,7 @@ import "./globals.css";
 
 import type { PropsWithChildren } from "react";
 
+import Container from "@/components/helper/Container";
 import Menu from "@/components/menu/client/Menu";
 import ProviderAIO from "@/components/providers/ProviderAIO";
 
@@ -11,7 +12,9 @@ export default function RootLayout({ children }: PropsWithChildren) {
       <head />
       <body id="__next">
         <ProviderAIO>
-          <Menu>{children}</Menu>
+          <Container className="bg-black">
+            <Menu>{children}</Menu>
+          </Container>
         </ProviderAIO>
       </body>
     </html>

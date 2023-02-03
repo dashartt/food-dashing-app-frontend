@@ -28,7 +28,7 @@ export default function OrderCard({
   return (
     <>
       {mounted && (
-        <Box className="bg-white h-fit rounded-md ">
+        <Box className="bg-white h-fit rounded-md max-w-fit">
           <Card className="border border-gray-400 shadow-lg">
             <CardBody className="m-0">
               <Box>

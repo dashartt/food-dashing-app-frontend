@@ -17,7 +17,7 @@ export default function Address() {
   return (
     <>
       {mounted && (
-        <VStack className="items-start">
+        <VStack className="items-start md:w-96">
           <VStack className="w-full px-4">
             <AddressForm addressId={addressId || ""} />
           </VStack>

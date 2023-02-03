@@ -66,7 +66,7 @@ export default function Identification() {
   return (
     <>
       {mounted && (
-        <VStack className="items-start">
+        <VStack className="items-start md:w-96">
           <Box className="w-full">
             <Text className="p-4 text-xl font-semibold">Identificação</Text>
             <Box className="mx-4 space-y-4">

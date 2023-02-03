@@ -8,7 +8,6 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import OrderCard from "@/components/cards/OrderItemCard";
-import PageTitleHeader from "@/components/header/PageTitleHeader";
 import useIdentificationState from "@/store/checkout/useIdentification";
 
 import * as api from "../../../services/api";
@@ -29,29 +28,26 @@ export default function History() {
   return (
     <>
       {mounted && (
-        <VStack className="items-start space-y-4 ">
-          <PageTitleHeader isResponsive className="" />
-          <SimpleGrid
-            columns={{ base: 1, md: 2, xl: 3, "2xl": 4 }}
-            spacing={10}
-            className="mx-auto max-w-fit"
-          >
-            {data && data.length > 0 ? (
-              data?.map((order) => (
-                <OrderCard key={order._id} order={order} date />
-              ))
-            ) : (
-              <VStack className="items-start space-y-4 rounded-md border border-gray-400 p-4 shadow-lg">
-                <Text className="text-xl">Nenhum pedido realizado ainda</Text>
-                <Link className="" href="/">
-                  <Button className="rounded-md bg-gray-900 p-4 text-white">
-                    Ver o cardápio{" "}
-                  </Button>
-                </Link>
-              </VStack>
-            )}
-          </SimpleGrid>
-        </VStack>
+        <SimpleGrid
+          columns={{ base: 1, md: 2 }}
+          spacing={10}
+          className="max-w-fit mx-auto"
+        >
+          {data && data.length > 0 ? (
+            data?.map((order) => (
+              <OrderCard key={order._id} order={order} date />
+            ))
+          ) : (
+            <VStack className="items-start space-y-4 rounded-md border border-gray-400 p-4 shadow-lg">
+              <Text className="text-xl">Nenhum pedido realizado ainda</Text>
+              <Link className="" href="/">
+                <Button className="rounded-md bg-gray-900 p-4 text-white">
+                  Ver o cardápio{" "}
+                </Button>
+              </Link>
+            </VStack>
+          )}
+        </SimpleGrid>
       )}
     </>
   );

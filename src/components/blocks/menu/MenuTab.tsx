@@ -14,7 +14,7 @@ export default function Menu() {
     <>
       {mounted && (
         <Tabs isFitted className="w-full ">
-          <TabList className="bg-black font-bold sticky top-[4.7rem]  z-10 pb-3 md:pb-6 border-none">
+          <TabList className="bg-black font-bold sticky top-[5rem] z-10 pb-3 md:pb-6 border-none">
             <Tab
               color="gray.400"
               _selected={{

@@ -20,7 +20,7 @@ export default function PageTitleHeader({
   const title = setHeaderTitle(path || "");
 
   const defaultStyles =
-    isDefault && "border-b-2 border-gray-300 p-[1.3rem] bg-white";
+    isDefault && "border-b-2 border-gray-300 p-[1.2rem] bg-white";
   const responsiveStyle = isResponsive && "hidden lg:flex sticky top-0 z-10";
 
   return (

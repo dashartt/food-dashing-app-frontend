@@ -74,7 +74,7 @@ export default function Checkout() {
   return (
     <>
       {mounted && (
-        <VStack className="items-start">
+        <VStack className="items-start md:w-96">
           <Identification />
           <Address />
 

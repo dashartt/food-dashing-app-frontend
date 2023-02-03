@@ -16,7 +16,7 @@ export default function PizzariaInformation() {
   return (
     <>
       {mounted && (
-        <VStack className="items-start">
+        <VStack className="items-start md:w-96">
           <HStack className="p-4 border-b-2 w-full border-gray-300 bg-white">
             <BackPageBtn />
             <Text className="text-lg font-semibold">

@@ -1,6 +1,5 @@
 "use client";
 
-import { VStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import MenuTab from "src/components/blocks/menu/MenuTab";
 

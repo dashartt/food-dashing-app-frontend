@@ -47,7 +47,7 @@ export default function MenuItem({ params }: Params) {
   return (
     <>
       {mounted && (
-        <VStack className="items-start space-y-4">
+        <VStack className="items-start space-y-4 md:w-96">
           {/* Name and back page btn  ----------------> */}
 
           <Box className="w-full space-y-4 px-4">

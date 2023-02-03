@@ -48,7 +48,7 @@ export default function OrderPage({ params }: Props) {
   return (
     <>
       {mounted && (
-        <VStack className="items-start ">
+        <VStack className="items-start md:w-96">
           <VStack className="mb-8 w-full space-y-8">
             {/* STATUS BLOCK */}
             <Box className="w-full space-y-2 px-4">

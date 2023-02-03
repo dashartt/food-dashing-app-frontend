@@ -25,6 +25,7 @@ import { RiFileList3Line } from "react-icons/ri";
 
 import PizzariaInfo from "@/components/blocks/pizzaria-info/PizzariaInfo";
 import PageTitleHeader from "@/components/header/PageTitleHeader";
+import Container from "@/components/helper/Container";
 
 interface NavItemProps extends FlexProps {
   icon: IconType;
@@ -160,7 +161,10 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
 export default function SimpleSidebar({ children }: { children: ReactNode }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-    <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
+    <Box
+      bg={useColorModeValue("gray.100", "gray.900")}
+      className="mx-auto max-w-7xl border bg-white border-gray-300 rounded-md min-h-screen"
+    >
       <SidebarContent
         onClose={() => onClose}
         display={{ base: "none", lg: "block" }}
@@ -180,10 +184,15 @@ export default function SimpleSidebar({ children }: { children: ReactNode }) {
       </Drawer>
       {/* mobilenav */}
       <MobileNav display={{ base: "flex", lg: "none" }} onOpen={onOpen} />
-      <Box ml={{ base: 0, lg: 72 }} className="bg-gray-200 min-h-full pb-10">
+      <Box ml={{ base: 0, lg: 72 }} className="bg-gray-200 min-h-screen ">
         <PageTitleHeader isDefault isResponsive />
-        <Box className="max-w-md md:max-w-lg mx-auto lg:mx-20 mt-10 bg-white p-4 rounded-md border border-gray-300 min-h-full">
-          {children}
+        <Box className="pt-5 md:pt-10">
+          <Container
+            canFit
+            className="mx-auto rounded-md border border-gray-300 bg-white p-4 lg:mx-10"
+          >
+            {children}
+          </Container>
         </Box>
       </Box>
     </Box>

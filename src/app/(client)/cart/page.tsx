@@ -25,7 +25,7 @@ export default function ShoppingCart() {
   return (
     <>
       {mounted && (
-        <VStack className="items-start space-y-4">
+        <VStack className="items-start space-y-4 md:w-96">
           {/* Cart items list ------------> */}
           <VStack className="w-full space-y-4 px-4">
             {items?.map((itemCart) => (
@@ -35,14 +35,14 @@ export default function ShoppingCart() {
 
           <Box className="w-full bg-white p-4">
             <HStack className="justify-between">
-              <Text className="text-xl font-semibold">
+              <Text className="text-lg font-semibold">
                 Total: R$ {formatCurrency(getTotalCart())}
               </Text>
               <Button
                 onClick={() => router.push("/checkout")}
                 className="bg-[#1a95f3] text-white"
               >
-                Confirmar pedido
+                Confirmar
               </Button>
             </HStack>
           </Box>
