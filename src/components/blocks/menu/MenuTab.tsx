@@ -14,39 +14,35 @@ export default function Menu() {
     <>
       {mounted && (
         <Tabs isFitted className="w-full ">
-          <TabList className="bg-black font-bold sticky top-[5rem] z-10 pb-3 md:pb-6 border-none">
+          <TabList className="bg-white font-bold sticky top-[5rem] z-10  border-none">
             <Tab
-              color="gray.400"
               _selected={{
-                color: "white",
-                borderBottom: "3px solid white",
+                color: "black",
+                borderBottom: "4px solid black",
               }}
             >
               Pizza salgada
             </Tab>
             <Tab
-              color="gray.400"
               _selected={{
-                color: "white",
-                borderBottom: "3px solid white",
+                color: "black",
+                borderBottom: "4px solid black",
               }}
             >
               Pizza doce
             </Tab>
             <Tab
-              color="gray.400"
               _selected={{
-                color: "white",
-                borderBottom: "3px solid white",
+                color: "black",
+                borderBottom: "4px solid black",
               }}
             >
               Lanche árabe
             </Tab>
             <Tab
-              color="gray.400"
               _selected={{
-                color: "white",
-                borderBottom: "3px solid white",
+                color: "black",
+                borderBottom: "4px solid black",
               }}
             >
               Bebidas
@@ -54,16 +50,16 @@ export default function Menu() {
           </TabList>
 
           <TabPanels>
-            <TabPanel className=" overflow-y-auto max-h-[85vh] bg-black">
+            <TabPanel className=" overflow-y-auto max-h-[85vh]">
               <MenuItemList category="salty pizza" />
             </TabPanel>
-            <TabPanel className=" overflow-y-auto max-h-[85vh] bg-black">
+            <TabPanel className=" overflow-y-auto max-h-[85vh]">
               <MenuItemList category="sweet pizza" />
             </TabPanel>
-            <TabPanel className=" overflow-y-auto max-h-[85vh] bg-black">
+            <TabPanel className=" overflow-y-auto max-h-[85vh]">
               <MenuItemList category="arabic snack" />
             </TabPanel>
-            <TabPanel className=" overflow-y-auto max-h-[85vh] bg-black">
+            <TabPanel className=" overflow-y-auto max-h-[85vh]">
               <MenuItemList category="drinks" />
             </TabPanel>
           </TabPanels>
