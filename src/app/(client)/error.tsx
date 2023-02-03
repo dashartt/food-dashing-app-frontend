@@ -13,17 +13,18 @@ export default function Error({ error }: Props) {
   const router = useRouter();
 
   useEffect(() => {
-    console.log(error);
+    console.log(error.stack);
   }, [error]);
 
   return (
-    <Box className="p-8 text-center bg-gray-900 h-screen space-y-4">
+    <Box className="p-8 text-center bg-gray-900 space-y-4">
       <Text className="text-4xl text-white">
         Ocorreu algum problema interno
       </Text>
+
       <Button
         className="bg-white rounded-none"
-        onClick={() => router.push("/admin/orders/to-do")}
+        onClick={() => router.push("/")}
       >
         Ir para o cardapio
       </Button>
