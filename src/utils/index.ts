@@ -24,7 +24,7 @@ export const setHeaderTitle = (path: string) => {
     },
     {
       path: "/pizzaria-information",
-      title: "Informações sobre a Pizzaria",
+      title: "Sobre a Pizzaria",
     },
     {
       path: "/order/",
