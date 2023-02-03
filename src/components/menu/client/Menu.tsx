@@ -40,14 +40,10 @@ const NavItem = ({ icon, path, children, ...rest }: NavItemProps) => {
       _focus={{ boxShadow: "none" }}
     >
       <Flex
-        align="center"
-        p="4"
-        mx="4"
-        borderRadius="lg"
         role="group"
-        cursor="pointer"
+        className="cursor-pointer rounded-md mx-4 p-4 items-center"
         _hover={{
-          bg: "black",
+          bg: "gray.500",
           color: "white",
         }}
         {...rest}
