@@ -20,7 +20,10 @@ export default function MenuItemCard({ menuItem }: Props) {
     <>
       {mounted && (
         <Link className="w-full" href={`/menu/${menuItem.name}`}>
-          <Card variant="outline" className="border border-gray-400 shadow-lg">
+          <Card
+            variant="outline"
+            className="border border-gray-400 shadow-lg bg-white"
+          >
             <CardBody className="space-y-2">
               <Heading size="md" className="font-medium">
                 {menuItem.name}
