@@ -53,7 +53,7 @@ export default function OrderPage({ params }: Props) {
             {/* STATUS BLOCK */}
             <Box className="w-full space-y-2 px-4">
               <Text className="text-xl font-bold">Status</Text>
-              <Box className="rounded-md border border-gray-400 px-4 pt-4">
+              <Box className="rounded-md border border-gray-400 px-4 pt-4 max-w-sm">
                 <OrderStatusStepper status={order?.status || "to-do"} />
               </Box>
             </Box>
