@@ -21,7 +21,7 @@ export default function Error({ error }: Props) {
       <Text className="text-4xl text-white">
         Ocorreu algum problema interno
       </Text>
-
+      <Text className="text-white text-start">{error.stack}</Text>
       <Button
         className="bg-white rounded-none"
         onClick={() => router.push("/")}
