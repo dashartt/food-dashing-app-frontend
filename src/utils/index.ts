@@ -22,8 +22,44 @@ export const setHeaderTitle = (path: string) => {
       path: "/admin/history/",
       title: "Histórico",
     },
+    {
+      path: "/pizzaria-information",
+      title: "Informações sobre a Pizzaria",
+    },
+    {
+      path: "/order/",
+      title: "Detalhes do pedido",
+    },
+    {
+      path: "/menu/",
+      title: "Detalhes do produto",
+    },
+    {
+      path: "/identification",
+      title: "Perfil",
+    },
+    {
+      path: "/history",
+      title: "Histórico de pedidos",
+    },
+    {
+      path: "/checkout",
+      title: "Finalizar pedido",
+    },
+    {
+      path: "/cart",
+      title: "Carrinho",
+    },
+    {
+      path: "/address",
+      title: "Endereço",
+    },
+    {
+      path: "/",
+      title: "Cardápio",
+    },
   ];
-  return pathAndTitle.find((obj) => obj.path === path)?.title;
+  return pathAndTitle.find((obj) => path.includes(obj.path))?.title;
 };
 
 export const formatCurrency = (value: number) =>
