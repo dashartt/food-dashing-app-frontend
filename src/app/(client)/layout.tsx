@@ -2,7 +2,7 @@ import "./globals.css";
 
 import type { PropsWithChildren } from "react";
 
-import MenuFooter from "@/components/blocks/footer/MenuFooter";
+import Menu from "@/components/menu/client/Menu";
 import ProviderAIO from "@/components/providers/ProviderAIO";
 
 export default function RootLayout({ children }: PropsWithChildren) {
@@ -11,8 +11,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
       <head />
       <body id="__next">
         <ProviderAIO>
-          {children}
-          <MenuFooter />
+          <Menu>{children}</Menu>
         </ProviderAIO>
       </body>
     </html>

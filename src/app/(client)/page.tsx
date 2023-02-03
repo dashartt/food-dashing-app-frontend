@@ -1,9 +1,8 @@
 "use client";
 
-import { Box, VStack } from "@chakra-ui/react";
+import { VStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import MenuTab from "src/components/blocks/menu/MenuTab";
-import PizzariaInfo from "src/components/blocks/pizzaria-info/PizzariaInfo";
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
@@ -15,10 +14,7 @@ export default function Home() {
   return (
     <>
       {mounted && (
-        <VStack className="mb-16">
-          <Box className="bg-black w-full p-8 ">
-            <PizzariaInfo />
-          </Box>
+        <VStack className="min-h-screen w-full bg-black py-20">
           <MenuTab />
         </VStack>
       )}
