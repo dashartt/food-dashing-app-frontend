@@ -40,28 +40,28 @@ export default function Checkout() {
         position: "top",
         isClosable: true,
       });
+    } else {
+      await api
+        .addOrder({
+          clientId: _id,
+          addressId: address?._id || "",
+          items: items.map((item_) => ({
+            itemIds: item_.item.map((item__) => item__?._id),
+            quantity: item_.quantity,
+            ...(item_.observation && { observation: item_.observation }),
+          })) as unknown as IOrderItem,
+          paymentType,
+          ...(hasPayBack && { hasPayBack }),
+          ...(payback && { payback }),
+        })
+        .then((orderId) => {
+          emptyCart();
+          router.push(`/order/${orderId}`);
+        })
+        .catch((_error) => {
+          throw new Error("erro ao cadastrar pedido");
+        });
     }
-
-    await api
-      .addOrder({
-        clientId: _id,
-        addressId: address?._id || "",
-        items: items.map((item_) => ({
-          itemIds: item_.item.map((item__) => item__?._id),
-          quantity: item_.quantity,
-          ...(item_.observation && { observation: item_.observation }),
-        })) as unknown as IOrderItem,
-        paymentType,
-        ...(hasPayBack && { hasPayBack }),
-        ...(payback && { payback }),
-      })
-      .then((orderId) => {
-        emptyCart();
-        router.push(`/order/${orderId}`);
-      })
-      .catch((_error) => {
-        throw new Error("erro ao cadastrar pedido");
-      });
   };
 
   useEffect(() => {
