@@ -9,6 +9,7 @@ import {
   DrawerHeader,
   DrawerOverlay,
   useDisclosure,
+  useMediaQuery,
   VStack,
 } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
@@ -27,10 +28,9 @@ type Props = {
 };
 
 export default function BuyMoreOrFinish({ children, orderItem }: Props) {
+  const [isDesktop] = useMediaQuery("(min-width: 720px)");
   const [mounted, setMounted] = useState(false);
-
   const { isOpen, onOpen, onClose } = useDisclosure();
-
   const router = useRouter();
 
   const { addItem } = useShoppingCart();
@@ -65,9 +65,13 @@ export default function BuyMoreOrFinish({ children, orderItem }: Props) {
           >
             {children}
           </Button>
-          <Drawer placement="bottom" onClose={onClose} isOpen={isOpen}>
+          <Drawer
+            placement={isDesktop ? "top" : "bottom"}
+            onClose={onClose}
+            isOpen={isOpen}
+          >
             <DrawerOverlay />
-            <DrawerContent>
+            <DrawerContent className="w-full sm:w-96 mx-auto">
               <DrawerCloseButton />
               <DrawerHeader className="border-b-2 border-gray-300">
                 Item adicionado ao carrinho
