@@ -31,7 +31,7 @@ export default function ItemCartCard({ itemCart }: Props) {
   return (
     <>
       {mounted && (
-        <Card className="w-full shadow-lg  border border-gray-400">
+        <Card className="w-full shadow-lg  border border-gray-400 bg-white">
           <CardBody>
             <VStack className="items-start">
               <HStack className="w-full justify-between">

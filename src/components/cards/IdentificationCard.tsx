@@ -16,7 +16,7 @@ export default function IdentificationCard() {
       {!mounted && <IdentificationCardSkeleton />}
       {mounted && (
         <Card
-          className="m-4 shadow-lg border border-gray-400"
+          className="m-4 shadow-lg border border-gray-400 bg-white"
           variant="outline"
         >
           <CardBody>

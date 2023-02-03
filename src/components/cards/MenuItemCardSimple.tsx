@@ -21,7 +21,7 @@ export default function MenuItemCardSimple({ menuItem }: Props) {
       {mounted && (
         <Card
           variant="outline"
-          className="mt-4 shadow-lg border border-gray-400"
+          className="mt-4 shadow-lg border border-gray-400 bg-white"
         >
           <CardBody>
             <Heading size="md" className="font-medium">
