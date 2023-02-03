@@ -1,9 +1,8 @@
 "use client";
 
-import { Box, Heading, HStack, Text, Textarea, VStack } from "@chakra-ui/react";
+import { Box, Text, Textarea, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import BackPageBtn from "src/components/buttons/BackPageBtn";
 import MenuItemCardSimple from "src/components/cards/MenuItemCardSimple";
 import ListPizzas from "src/components/selects/ListPizzas";
 import WholeOrHalfPizzaOption from "src/components/switchs/WholeOrHalfPizzaOption";
@@ -48,12 +47,8 @@ export default function MenuItem({ params }: Params) {
   return (
     <>
       {mounted && (
-        <VStack className="mb-20 items-start space-y-4">
+        <VStack className="items-start space-y-4">
           {/* Name and back page btn  ----------------> */}
-          <HStack className="w-full sticky top-0 z-10 border-b-2 bg-white border-gray-300 p-4">
-            <BackPageBtn />
-            <Heading size="lg">Detalhes do item</Heading>
-          </HStack>
 
           <Box className="w-full space-y-4 px-4">
             {/* Name and ingredients  ----------------> */}

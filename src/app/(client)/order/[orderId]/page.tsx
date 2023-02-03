@@ -1,11 +1,10 @@
 "use client";
 
-import { Box, Heading, HStack, Text, VStack } from "@chakra-ui/react";
+import { Box, Text, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { notFound } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import BackPageBtn from "@/components/buttons/BackPageBtn";
 import OrderCard from "@/components/cards/OrderItemCard";
 import OrderStatusStepper from "@/components/stepper/OrderStatusStepper";
 import Beam from "@/services/Beam";
@@ -49,12 +48,7 @@ export default function OrderPage({ params }: Props) {
   return (
     <>
       {mounted && (
-        <VStack className="mb-20 items-start ">
-          <HStack className="sticky top-0 z-10 w-full border-b-2 bg-white p-4">
-            <BackPageBtn />
-            <Heading size="lg">Detalhes do pedido</Heading>
-          </HStack>
-
+        <VStack className="items-start ">
           <VStack className="mb-8 w-full space-y-8">
             {/* STATUS BLOCK */}
             <Box className="w-full space-y-2 px-4">

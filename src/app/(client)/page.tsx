@@ -11,13 +11,5 @@ export default function Home() {
     setMounted(true);
   }, []);
 
-  return (
-    <>
-      {mounted && (
-        <VStack className="min-h-screen w-full bg-black py-20">
-          <MenuTab />
-        </VStack>
-      )}
-    </>
-  );
+  return <>{mounted && <MenuTab />}</>;
 }

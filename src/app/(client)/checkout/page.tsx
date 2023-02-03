@@ -1,20 +1,11 @@
 "use client";
 
-import {
-  Box,
-  Button,
-  Heading,
-  HStack,
-  Text,
-  useToast,
-  VStack,
-} from "@chakra-ui/react";
+import { Box, Button, HStack, Text, useToast, VStack } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Address from "src/components/blocks/address/Address";
 import Identification from "src/components/blocks/identification/Identification";
 import Payment from "src/components/blocks/payment/Payment";
-import BackPageBtn from "src/components/buttons/BackPageBtn";
 import useAddressesState from "src/store/checkout/useAddresses";
 import useIdentificationState from "src/store/checkout/useIdentification";
 import usePaymentState from "src/store/checkout/usePayment";
@@ -83,12 +74,7 @@ export default function Checkout() {
   return (
     <>
       {mounted && (
-        <VStack className="mb-20 items-start">
-          <HStack className="sticky top-0 z-10 w-full border-b-2 border-gray-300 bg-white p-4">
-            <BackPageBtn />
-            <Heading size="lg">Finalizar pedido</Heading>
-          </HStack>
-
+        <VStack className="items-start">
           <Identification />
           <Address />
 

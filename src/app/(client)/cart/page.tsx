@@ -1,9 +1,8 @@
 "use client";
 
-import { Box, Button, Heading, HStack, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, HStack, Text, VStack } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import BackPageBtn from "src/components/buttons/BackPageBtn";
 import ItemCartCard from "src/components/cards/ItemCartCard";
 import useShoppingCart from "src/store/useShoppingCart";
 import { v4 as uuid } from "uuid";
@@ -26,12 +25,7 @@ export default function ShoppingCart() {
   return (
     <>
       {mounted && (
-        <VStack className="items-start space-y-4 mb-20">
-          <HStack className="p-4 border-b-2 w-full border-gray-300 bg-white">
-            <BackPageBtn />
-            <Heading size="lg">Detalhes do pedido</Heading>
-          </HStack>
-
+        <VStack className="items-start space-y-4">
           {/* Cart items list ------------> */}
           <VStack className="w-full space-y-4 px-4">
             {items?.map((itemCart) => (
@@ -39,7 +33,7 @@ export default function ShoppingCart() {
             ))}
           </VStack>
 
-          <Box className="w-full p-4 bg-white">
+          <Box className="w-full bg-white p-4">
             <HStack className="justify-between">
               <Text className="text-xl font-semibold">
                 Total: R$ {formatCurrency(getTotalCart())}

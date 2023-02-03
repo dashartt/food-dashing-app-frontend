@@ -2,13 +2,13 @@
 
 "use client";
 
-import { Button, Heading, HStack, Text, VStack } from "@chakra-ui/react";
+import { Button, SimpleGrid, Text, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-import BackPageBtn from "@/components/buttons/BackPageBtn";
 import OrderCard from "@/components/cards/OrderItemCard";
+import PageTitleHeader from "@/components/header/PageTitleHeader";
 import useIdentificationState from "@/store/checkout/useIdentification";
 
 import * as api from "../../../services/api";
@@ -29,13 +29,13 @@ export default function History() {
   return (
     <>
       {mounted && (
-        <VStack className="mb-20 items-start space-y-4">
-          <HStack className="w-full border-b-2 border-gray-300 bg-white p-4">
-            <BackPageBtn />
-            <Heading size="lg">Histórico de pedidos</Heading>
-          </HStack>
-
-          <VStack className="w-full space-y-4 p-4">
+        <VStack className="items-start space-y-4 ">
+          <PageTitleHeader isResponsive className="" />
+          <SimpleGrid
+            columns={{ base: 1, md: 2, xl: 3, "2xl": 4 }}
+            spacing={10}
+            className="mx-auto max-w-fit"
+          >
             {data && data.length > 0 ? (
               data?.map((order) => (
                 <OrderCard key={order._id} order={order} date />
@@ -50,7 +50,7 @@ export default function History() {
                 </Link>
               </VStack>
             )}
-          </VStack>
+          </SimpleGrid>
         </VStack>
       )}
     </>

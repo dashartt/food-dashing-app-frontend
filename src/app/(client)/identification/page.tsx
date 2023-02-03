@@ -3,7 +3,6 @@
 import {
   Box,
   Button,
-  Heading,
   HStack,
   IconButton,
   Text,
@@ -15,7 +14,6 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { BiEditAlt } from "react-icons/bi";
 import { RiCloseLine } from "react-icons/ri";
-import BackPageBtn from "src/components/buttons/BackPageBtn";
 import IdentificationForm from "src/components/forms/IdentificationForm";
 import useAddressesState from "src/store/checkout/useAddresses";
 
@@ -69,13 +67,8 @@ export default function Identification() {
     <>
       {mounted && (
         <VStack className="items-start">
-          <HStack className="w-full border-b-2 border-gray-300 bg-white p-4">
-            <BackPageBtn />
-            <Heading size="lg">Perfil</Heading>
-          </HStack>
-
           <Box className="w-full">
-            <Text className="text-xl p-4 font-semibold">Identificação</Text>
+            <Text className="p-4 text-xl font-semibold">Identificação</Text>
             <Box className="mx-4 space-y-4">
               <IdentificationForm />
             </Box>
@@ -98,7 +91,7 @@ export default function Identification() {
                 addresses.map((address_) => (
                   <HStack
                     key={address_?._id}
-                    className="border border-gray-400 justify-between p-2 rounded-md"
+                    className="justify-between rounded-md border border-gray-400 p-2"
                   >
                     <Text key={address_._id}>
                       {`${address_.addressName} - ${address_.addressNumber} ${address_?.complement}`}
@@ -107,7 +100,7 @@ export default function Identification() {
                     </Text>
                     <HStack className="space-x-2">
                       <Link
-                        className="bg-transparent border border-gray-300 p-[0.55rem] rounded-md"
+                        className="rounded-md border border-gray-300 bg-transparent p-[0.55rem]"
                         href={{
                           pathname: "/address",
                           query: { addressId: address_._id },
@@ -116,7 +109,7 @@ export default function Identification() {
                         <BiEditAlt className="text-xl" />
                       </Link>
                       <IconButton
-                        className="bg-transparent border border-gray-300"
+                        className="border border-gray-300 bg-transparent"
                         aria-label="Excluir endereço"
                         onClick={() => onRemoveAddress(address_._id || "")}
                         icon={<RiCloseLine className="text-xl" />}

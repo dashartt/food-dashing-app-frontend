@@ -180,7 +180,12 @@ export default function SimpleSidebar({ children }: { children: ReactNode }) {
       </Drawer>
       {/* mobilenav */}
       <MobileNav display={{ base: "flex", lg: "none" }} onOpen={onOpen} />
-      <Box ml={{ base: 0, lg: 60 }}>{children}</Box>
+      <Box ml={{ base: 0, lg: 72 }} className="bg-gray-200 min-h-full pb-10">
+        <PageTitleHeader isDefault isResponsive />
+        <Box className="max-w-md md:max-w-lg mx-auto lg:mx-20 mt-10 bg-white p-4 rounded-md border border-gray-300 min-h-full">
+          {children}
+        </Box>
+      </Box>
     </Box>
   );
 }

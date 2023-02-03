@@ -13,8 +13,8 @@ export default function Menu() {
   return (
     <>
       {mounted && (
-        <Tabs isFitted className="w-full md:min-w-[32rem] max-w-lg">
-          <TabList className="bg-black font-bold sticky top-20 lg:top-0 z-10 pb-3 md:pb-6 border-none">
+        <Tabs isFitted className="w-full ">
+          <TabList className="bg-black font-bold sticky top-[4.7rem]  z-10 pb-3 md:pb-6 border-none">
             <Tab
               color="gray.400"
               _selected={{
@@ -54,16 +54,16 @@ export default function Menu() {
           </TabList>
 
           <TabPanels>
-            <TabPanel className="md:m-0 md:p-0 overflow-y-scroll max-h-[85vh]">
+            <TabPanel className=" overflow-y-auto max-h-[85vh] bg-black">
               <MenuItemList category="salty pizza" />
             </TabPanel>
-            <TabPanel className="md:m-0 md:p-0">
+            <TabPanel className=" overflow-y-auto max-h-[85vh] bg-black">
               <MenuItemList category="sweet pizza" />
             </TabPanel>
-            <TabPanel className="md:m-0 md:p-0">
+            <TabPanel className=" overflow-y-auto max-h-[85vh] bg-black">
               <MenuItemList category="arabic snack" />
             </TabPanel>
-            <TabPanel className="md:m-0 md:p-0">
+            <TabPanel className=" overflow-y-auto max-h-[85vh] bg-black">
               <MenuItemList category="drinks" />
             </TabPanel>
           </TabPanels>
