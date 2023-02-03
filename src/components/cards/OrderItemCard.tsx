@@ -1,4 +1,5 @@
 import { Box, Card, CardBody, HStack, Text, VStack } from "@chakra-ui/react";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
 
@@ -28,8 +29,8 @@ export default function OrderCard({
   return (
     <>
       {mounted && (
-        <Box className="bg-white h-fit rounded-md max-w-fit">
-          <Card className="border border-gray-400 shadow-lg">
+        <Link href={`/order/${order._id}`}>
+          <Card className="h-fit max-w-fit rounded-md border border-gray-400 bg-white shadow-lg">
             <CardBody className="m-0">
               <Box>
                 {/*  ITEMS  --------------------------> */}
@@ -107,8 +108,8 @@ export default function OrderCard({
               </Box>
             </CardBody>
           </Card>
-        </Box>
-      )}{" "}
+        </Link>
+      )}
     </>
   );
 }
