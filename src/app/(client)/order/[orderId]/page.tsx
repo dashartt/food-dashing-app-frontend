@@ -32,7 +32,7 @@ export default function OrderPage({ params }: Props) {
     setMounted(true);
 
     Pusher.subscribe("client");
-    Beam.subscribe("update-order-status");
+    // Beam.subscribe("update-order-status");
 
     Pusher.onEvent("update-order-status", (status: string) =>
       setOrder((state) => (state ? { ...state, status } : state))
