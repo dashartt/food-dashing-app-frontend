@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 
 import OrderCard from "@/components/cards/OrderItemCard";
 import OrderStatusStepper from "@/components/stepper/OrderStatusStepper";
-import Beam from "@/services/Beam";
+// import Beam from "@/services/Beam";
 import Pusher from "@/services/Pusher";
 import type { IAdminOrder } from "@/types";
 
