@@ -59,7 +59,7 @@ export default function PizzariaInformation() {
             </Text>
             <Box className="space-y-4 rounded-md border border-gray-400 p-4">
               <Text>
-                De terça-feira à domingo <br />A partir as 19h00 até 23h30
+                De terça-feira à domingo <br />A partir de 19h00 até 23h30
               </Text>
               <Text>Obs: segunda-feira não abre</Text>
             </Box>

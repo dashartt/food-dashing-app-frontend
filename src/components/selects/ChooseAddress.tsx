@@ -12,19 +12,22 @@ export default function ListAddress() {
 
   useEffect(() => setMounted(true), []);
 
-  // if (addresses.length === 0) return null;
+  const placeholderText =
+    addresses.length === 0
+      ? "Nenhum endereço cadastrado"
+      : "Selecione algum endereço";
+
   return (
     <>
       {!mounted && <LoadingSimple />}
       {mounted && (
         <Select
           className="border border-gray-400"
-          placeholder=""
           onChange={({ target }) => setAddress(target.value)}
           value={address?._id}
         >
           <option value="" className="hidden">
-            Selecione algum endereço
+            {placeholderText}
           </option>
           {addresses?.map((address_) => (
             <option key={address_._id} value={address_._id}>

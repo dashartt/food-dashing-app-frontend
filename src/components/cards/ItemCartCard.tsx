@@ -49,7 +49,9 @@ export default function ItemCartCard({ itemCart }: Props) {
                   onClick={() => removeItem(itemCart)}
                   size="sm"
                   aria-label="Remover item do pedido"
-                  icon={<RiCloseLine className="text-2xl text-red-500" />}
+                  icon={
+                    <RiCloseLine className="text-2xl text-red-500 bg-transparent" />
+                  }
                 />
               </HStack>
               <HStack>
