@@ -30,7 +30,7 @@ export default function OrderCard({
     <>
       {mounted && (
         <Link href={`/order/${order._id}`}>
-          <Card className="h-fit max-w-fit rounded-md border border-gray-400 bg-white shadow-lg">
+          <Card className="h-fit w-full rounded-md border border-gray-400 bg-white shadow-lg">
             <CardBody className="m-0">
               <Box>
                 {/*  ITEMS  --------------------------> */}

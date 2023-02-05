@@ -59,8 +59,8 @@ export default function OrderPage({ params }: Props) {
             </Box>
 
             {/* ORDER SHEET BLOCK */}
-            <Box className="w-full space-y-2 px-4">
-              <Text className="text-xl font-bold">Comanda</Text>
+            <Box className="w-full px-4">
+              <Text className="text-xl font-bold mb-2">Comanda</Text>
               <OrderCard order={order} />
             </Box>
           </VStack>

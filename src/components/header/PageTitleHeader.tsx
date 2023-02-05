@@ -1,4 +1,4 @@
-import { Heading, HStack } from "@chakra-ui/react";
+import { HStack, Text } from "@chakra-ui/react";
 import { usePathname } from "next/navigation";
 
 import { setHeaderTitle } from "@/utils";
@@ -28,9 +28,7 @@ export default function PageTitleHeader({
       className={`w-full ${className} ${responsiveStyle} ${defaultStyles}`}
     >
       {path !== "/" && <BackPageBtn />}
-      <Heading size="lg" className="text-black">
-        {title}
-      </Heading>
+      <Text className="text-black font-semibold text-2xl py-0.5">{title}</Text>
     </HStack>
   );
 }
