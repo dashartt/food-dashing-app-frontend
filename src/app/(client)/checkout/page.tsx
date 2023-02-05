@@ -28,12 +28,18 @@ export default function Checkout() {
 
   // eslint-disable-next-line @typescript-eslint/naming-convention
   const { name, phone, _id } = useIdentificationState();
-  const { address } = useAddressesState();
+  const { address, addresses } = useAddressesState();
   const { paymentType, hasPayBack, payback } = usePaymentState();
   const { items, emptyCart } = useShoppingCart();
 
   const onConfirmPurchase = async () => {
-    if (!address || !paymentType || (hasPayBack && payback === 0)) {
+    if (
+      !address ||
+      addresses.length === 0 ||
+      !paymentType ||
+      (hasPayBack && payback === 0) ||
+      items.length === 0
+    ) {
       toast({
         title: "Faltam informações",
         description: "Informe os dados necessários para confirmar o pedido ",
@@ -68,6 +74,9 @@ export default function Checkout() {
     setMounted(true);
     if (!name && !phone) {
       router.push("/identification");
+    }
+    if (items.length === 0) {
+      router.push("/");
     }
   }, []);
 
