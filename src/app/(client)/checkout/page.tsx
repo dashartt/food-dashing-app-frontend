@@ -42,9 +42,10 @@ export default function Checkout() {
     ) {
       toast({
         title: "Faltam informações",
-        description: "Informe os dados necessários para confirmar o pedido ",
+        description: "Confirme se escolheu o endereço e forma de pagamento",
         position: "top",
         isClosable: true,
+        variant: "solid",
       });
     } else {
       await api
