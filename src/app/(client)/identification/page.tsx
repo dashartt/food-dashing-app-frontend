@@ -34,13 +34,23 @@ export default function Identification() {
   };
 
   const onConfirmRegistration = async () => {
-    if (!name || !phone || addresses.length === 0) {
+    if (phone.length !== 11) {
+      toast({
+        title: "Revise o celular",
+        description:
+          "Informação incompleta, inclua o DDD, 9º digito e seu numero corretamente",
+        status: "info",
+        variant: "solid",
+        isClosable: true,
+        position: "top",
+      });
+    } else if (!name || !phone || addresses.length === 0) {
       toast({
         title: "Faltam informações",
         description:
           "Preencha todas as informações: nome, celular e adicione 1 endereço",
         status: "info",
-        duration: 9000,
+        variant: "solid",
         isClosable: true,
         position: "top",
       });
