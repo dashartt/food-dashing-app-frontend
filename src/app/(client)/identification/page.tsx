@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+
 "use client";
 
 import {
@@ -21,6 +23,7 @@ import SignMessage from "@/components/box-message/SignMessage";
 
 import * as api from "../../../services/api";
 import useIdentificationState from "../../../store/checkout/useIdentification";
+import * as utils from "../../../utils";
 
 export default function Identification() {
   const [mounted, setMounted] = useState(false);
@@ -52,10 +55,7 @@ export default function Identification() {
         title: "Faltam informações",
         description:
           "Preencha todas as informações: nome, celular e adicione 1 endereço",
-        status: "info",
-        variant: "solid",
-        isClosable: true,
-        position: "top",
+        ...utils.toastOptions,
       });
     } else {
       const clientId = await api.addClient({

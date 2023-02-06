@@ -1,3 +1,4 @@
+import type { ToastPosition } from "@chakra-ui/react";
 import moment from "moment";
 
 export const setHeaderTitle = (path: string) => {
@@ -68,3 +69,9 @@ export const formatCurrency = (value: number) =>
   });
 
 export const formatDate = (value: string) => moment(value).format("DD/MM/YY");
+
+export const toastOptions = {
+  variant: "solid",
+  isClosable: true,
+  position: "top" as ToastPosition,
+};

@@ -17,6 +17,7 @@ import useApplyDeliveryFee from "@/store/useApplyDeliveryFee";
 import { formatCurrency } from "@/utils";
 
 import * as api from "../../../services/api";
+import * as utils from "../../../utils";
 
 export default function Checkout() {
   const [mounted, setMounted] = useState(false);
@@ -43,9 +44,7 @@ export default function Checkout() {
       toast({
         title: "Faltam informações",
         description: "Confirme se escolheu o endereço e forma de pagamento",
-        position: "top",
-        isClosable: true,
-        variant: "solid",
+        ...utils.toastOptions,
       });
     } else {
       await api
