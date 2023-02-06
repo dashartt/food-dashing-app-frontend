@@ -1,26 +1,26 @@
 import type { PropsWithChildren } from "react";
 
-import CustomChakraProvider from "./CustomChakraProvider";
-import CustomReactQuery from "./CustomReactQuery";
+import ChakraProvider from "./ChakraProvider";
+import ReactQueryProvider from "./ReactQueryProvider";
 import SessionProvider from "./SessionProvider";
 
 type Props = {
   withSession?: boolean;
 };
 
-export default function ProviderAIO({
+export default function AllInOneProvider({
   children,
   withSession = false,
 }: PropsWithChildren<Props>) {
   return (
-    <CustomChakraProvider>
-      <CustomReactQuery>
+    <ChakraProvider>
+      <ReactQueryProvider>
         {withSession ? (
           <SessionProvider> {children}</SessionProvider>
         ) : (
           children
         )}
-      </CustomReactQuery>
-    </CustomChakraProvider>
+      </ReactQueryProvider>
+    </ChakraProvider>
   );
 }
