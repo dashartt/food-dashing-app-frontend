@@ -3,7 +3,7 @@ import "../../styles/global.css";
 import type { PropsWithChildren } from "react";
 
 import Container from "@/components/helper/Container";
-import Menu from "@/components/menu/client/Menu";
+import LayoutSidebarMenu from "@/components/layouts/LayoutSidebarMenu";
 import ProviderAIO from "@/components/providers/ProviderAIO";
 
 export default function RootLayout({ children }: PropsWithChildren) {
@@ -13,7 +13,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
       <body id="__next">
         <ProviderAIO>
           <Container className="bg-black">
-            <Menu>{children}</Menu>
+            <LayoutSidebarMenu>{children}</LayoutSidebarMenu>
           </Container>
         </ProviderAIO>
       </body>
