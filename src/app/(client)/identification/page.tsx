@@ -17,6 +17,8 @@ import { RiCloseLine } from "react-icons/ri";
 import IdentificationForm from "src/components/forms/IdentificationForm";
 import useAddressesState from "src/store/checkout/useAddresses";
 
+import SignMessage from "@/components/box-message/SignMessage";
+
 import * as api from "../../../services/api";
 import useIdentificationState from "../../../store/checkout/useIdentification";
 
@@ -24,27 +26,28 @@ export default function Identification() {
   const [mounted, setMounted] = useState(false);
 
   const toast = useToast();
-  const { name, phone, setId } = useIdentificationState();
+  const { name, phone, setId, _id } = useIdentificationState();
   const { addresses, removeAddress } = useAddressesState();
   const router = useRouter();
 
-  const onRemoveAddress = async (_id: string) => {
-    removeAddress(_id);
-    await api.removeAddress(_id);
+  const onRemoveAddress = async (_id_: string) => {
+    removeAddress(_id_);
+    await api.removeAddress(_id_);
   };
 
   const onConfirmRegistration = async () => {
-    if (phone.length !== 11) {
-      toast({
-        title: "Revise o celular",
-        description:
-          "Informação incompleta, inclua o DDD, 9º digito e seu numero corretamente",
-        status: "info",
-        variant: "solid",
-        isClosable: true,
-        position: "top",
-      });
-    } else if (!name || !phone || addresses.length === 0) {
+    // if (phone.length !== 11) {
+    //   toast({
+    //     title: "Revise o celular",
+    //     description:
+    //       "Informação incompleta, inclua o DDD, 9º digito e seu numero corretamente",
+    //     status: "info",
+    //     variant: "solid",
+    //     isClosable: true,
+    //     position: "top",
+    //   });
+    // }
+    if (!name || !phone || addresses.length === 0) {
       toast({
         title: "Faltam informações",
         description:
@@ -72,6 +75,8 @@ export default function Identification() {
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  if (_id === "") return <SignMessage />;
 
   return (
     <>

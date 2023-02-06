@@ -3,12 +3,13 @@ import { createJSONStorage, persist } from "zustand/middleware";
 
 interface ISession {
   token: string;
+  role: string;
   fullName: string;
 }
 
 interface SessionState {
   session: ISession | null;
-  setSession: (session: ISession) => void;
+  setSession: (session: ISession | null) => void;
   clearSession: () => void;
 
   path: string;
@@ -19,8 +20,7 @@ const useSessionState = create<SessionState>()(
   persist(
     (set) => ({
       session: null,
-      setSession: ({ fullName, token }) =>
-        set((state) => ({ ...state, session: { fullName, token } })),
+      setSession: (session) => set((state) => ({ ...state, session })),
       clearSession: () => set((state) => ({ ...state, session: null })),
 
       path: "",
