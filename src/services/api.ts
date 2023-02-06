@@ -47,6 +47,57 @@ export const getMenuItemsByCategory = async (category: string) => {
   return data as IMenuItem[];
 };
 
+export const signup = async ({
+  fullName,
+  phone,
+  password,
+  role = "client",
+}: {
+  fullName: string;
+  password: string;
+  phone: string;
+  role?: string;
+}) => {
+  const response = await fetch(`${SERVER_URL}/account/signup`, {
+    headers: { "Content-Type": "application/json" },
+    method: "POST",
+    body: JSON.stringify({ fullName, password, phone, role }),
+  });
+
+  if (!response.ok) return null;
+
+  const account = (await response.json()) as { accountId: string };
+
+  return account.accountId;
+};
+
+export const signin = async ({
+  phone,
+  password,
+}: {
+  password: string;
+  phone: string;
+}) => {
+  const response = await fetch(`${SERVER_URL}/account/signin`, {
+    headers: { "Content-Type": "application/json" },
+    method: "POST",
+    body: JSON.stringify({ password, phone }),
+  });
+
+  if (!response.ok) return null;
+
+  const data = (await response.json()) as {
+    isSucess: boolean;
+    message: string;
+    data: {
+      fullName: string;
+      token: string;
+      role: string;
+    };
+  };
+  return data;
+};
+
 export const addClient = async (clientDTO: IClient) => {
   const response = await fetch(`${SERVER_URL}/client`, {
     headers: { "Content-Type": "application/json" },
