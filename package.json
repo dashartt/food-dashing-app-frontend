@@ -28,6 +28,7 @@
     "@tailwindcss/line-clamp": "^0.4.2",
     "@tanstack/react-query": "^4.22.0",
     "chakra-ui-steps": "^2.0.1",
+    "cookies-next": "^2.1.1",
     "framer-motion": "^8.2.4",
     "moment": "^2.29.4",
     "next": "^13.1.1",
