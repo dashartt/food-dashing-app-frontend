@@ -5,7 +5,7 @@ import SignInForm from "../forms/SignInForm";
 import SignUpForm from "../forms/SignUpForm";
 
 export default function SignTabs() {
-  const [tabIndex, setTabIndex] = useState(0);
+  const [tabIndex, setTabIndex] = useState(1);
 
   const handleTabsChange = (index: number) => {
     setTabIndex(index);

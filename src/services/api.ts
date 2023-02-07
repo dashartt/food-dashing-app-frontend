@@ -1,7 +1,7 @@
 import type {
+  IAccount,
   IAddress,
   IAdminOrder,
-  IClient,
   IMenu,
   IMenuItem,
   IOrder,
@@ -84,32 +84,18 @@ export const signin = async ({
     body: JSON.stringify({ password, phone }),
   });
 
-  if (!response.ok) return null;
-
-  const data = (await response.json()) as {
-    isSucess: boolean;
-    message: string;
-    data: {
-      fullName: string;
-      token: string;
-      role: string;
-    };
-  };
+  const data = await response.json();
   return data;
 };
 
-export const addClient = async (clientDTO: IClient) => {
-  const response = await fetch(`${SERVER_URL}/client`, {
+export const updateClientAccount = async (
+  clientDTO: Omit<IAccount, "password" | "role">
+) => {
+  await fetch(`${SERVER_URL}/account`, {
     headers: { "Content-Type": "application/json" },
-    method: "POST",
+    method: "PUT",
     body: JSON.stringify(clientDTO),
   });
-
-  if (!response.ok) return null;
-
-  const client = (await response.json()) as { clientId: string };
-
-  return client.clientId;
 };
 
 export const addAddress = async (addressDTO: IAddress) => {
@@ -250,8 +236,6 @@ export const verifyAuth = async ({ token }: { token: string }) => {
     },
     method: "GET",
   });
-
-  if (!response.ok) return null;
 
   const session = await response.json();
   return session;

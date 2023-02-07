@@ -7,6 +7,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { setCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import InputMask from "react-input-mask";
@@ -47,13 +48,26 @@ export default function SignInForm() {
 
   const onSubmit = (signupValues: SignupValues) => {
     api
-      .signin(signupValues)
+      .signin({
+        password: signupValues.password,
+        phone: signupValues.phone.replace(/[^\d]/g, ""),
+      })
       .then((data) => {
-        setSession(data?.data || null);
-        const role = data?.data.role;
-        const redirectByRole = role === "client" ? "/" : "/admin/orders/to-do";
-        const isPathEmpty = path === "";
-        router.push(isPathEmpty ? redirectByRole : path);
+        if (!data.isSuccess) {
+          toast({
+            title: "Ops, ocorreu algum erro",
+            description: data?.message,
+            ...utils.toastOptions,
+          });
+        } else {
+          setSession(data?.data?.session || null);
+          setCookie("token", data?.data.token);
+          const role = data?.data.session.role;
+          const redirectByRole =
+            role === "client" ? "/" : "/admin/orders/to-do";
+          const isPathEmpty = path === "";
+          router.push(isPathEmpty ? redirectByRole : path);
+        }
       })
       .catch((error) =>
         toast({

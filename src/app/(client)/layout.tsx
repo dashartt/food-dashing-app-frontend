@@ -11,6 +11,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
     <html lang="en">
       <head />
       <body id="__next">
+        {/* @ts-expect-error Server Component */}
         <AllInOneProvider>
           <Container className="bg-black">
             <LayoutSidebarMenu>{children}</LayoutSidebarMenu>

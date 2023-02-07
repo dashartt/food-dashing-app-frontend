@@ -7,13 +7,13 @@ import Address from "src/components/blocks/address/Address";
 import Identification from "src/components/blocks/identification/Identification";
 import Payment from "src/components/blocks/payment/Payment";
 import useAddressesState from "src/store/checkout/useAddresses";
-import useIdentificationState from "src/store/checkout/useIdentification";
 import usePaymentState from "src/store/checkout/usePayment";
 import useShoppingCart from "src/store/useShoppingCart";
 import type { IOrderItem } from "src/types";
 
 import DeliveryOrPickup from "@/components/switchs/DeliveryOrPickup";
 import useApplyDeliveryFee from "@/store/useApplyDeliveryFee";
+import useSessionState from "@/store/useSession";
 import { formatCurrency } from "@/utils";
 
 import * as api from "../../../services/api";
@@ -28,7 +28,7 @@ export default function Checkout() {
   const router = useRouter();
 
   // eslint-disable-next-line @typescript-eslint/naming-convention
-  const { name, phone, _id } = useIdentificationState();
+  const { session } = useSessionState();
   const { address, addresses } = useAddressesState();
   const { paymentType, hasPayBack, payback } = usePaymentState();
   const { items, emptyCart } = useShoppingCart();
@@ -49,7 +49,7 @@ export default function Checkout() {
     } else {
       await api
         .addOrder({
-          clientId: _id,
+          clientId: session?._id || "",
           addressId: address?._id || "",
           items: items.map((item_) => ({
             itemIds: item_.item.map((item__) => item__?._id),
@@ -72,12 +72,8 @@ export default function Checkout() {
 
   useEffect(() => {
     setMounted(true);
-    if (!name && !phone) {
-      router.push("/identification");
-    }
-    if (items.length === 0) {
-      router.push("/");
-    }
+
+    if (items.length === 0) router.push("/");
   }, []);
 
   return (

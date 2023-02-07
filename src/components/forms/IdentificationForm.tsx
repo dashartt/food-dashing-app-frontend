@@ -2,12 +2,11 @@ import { FormControl, FormLabel, Input } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import InputMask from "react-input-mask";
 
-import useIdentification from "../../store/checkout/useIdentification";
+import useSessionState from "@/store/useSession";
 
 export default function IdentificationForm() {
   const [mounted, setMounted] = useState(false);
-
-  const { setName, setPhone, name, phone } = useIdentification();
+  const { session, setSession } = useSessionState();
 
   useEffect(() => {
     setMounted(true);
@@ -20,8 +19,13 @@ export default function IdentificationForm() {
           <FormControl>
             <FormLabel htmlFor="fullName">Nome completo</FormLabel>
             <Input
-              value={name}
-              onChange={({ target }) => setName(target.value)}
+              value={session?.fullName}
+              onChange={({ target }) =>
+                setSession({
+                  ...session!,
+                  fullName: target.value || "",
+                })
+              }
               className="border border-gray-400 bg-gray-100"
               id="fullName"
             />
@@ -32,8 +36,13 @@ export default function IdentificationForm() {
             <Input
               as={InputMask}
               mask="(99) 99999-9999"
-              value={phone}
-              onChange={({ target }) => setPhone(target.value)}
+              value={session?.phone}
+              onChange={({ target }) =>
+                setSession({
+                  ...session!,
+                  phone: target.value || "",
+                })
+              }
               className="border border-gray-400 bg-gray-100"
               id="phone"
             />

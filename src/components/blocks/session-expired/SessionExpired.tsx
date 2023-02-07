@@ -1,26 +1,28 @@
-import { Box, Button, Text, VStack } from "@chakra-ui/react";
+"use client";
+
+import { Button, Text, VStack } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 
 export default function SessionExpired() {
   const router = useRouter();
 
   return (
-    <VStack className="m-4 rounded-md border border-gray-400 bg-white p-4 shadow-lg w-fit max-w-sm mx-auto">
-      <Box className="m-10 space-y-10">
+    <VStack className="bg-[#637eab] h-screen w-full">
+      <VStack className="items-start m-10 space-y-10 bg-white p-10 max-w-md rounded-md">
         <Text className="text-2xl underline underline-offset-4 font-semibold">
-          Sessão expirou
+          É necessário se auntenticar
         </Text>
         <Text className="text-xl text-justify">
-          É necessário se autenticar novamente para ter acesso ao sistema de
-          administração
+          Para continuar com seu acesso, clique no botão abaixo e entre com sua
+          conta
         </Text>
         <Button
-          className="w-full bg-gray-800 text-white"
+          className="bg-blue-500 text-white self-end"
           onClick={() => router.push("/auth")}
         >
-          Autenticar-se
+          Entrar
         </Button>
-      </Box>
+      </VStack>
     </VStack>
   );
 }

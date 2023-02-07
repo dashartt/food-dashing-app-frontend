@@ -19,17 +19,18 @@ import { RiCloseLine } from "react-icons/ri";
 import IdentificationForm from "src/components/forms/IdentificationForm";
 import useAddressesState from "src/store/checkout/useAddresses";
 
-import SignMessage from "@/components/box-message/SignMessage";
+import useSessionState from "@/store/useSession";
 
 import * as api from "../../../services/api";
-import useIdentificationState from "../../../store/checkout/useIdentification";
+// import useIdentificationState from "../../../store/checkout/useIdentification";
 import * as utils from "../../../utils";
 
 export default function Identification() {
   const [mounted, setMounted] = useState(false);
 
   const toast = useToast();
-  const { name, phone, setId, _id } = useIdentificationState();
+  // const { name, phone, setId,} = useIdentificationState();
+  const { session } = useSessionState();
   const { addresses, removeAddress } = useAddressesState();
   const router = useRouter();
 
@@ -39,18 +40,7 @@ export default function Identification() {
   };
 
   const onConfirmRegistration = async () => {
-    // if (phone.length !== 11) {
-    //   toast({
-    //     title: "Revise o celular",
-    //     description:
-    //       "Informação incompleta, inclua o DDD, 9º digito e seu numero corretamente",
-    //     status: "info",
-    //     variant: "solid",
-    //     isClosable: true,
-    //     position: "top",
-    //   });
-    // }
-    if (!name || !phone || addresses.length === 0) {
+    if (!session?.fullName || !session.phone || addresses.length === 0) {
       toast({
         title: "Faltam informações",
         description:
@@ -58,25 +48,18 @@ export default function Identification() {
         ...utils.toastOptions,
       });
     } else {
-      const clientId = await api.addClient({
+      await api.updateClientAccount({
         addressesId: addresses.map((address) => address._id || ""),
-        name,
-        phone,
+        fullName: session.fullName,
+        _id: session._id || "",
+        phone: session.phone.replace(/[^\d]/g, ""),
       });
-      if (clientId) {
-        setId(clientId);
-        router.back();
-      } else {
-        throw new Error("erro ao cadastrar usuário e retornar id");
-      }
     }
   };
 
   useEffect(() => {
     setMounted(true);
   }, []);
-
-  if (_id === "") return <SignMessage />;
 
   return (
     <>

@@ -1,13 +1,13 @@
-// IDENTIFICATION TYPE ------------------------>
-export interface IIdentification {
-  name: string;
+export interface ICredentials {
   phone: string;
+  password: string;
 }
 
-// CLIENT TYPE -------------------------------->
-export interface IClient extends IIdentification {
-  clientId?: string;
-  addressesId: string[];
+export interface IAccount extends ICredentials {
+  _id?: ObjectId;
+  fullName: string;
+  role: string;
+  addressesId?: ObjectId[];
 }
 
 // MENU TYPE ---------------------->

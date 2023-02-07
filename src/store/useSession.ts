@@ -4,7 +4,9 @@ import { createJSONStorage, persist } from "zustand/middleware";
 interface ISession {
   token: string;
   role: string;
+  phone: string;
   fullName: string;
+  _id?: string;
 }
 
 interface SessionState {

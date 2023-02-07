@@ -7,22 +7,19 @@ import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { v4 as uuid } from "uuid";
 
-import SignMessage from "@/components/box-message/SignMessage";
 import OrderCard from "@/components/cards/OrderItemCard";
 import OrderCardSkeleton from "@/components/skeletons/OrderCardSkeleton";
-import useIdentificationState from "@/store/checkout/useIdentification";
+import useSessionState from "@/store/useSession";
 
 import * as api from "../../../services/api";
 
 export default function History() {
-  const { _id } = useIdentificationState();
+  const { session } = useSessionState();
 
   const { data, isFetched, isLoading } = useQuery({
     queryKey: ["orders"],
-    queryFn: () => api.getClientOrders(_id),
+    queryFn: () => api.getClientOrders(session?._id || ""),
   });
-
-  if (_id === "") return <SignMessage />;
 
   return (
     <SimpleGrid
