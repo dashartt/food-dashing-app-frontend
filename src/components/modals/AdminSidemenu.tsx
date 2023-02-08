@@ -17,6 +17,7 @@ import {
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
+// import { cookies } from "next/headers";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { BsCardChecklist } from "react-icons/bs";
@@ -24,8 +25,6 @@ import { GiFireBowl, GiHamburgerMenu } from "react-icons/gi";
 import { MdOutlineDeliveryDining } from "react-icons/md";
 import { RiFileList3Line } from "react-icons/ri";
 import { v4 as uuid } from "uuid";
-
-import useSessionState from "@/store/useSession";
 
 const buttonsMap = [
   {
@@ -60,7 +59,10 @@ export default function AdminSidemenu() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter();
 
-  const { clearSession } = useSessionState();
+  const logout = () => {
+    // cookies().delete("token");
+    router.push("/auth");
+  };
 
   useEffect(() => {
     setMounted(true);
@@ -116,10 +118,7 @@ export default function AdminSidemenu() {
                 </VStack>
               </DrawerBody>
               <DrawerFooter className="flex justify-start">
-                <Button
-                  onClick={() => clearSession()}
-                  className="bg-gray-400 px-5"
-                >
+                <Button onClick={logout} className="bg-gray-400 px-5">
                   Sair
                 </Button>
               </DrawerFooter>
