@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 
 import OrdersList from "@/components/blocks/ordersList/AdminOrdersList";
 import * as api from "@/services/api";
-import Beam from "@/services/Beam";
+// import Beam from "@/services/Beam";
 import Pusher from "@/services/Pusher";
 import useOrderState from "@/store/useOrder";
 import type { IAdminOrder } from "@/types";
@@ -44,7 +44,7 @@ export default function AdminOrdersToDo() {
 
     // events and notifications setup ------------
     Pusher.subscribe("admin");
-    Beam.subscribe("new-order");
+    // Beam.subscribe("new-order");
     Pusher.onEvent("new-order", (orderId_: string) => setOrderId(orderId_));
   }, []);
 
