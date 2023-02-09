@@ -9,7 +9,7 @@ import SignMessage from "@/components/messages/SignMessage";
 
 import * as api from "../../services/api";
 import Container from "../helpers/Container";
-import LayoutSidebarMenu from "../layouts/LayoutSidebarMenu";
+import LayoutSidebarMenu from "../layouts/sidebar-menu";
 import LoadingSimple from "../loading/LoadingSimple";
 
 export default function AuthProvider({ children }: PropsWithChildren) {
