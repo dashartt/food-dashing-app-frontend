@@ -1,3 +1,5 @@
+"use client";
+
 import { HStack, Text, VStack } from "@chakra-ui/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -17,12 +19,14 @@ export default function SignMessage() {
         É necessário entrar com sua conta para continuar com o acesso
       </Text>
       <HStack className="self-end">
-        <Link
-          href="/auth"
-          className="rounded-md bg-gray-600 px-4 py-2 text-white"
-        >
-          Criar conta
-        </Link>
+        {!path.includes("admin") && (
+          <Link
+            href="/auth"
+            className="rounded-md bg-gray-600 px-4 py-2 text-white"
+          >
+            Criar conta
+          </Link>
+        )}
         <Link
           href="/auth"
           className="rounded-md bg-blue-600 px-4 py-2 text-white"
