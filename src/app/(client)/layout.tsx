@@ -2,8 +2,6 @@ import "../../styles/global.css";
 
 import type { PropsWithChildren } from "react";
 
-import Container from "@/components/helper/Container";
-import LayoutSidebarMenu from "@/components/layouts/LayoutSidebarMenu";
 import AllInOneProvider from "@/components/providers/AllInOneProvider";
 
 export default function RootLayout({ children }: PropsWithChildren) {
@@ -11,12 +9,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
     <html lang="en">
       <head />
       <body id="__next">
-        {/* @ts-expect-error Server Component */}
-        <AllInOneProvider>
-          <Container className="bg-black">
-            <LayoutSidebarMenu>{children}</LayoutSidebarMenu>
-          </Container>
-        </AllInOneProvider>
+        <AllInOneProvider>{children}</AllInOneProvider>
       </body>
     </html>
   );
