@@ -24,7 +24,7 @@ import { RiFileList3Line } from "react-icons/ri";
 
 import PizzariaInfo from "@/components/blocks/pizzaria-info/PizzariaInfo";
 import PageTitleHeader from "@/components/header/PageTitleHeader";
-import Container from "@/components/helper/Container";
+import Container from "@/components/helpers/Container";
 
 // --- NavItem ---------------------------------------------------------------->
 
