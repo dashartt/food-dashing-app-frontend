@@ -13,14 +13,33 @@ import LayoutSidebarMenu from "../layouts/LayoutSidebarMenu";
 
 export default function AuthProvider({ children }: PropsWithChildren) {
   const router = useRouter();
-  const path = usePathname();
+  const path = usePathname() as string;
+  const token = (getCookie("token") as string) || "";
+  const requiredAuthPaths = [
+    "/checkout",
+    "/address",
+    "/identification",
+    "/history",
+  ];
+  const needAuth = requiredAuthPaths.some((path_) =>
+    new RegExp(path_).test(path)
+  );
+
   const { data } = useQuery({
-    queryKey: ["auth/verify"],
-    queryFn: () =>
-      api.verifyAuth({ token: (getCookie("token") as string) || "" }),
+    queryKey: [`auth/token/${token}`],
+    queryFn: () => api.verifyAuth({ token }),
   });
 
   if (path?.includes("auth") && data?.isSuccess) router.back();
+
+  const renderHandler = () => {
+    const hasAuth = data?.isSuccess;
+
+    if ((needAuth && hasAuth) || !needAuth) {
+      return children;
+    }
+    return <SignMessage />;
+  };
 
   return (
     <>
@@ -28,9 +47,7 @@ export default function AuthProvider({ children }: PropsWithChildren) {
         children
       ) : (
         <Container className="bg-black">
-          <LayoutSidebarMenu>
-            {data?.isSucess ? children : <SignMessage />}
-          </LayoutSidebarMenu>
+          <LayoutSidebarMenu>{renderHandler()}</LayoutSidebarMenu>
         </Container>
       )}
     </>
