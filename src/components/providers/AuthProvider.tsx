@@ -10,6 +10,7 @@ import SignMessage from "@/components/messages/SignMessage";
 import * as api from "../../services/api";
 import Container from "../helpers/Container";
 import LayoutSidebarMenu from "../layouts/LayoutSidebarMenu";
+import LoadingSimple from "../loading/LoadingSimple";
 
 export default function AuthProvider({ children }: PropsWithChildren) {
   const router = useRouter();
@@ -25,7 +26,7 @@ export default function AuthProvider({ children }: PropsWithChildren) {
     new RegExp(path_).test(path)
   );
 
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: [`auth/token/${token}`],
     queryFn: () => api.verifyAuth({ token }),
   });
@@ -35,6 +36,7 @@ export default function AuthProvider({ children }: PropsWithChildren) {
   const renderHandler = () => {
     const hasAuth = data?.isSuccess;
 
+    if (isLoading) return <LoadingSimple />;
     if ((needAuth && hasAuth) || !needAuth) {
       return children;
     }
