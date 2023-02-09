@@ -8,7 +8,6 @@ export default function RootLayout({ children }: PropsWithChildren) {
     <html lang="en">
       <head />
       <body id="__next" className="bg-[#637eab]">
-        {/* @ts-expect-error Server Component */}
         <AllInOneProvider>{children}</AllInOneProvider>
       </body>
     </html>
