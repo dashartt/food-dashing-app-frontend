@@ -25,10 +25,10 @@ export default function PageTitleHeader({
 
   return (
     <HStack
-      className={`w-full ${className} ${responsiveStyle} ${defaultStyles}`}
+      className={`w-full ${className} ${responsiveStyle} ${defaultStyles} h-20`}
     >
       {path !== "/" && <BackPageBtn />}
-      <Text className="text-black font-semibold text-xl py-0.5">{title}</Text>
+      <Text className="text-black font-semibold text-xl">{title}</Text>
     </HStack>
   );
 }
