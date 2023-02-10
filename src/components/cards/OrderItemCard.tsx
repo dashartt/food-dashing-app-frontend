@@ -74,7 +74,7 @@ export default function OrderCard({
             {/*  CLIENT NAME  --------------------------> */}
             <HStack>
               <Text className="font-bold">Cliente:</Text>
-              <Text>{order?.clientId?.name}</Text>
+              <Text>{order?.clientId?.fullName}</Text>
             </HStack>
 
             {/*  ADDRESS NAME  --------------------------> */}

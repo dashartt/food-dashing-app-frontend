@@ -84,7 +84,7 @@ export interface IAdminOrder extends ITimestamps {
   _id: string;
   clientId: {
     _id: string;
-    name: string;
+    fullName: string;
     phone: string;
     addressesId: string[];
   };
