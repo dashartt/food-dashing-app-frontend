@@ -22,9 +22,9 @@ export async function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     "/address/",
-    "/checkout",
-    "/identification",
-    "/order/:path",
-    "/history",
+    "/checkout/",
+    "/identification/",
+    "/order/:path/",
+    "/history/",
   ],
 };
