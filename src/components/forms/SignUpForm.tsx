@@ -49,9 +49,13 @@ export default function SignUpForm({ handleTabsChange }: Props) {
     resolver: zodResolver(signUpSchema),
   });
 
-  const onSubmit = (signupValues: SignupValues) => {
+  const onSubmit = ({ fullName, password, phone }: SignupValues) => {
     api
-      .signup(signupValues)
+      .signup({
+        fullName,
+        password,
+        phone: phone.replace(/[^\d]/g, ""),
+      })
       .then(() => {
         toast({
           title: "Conta criada",
