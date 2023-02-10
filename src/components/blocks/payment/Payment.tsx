@@ -34,7 +34,7 @@ export default function Payment() {
               </VStack>
               {hasPayBack && (
                 <VStack className="items-start">
-                  <Text>Valor em nota</Text>
+                  <Text>Para quanto?</Text>
                   <Payback />
                 </VStack>
               )}
