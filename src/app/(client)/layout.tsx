@@ -4,8 +4,6 @@ import "../../styles/global.css";
 
 import type { PropsWithChildren } from "react";
 
-import Container from "@/components/helpers/Container";
-import LayoutSidebarMenu from "@/components/layouts/sidebar-menu";
 import AllInOneProvider from "@/components/providers/AllInOneProvider";
 
 export default function RootLayout({ children }: PropsWithChildren) {
@@ -13,11 +11,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
     <html lang="en">
       <head />
       <body id="__next">
-        <AllInOneProvider>
-          <Container className="bg-black">
-            <LayoutSidebarMenu>{children}</LayoutSidebarMenu>
-          </Container>
-        </AllInOneProvider>
+        <AllInOneProvider>{children}</AllInOneProvider>
       </body>
     </html>
   );
