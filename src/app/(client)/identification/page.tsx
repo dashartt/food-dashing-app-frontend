@@ -58,6 +58,7 @@ export default function Identification() {
   };
 
   useEffect(() => {
+    router.refresh();
     setMounted(true);
   }, []);
 
