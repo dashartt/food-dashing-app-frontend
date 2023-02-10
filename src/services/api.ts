@@ -15,6 +15,7 @@ export const getMenuItemByName = async (name: string) => {
   const response = await fetch(`${SERVER_URL}/menu/item/${name}`, {
     headers: { "Content-Type": "application/json" },
     method: "GET",
+    mode: "no-cors",
   });
 
   if (!response.ok) return null;
@@ -26,6 +27,7 @@ export const getMenuItemByName = async (name: string) => {
 export const getMenuItems = async () => {
   const response = await fetch(`${SERVER_URL}/menu`, {
     method: "GET",
+    mode: "no-cors",
   });
 
   if (!response.ok) return null;
@@ -38,6 +40,7 @@ export const getMenuItems = async () => {
 export const getMenuItemsByCategory = async (category: string) => {
   const response = await fetch(`${SERVER_URL}/menu/${category}`, {
     method: "GET",
+    mode: "no-cors",
   });
 
   if (!response.ok) return null;
@@ -61,6 +64,7 @@ export const signup = async ({
   const response = await fetch(`${SERVER_URL}/account/signup`, {
     headers: { "Content-Type": "application/json" },
     method: "POST",
+    mode: "no-cors",
     body: JSON.stringify({ fullName, password, phone, role }),
   });
 
@@ -81,6 +85,7 @@ export const signin = async ({
   const response = await fetch(`${SERVER_URL}/account/signin`, {
     headers: { "Content-Type": "application/json" },
     method: "POST",
+    mode: "no-cors",
     body: JSON.stringify({ password, phone }),
   });
 
@@ -94,6 +99,7 @@ export const updateClientAccount = async (
   await fetch(`${SERVER_URL}/account`, {
     headers: { "Content-Type": "application/json" },
     method: "PUT",
+    mode: "no-cors",
     body: JSON.stringify(clientDTO),
   });
 };
@@ -102,6 +108,7 @@ export const addAddress = async (addressDTO: IAddress) => {
   const response = await fetch(`${SERVER_URL}/address`, {
     headers: { "Content-Type": "application/json" },
     method: "POST",
+    mode: "no-cors",
     body: JSON.stringify(addressDTO),
   });
 
@@ -116,6 +123,7 @@ export const removeAddress = async (addressId: string) => {
   const response = await fetch(`${SERVER_URL}/address/${addressId}`, {
     headers: { "Content-Type": "application/json" },
     method: "DELETE",
+    mode: "no-cors",
   });
 
   if (!response.ok) return null;
@@ -135,6 +143,7 @@ export const updateAddress = async (
   const response = await fetch(`${SERVER_URL}/address/${addressId}`, {
     headers: { "Content-Type": "application/json" },
     method: "PUT",
+    mode: "no-cors",
     body: JSON.stringify(addressDTO),
   });
 
@@ -153,6 +162,7 @@ export const updateOrderStatus = async (orderId: string, status: string) => {
   await fetch(`${SERVER_URL}/orders/${orderId}?status=${status}`, {
     headers: { "Content-Type": "application/json" },
     method: "PATCH",
+    mode: "no-cors",
   });
 };
 
@@ -160,6 +170,7 @@ export const addOrder = async (orderDTO: IOrder) => {
   const response = await fetch(`${SERVER_URL}/orders`, {
     headers: { "Content-Type": "application/json" },
     method: "POST",
+    mode: "no-cors",
     body: JSON.stringify(orderDTO),
   });
 
@@ -178,6 +189,7 @@ export const getOrders = async ({ today, status }: IOrderSearchParams) => {
       "Content-Type": "application/json",
     },
     method: "GET",
+    mode: "no-cors",
   });
 
   if (!response.ok) return null;
@@ -191,6 +203,7 @@ export const getClientOrders = async (clientId: string) => {
   const response = await fetch(`${SERVER_URL}/orders/client/${clientId}`, {
     headers: { "Content-Type": "application/json" },
     method: "GET",
+    mode: "no-cors",
   });
 
   if (!response.ok) return null;
@@ -206,6 +219,7 @@ export const getOrderById = async (orderId: string) => {
       "Content-Type": "application/json",
     },
     method: "GET",
+    mode: "no-cors",
   });
 
   if (!response.ok) return null;
@@ -219,6 +233,7 @@ export const accessAuth = async ({ password }: { password: string }) => {
   const response = await fetch(`${SERVER_URL}/account/auth`, {
     headers: { "Content-Type": "application/json" },
     method: "POST",
+    mode: "no-cors",
     body: JSON.stringify({ password }),
   });
 
@@ -235,6 +250,7 @@ export const verifyAuth = async ({ token }: { token: string }) => {
       Authorization: token,
     },
     method: "GET",
+    mode: "no-cors",
   });
 
   const session = await response.json();
