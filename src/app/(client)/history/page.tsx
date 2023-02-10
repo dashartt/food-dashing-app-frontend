@@ -5,6 +5,8 @@
 import { Button, SimpleGrid, Text, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { v4 as uuid } from "uuid";
 
 import OrderCard from "@/components/cards/OrderItemCard";
@@ -14,12 +16,15 @@ import useSessionState from "@/store/useSession";
 import * as api from "../../../services/api";
 
 export default function History() {
+  const router = useRouter();
   const { session } = useSessionState();
 
   const { data, isFetched, isLoading } = useQuery({
     queryKey: ["orders"],
     queryFn: () => api.getClientOrders(session?._id || ""),
   });
+
+  useEffect(() => router.refresh(), []);
 
   return (
     <SimpleGrid
