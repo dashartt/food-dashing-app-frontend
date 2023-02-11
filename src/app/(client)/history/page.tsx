@@ -31,10 +31,12 @@ export default function History() {
 
   return (
     <Box>
-      <Alert variant="blank" className="mb-8 w-fit text-xl">
-        <AlertIcon className="mt-1 self-start" />
-        Clique em algum pedido para ir para a página de detalhes
-      </Alert>
+      {isFetched && data && data.length > 0 && (
+        <Alert variant="blank" className="mb-8 w-fit text-xl">
+          <AlertIcon className="mt-1 self-start" />
+          Clique em algum pedido para ir para a página de detalhes
+        </Alert>
+      )}
       <SimpleGrid
         columns={{ base: 1, md: 2 }}
         spacing={10}
