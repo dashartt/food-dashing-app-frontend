@@ -4,10 +4,10 @@ export interface ICredentials {
 }
 
 export interface IAccount extends ICredentials {
-  _id?: ObjectId;
+  _id?: string;
   fullName: string;
   role: string;
-  addressesId?: ObjectId[];
+  addressesId?: string[];
 }
 
 export interface IClientAccount extends Omit<IAccount, "password"> {}
