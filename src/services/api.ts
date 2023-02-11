@@ -9,8 +9,8 @@ import type {
   IOrderSearchParams,
 } from "@/types";
 
-// const SERVER_URL = "https://macacoloucopizzaria-backend.vercel.app";
-const SERVER_URL = "http://localhost:3003";
+const SERVER_URL = "https://macacoloucopizzaria-backend.vercel.app";
+// const SERVER_URL = "http://localhost:3003";
 
 export const getMenuItemByName = async (name: string) => {
   const response = await fetch(`${SERVER_URL}/menu/item/${name}`, {
