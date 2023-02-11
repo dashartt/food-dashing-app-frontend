@@ -1,7 +1,9 @@
 import type { BoxProps } from "@chakra-ui/react";
 import { Box, CloseButton, Flex } from "@chakra-ui/react";
+import { usePathname, useRouter } from "next/navigation";
 
 import PizzariaInfo from "@/components/blocks/pizzaria-info/PizzariaInfo";
+import useSessionState from "@/store/useSession";
 
 import { AdminLinkItems, ClientLinkItems } from "../nav/LinkItems";
 import NavItem from "../nav/NavItem";
@@ -17,6 +19,15 @@ export default function SidebarContent({
   isAdmin = false,
   ...rest
 }: SidebarContentProps) {
+  const router = useRouter();
+  const localPath = usePathname();
+  const { session } = useSessionState();
+
+  const navsToHide = ["/history", "/identification"];
+  const isAdminPaths = localPath?.includes("admin");
+  const canShowThisNav = (path: string) =>
+    navsToHide.includes(path) ? !!session?._id : true;
+
   const linkItemsHandler = () => (isAdmin ? AdminLinkItems : ClientLinkItems);
 
   return (
@@ -29,11 +40,19 @@ export default function SidebarContent({
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
 
-      {linkItemsHandler().map(({ icon, name, path }) => (
-        <NavItem key={name} icon={icon} path={path}>
-          {name}
-        </NavItem>
-      ))}
+      {linkItemsHandler()
+        .filter(({ path }) => (!isAdminPaths ? canShowThisNav(path) : true))
+        .map(({ icon, name, path }) => (
+          <NavItem
+            onClick={() => {
+              onClose();
+              router.push(path);
+            }}
+            key={name}
+            icon={icon}
+            name={name}
+          />
+        ))}
     </Box>
   );
 }
