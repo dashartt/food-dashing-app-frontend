@@ -1,7 +1,10 @@
 import type { FlexProps } from "@chakra-ui/react";
 import { Flex, Icon, Text } from "@chakra-ui/react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import type { IconType } from "react-icons";
+
+import useSessionState from "@/store/useSession";
 
 interface NavItemProps extends FlexProps {
   icon: IconType;
@@ -13,6 +16,13 @@ export default function NavItem({
   children,
   ...rest
 }: NavItemProps) {
+  const localPath = usePathname();
+  const { session } = useSessionState();
+  const pathsToHide = ["/history", "/identification"].includes(path);
+  const onlyHideIfPathIs = !localPath?.includes("admin");
+
+  if (onlyHideIfPathIs && pathsToHide && !session) return null;
+
   return (
     <Link href={path} className="no-underline focus:shadow-none">
       <Flex
