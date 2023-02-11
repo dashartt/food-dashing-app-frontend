@@ -15,7 +15,7 @@ import type { IAdminOrder } from "@/types";
 
 export default function AdminOrdersToDo() {
   // states and vars ----------------------
-  const { orders, setOrders, setOrder } = useOrderState();
+  const { setOrders, setOrder } = useOrderState();
   const [mounted, setMounted] = useState(false);
   const [orderId, setOrderId] = useState<string>("");
 
@@ -69,11 +69,7 @@ export default function AdminOrdersToDo() {
     <>
       {mounted && (
         <Box className="m-6">
-          <OrdersList
-            isLoading={orders_.isLoading}
-            orders={orders}
-            status="to-do"
-          />
+          <OrdersList isLoading={orders_.isLoading} status="to-do" />
         </Box>
       )}
     </>

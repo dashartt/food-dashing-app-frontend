@@ -6,16 +6,16 @@ import { v4 as uuid } from "uuid";
 import OrderCard from "@/components/cards/OrderItemCard";
 import EmptyOrders from "@/components/empty/EmptyOrders";
 import OrderCardSkeleton from "@/components/skeletons/OrderCardSkeleton";
-import type { IAdminOrder } from "@/types";
+import useOrderState from "@/store/useOrder";
 
 type Props = {
-  orders: IAdminOrder[];
   status: string;
   isLoading: boolean;
 };
 
-export default function OrdersList({ orders, status, isLoading }: Props) {
-  const orders_ = orders.filter((order) => order.status === status);
+export default function OrdersList({ status, isLoading }: Props) {
+  const { getOrders } = useOrderState();
+  const orders_ = getOrders({ today: status !== "completed" });
 
   return (
     <>
@@ -35,13 +35,15 @@ export default function OrdersList({ orders, status, isLoading }: Props) {
           {!isLoading &&
             orders_.length > 0 &&
             orders_
-              .filter((order) => order.status === status)
+              .filter(
+                (order) => status === "completed" || order.status === status
+              )
               .sort(
                 ({ orderCount: current }, { orderCount: next }) =>
                   current - next
               )
               ?.map((order) => (
-                <OrderCard key={order._id} order={order} isAdmin />
+                <OrderCard date key={order._id} order={order} isAdmin />
               ))}
         </SimpleGrid>
       )}

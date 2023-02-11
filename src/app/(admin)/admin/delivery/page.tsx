@@ -13,7 +13,7 @@ import type { IAdminOrder } from "@/types";
 
 export default function AdminOrdersDelivery() {
   const [mounted, setMounted] = useState(false);
-  const { orders, setOrders } = useOrderState();
+  const { setOrders } = useOrderState();
 
   const orders_ = useQuery({
     queryKey: ["admin/orders-delivery"],
@@ -36,11 +36,7 @@ export default function AdminOrdersDelivery() {
     <>
       {mounted && (
         <Box className="m-6">
-          <OrdersList
-            isLoading={orders_.isLoading}
-            orders={orders}
-            status="delivery"
-          />
+          <OrdersList isLoading={orders_.isLoading} status="delivery" />
         </Box>
       )}
     </>

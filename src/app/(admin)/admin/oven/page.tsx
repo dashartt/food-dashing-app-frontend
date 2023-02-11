@@ -13,7 +13,7 @@ import type { IAdminOrder } from "@/types";
 
 export default function AdminOrdersOven() {
   const [mounted, setMounted] = useState(false);
-  const { orders, setOrders } = useOrderState();
+  const { setOrders } = useOrderState();
 
   const orders_ = useQuery({
     queryKey: ["admin/orders-oven"],
@@ -36,11 +36,7 @@ export default function AdminOrdersOven() {
     <>
       {mounted && (
         <Box className="m-6">
-          <OrdersList
-            isLoading={orders_.isLoading}
-            orders={orders}
-            status="oven"
-          />
+          <OrdersList isLoading={orders_.isLoading} status="oven" />
         </Box>
       )}
     </>
