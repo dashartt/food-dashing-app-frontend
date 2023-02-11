@@ -29,7 +29,7 @@ export default function OrderCardSkeleton() {
                   <Skeleton className="w-6 h-4" />
                 </Center>
 
-                <VStack className="border border-gray-300 rounded-md p-4 w-full">
+                <VStack className="items-start border border-gray-300 rounded-md p-4 w-full">
                   <Skeleton className="w-28 h-4" />
                   <Skeleton className="w-28 h-4" />
                 </VStack>
