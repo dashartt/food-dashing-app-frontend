@@ -38,10 +38,12 @@ export default function OrderCard({
           {/*  ITEMS  --------------------------> */}
           <VStack className="items-start">
             <HStack className="w-full justify-between">
-              <Text className="font-bold underline">
-                Pedido #{order?.orderCount}
-              </Text>
-              <Text>{date && formatDate(order?.createdAt || "")}</Text>
+              <Box>
+                <Text className="font-bold underline">
+                  Pedido #{order?.orderCount}
+                </Text>
+                <Text>{date && formatDate(order?.createdAt || "")}</Text>
+              </Box>
               {isAdmin && (
                 <Box className="w-32">
                   <OrderStatus
