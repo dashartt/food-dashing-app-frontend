@@ -10,6 +10,8 @@ export interface IAccount extends ICredentials {
   addressesId?: ObjectId[];
 }
 
+export interface IClientAccount extends Omit<IAccount, "password"> {}
+
 // MENU TYPE ---------------------->
 export interface IMenu extends Array<IMenuItem> {}
 

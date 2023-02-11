@@ -2,6 +2,7 @@ import type {
   IAccount,
   IAddress,
   IAdminOrder,
+  IClientAccount,
   IMenu,
   IMenuItem,
   IOrder,
@@ -55,24 +56,36 @@ export const signup = async ({
   phone,
   password,
   role = "client",
+  addressesId,
 }: {
   fullName: string;
-  password: string;
+  password?: string;
   phone: string;
   role?: string;
+  addressesId?: string[];
 }) => {
   const response = await fetch(`${SERVER_URL}/account/signup`, {
     headers: { "Content-Type": "application/json" },
     method: "POST",
     mode: "cors",
-    body: JSON.stringify({ fullName, password, phone, role }),
+    body: JSON.stringify({
+      fullName,
+      phone,
+      ...(addressesId && { addressesId }),
+      ...(password && { password }),
+      role,
+    }),
   });
 
   if (!response.ok) return null;
 
-  const account = (await response.json()) as { accountId: string };
+  const responseData = (await response.json()) as {
+    isSuccess: boolean;
+    message: string;
+    data: IClientAccount;
+  };
 
-  return account.accountId;
+  return responseData;
 };
 
 export const signin = async ({
@@ -89,19 +102,36 @@ export const signin = async ({
     body: JSON.stringify({ password, phone }),
   });
 
-  const data = await response.json();
-  return data;
+  const responseData = (await response.json()) as {
+    isSuccess: boolean;
+    message: string;
+    data: IClientAccount;
+  };
+
+  return responseData;
 };
 
 export const updateClientAccount = async (
   clientDTO: Omit<IAccount, "password" | "role">
 ) => {
-  await fetch(`${SERVER_URL}/account`, {
+  const response = await fetch(`${SERVER_URL}/account`, {
     headers: { "Content-Type": "application/json" },
     method: "PUT",
     mode: "cors",
     body: JSON.stringify(clientDTO),
   });
+
+  if (!response.ok) return null;
+
+  const responseData = (await response.json()) as {
+    isSuccess: boolean;
+    message: string;
+    data: {
+      accountId: string;
+    };
+  };
+
+  return responseData;
 };
 
 export const addAddress = async (addressDTO: IAddress) => {
