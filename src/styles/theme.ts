@@ -6,6 +6,21 @@ const theme = extendTheme({
     Steps,
     Alert: {
       variants: {
+        blank: {
+          container: {
+            bg: "white",
+            borderWidth: "1px",
+            borderRadius: "0.375rem",
+            borderColor: "gray.300",
+          },
+          title: {
+            fontSize: "1.4rem",
+            marginBottom: "10px",
+          },
+          icon: {
+            color: "gray.600",
+          },
+        },
         solid: {
           container: {
             bg: "#333",
