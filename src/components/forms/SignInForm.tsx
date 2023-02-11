@@ -60,7 +60,10 @@ export default function SignInForm() {
             ...utils.toastOptions,
           });
         } else {
-          setSession(data?.data?.session || null);
+          setSession({
+            ...data?.data?.session,
+            addressesId: data?.data?.session.addressesId || [],
+          });
           setCookie("token", data?.data.token);
           const role = data?.data.session.role;
           const redirectByRole =

@@ -3,7 +3,7 @@ import { createJSONStorage, persist } from "zustand/middleware";
 
 interface ISession {
   role: string;
-  addressesId: string[];
+  addressesId: string[] | [];
   phone: string;
   fullName: string;
   _id?: string;
