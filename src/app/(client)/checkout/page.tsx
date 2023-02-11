@@ -72,10 +72,10 @@ export default function Checkout() {
 
   useEffect(() => {
     setMounted(true);
-  }, []);
 
-  if (items.length === 0) router.push("/");
-  if (!session) router.push("/identification");
+    if (items.length === 0) router.push("/");
+    if (!session) router.push("/identification");
+  }, []);
 
   return (
     <>
