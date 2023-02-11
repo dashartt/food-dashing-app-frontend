@@ -20,11 +20,10 @@ export default function NavItem({
   const { session } = useSessionState();
   const pathsToHide = ["/history", "/identification"].includes(path);
   const onlyHideIfPathIs = !localPath?.includes("admin");
-
-  if (onlyHideIfPathIs && pathsToHide && !session) return null;
+  const canHide = onlyHideIfPathIs && pathsToHide && !session?._id && "hidden";
 
   return (
-    <Link href={path} className="no-underline focus:shadow-none">
+    <Link href={path} className={`no-underline focus:shadow-none ${canHide}`}>
       <Flex
         role="group"
         className="mx-4 cursor-pointer items-center rounded-md p-4 hover:bg-gray-800 hover:text-white"
