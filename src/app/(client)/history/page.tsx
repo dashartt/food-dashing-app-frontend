@@ -13,8 +13,6 @@ import {
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 import { v4 as uuid } from "uuid";
 
 import OrderCard from "@/components/cards/OrderItemCard";
@@ -24,7 +22,6 @@ import useSessionState from "@/store/useSession";
 import * as api from "../../../services/api";
 
 export default function History() {
-  const router = useRouter();
   const { session } = useSessionState();
 
   const { data, isFetched, isLoading } = useQuery({
@@ -32,12 +29,10 @@ export default function History() {
     queryFn: () => api.getClientOrders(session?._id || ""),
   });
 
-  useEffect(() => router.refresh(), []);
-
   return (
     <Box>
-      <Alert variant="blank" className="text-xl mb-8 w-fit">
-        <AlertIcon className="self-start mt-1" />
+      <Alert variant="blank" className="mb-8 w-fit text-xl">
+        <AlertIcon className="mt-1 self-start" />
         Clique em algum pedido para ir para a página de detalhes
       </Alert>
       <SimpleGrid
