@@ -2,8 +2,8 @@ import create from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 interface ISession {
-  token: string;
   role: string;
+  addressesId: string[];
   phone: string;
   fullName: string;
   _id?: string;
