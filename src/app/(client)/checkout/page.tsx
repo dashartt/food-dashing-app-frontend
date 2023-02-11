@@ -71,11 +71,11 @@ export default function Checkout() {
   };
 
   useEffect(() => {
-    router.refresh();
     setMounted(true);
-
-    if (items.length === 0) router.push("/");
   }, []);
+
+  if (items.length === 0) router.push("/");
+  if (!session) router.push("/identification");
 
   return (
     <>
