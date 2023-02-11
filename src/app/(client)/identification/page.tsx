@@ -22,14 +22,12 @@ import useAddressesState from "src/store/checkout/useAddresses";
 import useSessionState from "@/store/useSession";
 
 import * as api from "../../../services/api";
-// import useIdentificationState from "../../../store/checkout/useIdentification";
 import * as utils from "../../../utils";
 
 export default function Identification() {
   const [mounted, setMounted] = useState(false);
 
   const toast = useToast();
-  // const { name, phone, setId,} = useIdentificationState();
   const { session } = useSessionState();
   const { addresses, removeAddress } = useAddressesState();
   const router = useRouter();
@@ -47,19 +45,51 @@ export default function Identification() {
           "Preencha todas as informações: nome, celular e adicione 1 endereço",
         ...utils.toastOptions,
       });
+    } else if (!session._id) {
+      await api
+        .signup({
+          addressesId: addresses.map((address) => address._id || ""),
+          fullName: session.fullName,
+          phone: session.phone.replace(/[^\d]/g, ""),
+        })
+        .then((response) => {
+          if (response?.isSuccess) {
+            toast({
+              title: response.message,
+              ...utils.toastOptions,
+            });
+            router.push("/checkout");
+          }
+        });
     } else {
-      await api.updateClientAccount({
-        addressesId: addresses.map((address) => address._id || ""),
-        fullName: session.fullName,
-        _id: session._id || "",
-        phone: session.phone.replace(/[^\d]/g, ""),
-      });
+      await api
+        .updateClientAccount({
+          addressesId: addresses.map((address) => address._id || ""),
+          fullName: session.fullName,
+          _id: session._id || "",
+          phone: session.phone.replace(/[^\d]/g, ""),
+        })
+        .then((response) => {
+          if (response?.isSuccess) {
+            toast({
+              title: response.message,
+              ...utils.toastOptions,
+            });
+          }
+        });
     }
   };
 
   useEffect(() => {
-    router.refresh();
     setMounted(true);
+
+    if (!session) {
+      toast({
+        title: "Você ainda não tem uma conta",
+        description: "Cadastra-se para continuar e confirmar seu pedido",
+        ...utils.toastOptions,
+      });
+    }
   }, []);
 
   return (
