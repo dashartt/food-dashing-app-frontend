@@ -29,7 +29,7 @@ export default function IdentificationCard() {
 
               <Box>
                 <Text className="font-bold">Celular</Text>
-                <Text>{formatPhone(session?.phone)}</Text>
+                <Text>{formatPhone(session?.phone || "")}</Text>
               </Box>
             </VStack>
           </CardBody>
