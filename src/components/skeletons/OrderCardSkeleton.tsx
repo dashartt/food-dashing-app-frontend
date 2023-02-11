@@ -4,7 +4,6 @@ import {
   CardBody,
   Center,
   Skeleton,
-  SkeletonText,
   Text,
   VStack,
 } from "@chakra-ui/react";
@@ -30,18 +29,18 @@ export default function OrderCardSkeleton() {
                 </Center>
 
                 <VStack className="items-start border border-gray-300 rounded-md p-4 w-full">
-                  <Skeleton className="w-28 h-4" />
-                  <Skeleton className="w-28 h-4" />
+                  <Skeleton className="w-36 h-4" />
+                  <Skeleton className="w-36 h-4" />
                 </VStack>
 
                 <Center className="space-x-1">
                   <Text>Cliente: </Text>
-                  <Skeleton className="w-28 h-4" />
+                  <Skeleton className="w-32 h-4" />
                 </Center>
 
                 <Center className="space-x-1">
                   <Text>Endereço: </Text>
-                  <SkeletonText noOfLines={2} />
+                  <Skeleton className="w-48 h-4" />
                 </Center>
 
                 <Center className="space-x-1">
