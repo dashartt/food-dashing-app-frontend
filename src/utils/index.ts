@@ -1,6 +1,8 @@
 import type { ToastPosition } from "@chakra-ui/react";
 import moment from "moment";
 
+const StringMask = require("string-mask");
+
 export const setHeaderTitle = (path: string) => {
   const pathAndTitle = [
     {
@@ -75,3 +77,6 @@ export const toastOptions = {
   isClosable: true,
   position: "top" as ToastPosition,
 };
+
+export const formatterPhone = new StringMask("(00) 00000-0000");
+export const formatPhone = (value: string) => formatterPhone.apply(value);
