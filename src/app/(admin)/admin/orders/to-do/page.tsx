@@ -69,7 +69,11 @@ export default function AdminOrdersToDo() {
     <>
       {mounted && (
         <Box className="m-6">
-          <OrdersList orders={orders} status="to-do" />
+          <OrdersList
+            isLoading={orders_.isLoading}
+            orders={orders}
+            status="to-do"
+          />
         </Box>
       )}
     </>

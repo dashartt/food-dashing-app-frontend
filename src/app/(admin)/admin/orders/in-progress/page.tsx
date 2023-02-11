@@ -36,7 +36,11 @@ export default function AdminOrdersInProgress() {
     <>
       {mounted && (
         <Box className="m-6">
-          <OrdersList orders={orders} status="in-progress" />
+          <OrdersList
+            isLoading={orders_.isLoading}
+            orders={orders}
+            status="in-progress"
+          />
         </Box>
       )}
     </>

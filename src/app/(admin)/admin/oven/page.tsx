@@ -36,7 +36,11 @@ export default function AdminOrdersOven() {
     <>
       {mounted && (
         <Box className="m-6">
-          <OrdersList orders={orders} status="oven" />
+          <OrdersList
+            isLoading={orders_.isLoading}
+            orders={orders}
+            status="oven"
+          />
         </Box>
       )}
     </>

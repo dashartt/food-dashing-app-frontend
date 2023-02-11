@@ -36,7 +36,11 @@ export default function AdminOrdersHistory() {
     <>
       {mounted && (
         <Box className="m-6">
-          <OrdersList orders={orders} status="completed" />
+          <OrdersList
+            orders={orders}
+            isLoading={orders_.isLoading}
+            status="completed"
+          />
         </Box>
       )}
     </>

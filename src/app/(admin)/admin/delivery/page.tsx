@@ -36,7 +36,11 @@ export default function AdminOrdersDelivery() {
     <>
       {mounted && (
         <Box className="m-6">
-          <OrdersList orders={orders} status="delivery" />
+          <OrdersList
+            isLoading={orders_.isLoading}
+            orders={orders}
+            status="delivery"
+          />
         </Box>
       )}
     </>
