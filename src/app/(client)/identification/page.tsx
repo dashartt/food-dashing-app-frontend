@@ -20,6 +20,7 @@ import IdentificationForm from "src/components/forms/IdentificationForm";
 import useAddressesState from "src/store/checkout/useAddresses";
 
 import useSessionState from "@/store/useSession";
+import type { IAddress } from "@/types";
 
 import * as api from "../../../services/api";
 import * as utils from "../../../utils";
@@ -28,7 +29,7 @@ export default function Identification() {
   const [mounted, setMounted] = useState(false);
 
   const toast = useToast();
-  const { session } = useSessionState();
+  const { session, setSession } = useSessionState();
   const { addresses, removeAddress } = useAddressesState();
   const router = useRouter();
 
@@ -48,7 +49,7 @@ export default function Identification() {
     } else if (!session._id) {
       await api
         .signup({
-          addressesId: addresses.map((address) => address._id || ""),
+          addressesId: addresses.map((address: IAddress) => address._id || ""),
           fullName: session.fullName,
           phone: session.phone.replace(/[^\d]/g, ""),
         })
@@ -57,6 +58,13 @@ export default function Identification() {
             toast({
               title: response.message,
               ...utils.toastOptions,
+            });
+            setSession({
+              fullName: response.data.fullName,
+              phone: response.data.phone,
+              _id: response.data._id,
+              role: response.data.role,
+              addressesId: response.data.addressesId as unknown as string[],
             });
             router.push("/checkout");
           }
@@ -83,7 +91,7 @@ export default function Identification() {
   useEffect(() => {
     setMounted(true);
 
-    if (!session) {
+    if (!session?._id) {
       toast({
         title: "Você ainda não tem uma conta",
         description: "Cadastra-se para continuar e confirmar seu pedido",
