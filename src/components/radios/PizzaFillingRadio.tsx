@@ -1,6 +1,7 @@
 import type { RadioProps } from "@chakra-ui/react";
 import { Box, HStack, useRadio, useRadioGroup } from "@chakra-ui/react";
 
+import useAnotherHalfPizzaState from "@/store/pizza/useAnotherHalfPizza";
 import usePizzaStuffing from "@/store/pizza/usePizzaStuffing";
 
 type RadioCardProp = RadioProps & {
@@ -37,11 +38,17 @@ function RadioCard(props: RadioCardProp) {
 export default function PizzaFillingRadio() {
   const options = ["whole", "half"];
   const { updateStuffing } = usePizzaStuffing();
+  const { resetAnotherHalf } = useAnotherHalfPizzaState();
+
+  const onChangeHandler = (current: string) => {
+    updateStuffing(current === "half");
+    resetAnotherHalf();
+  };
 
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: "filling-option",
     defaultValue: "whole",
-    onChange: (current) => updateStuffing(current === "half"),
+    onChange: onChangeHandler,
   });
 
   const group = getRootProps();
