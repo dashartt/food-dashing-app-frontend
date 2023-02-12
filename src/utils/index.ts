@@ -3,6 +3,7 @@ import moment from "moment";
 
 const StringMask = require("string-mask");
 
+// Session title chosen based on path  -------------------->
 export const setHeaderTitle = (path: string) => {
   const pathAndTitle = [
     {
@@ -65,18 +66,50 @@ export const setHeaderTitle = (path: string) => {
   return pathAndTitle.find((obj) => path.includes(obj.path))?.title;
 };
 
+// Format currency  -------------------->
 export const formatCurrency = (value: number) =>
   value.toLocaleString("pt-BR", {
     minimumFractionDigits: 2,
   });
 
+// Format date  -------------------->
 export const formatDate = (value: string) => moment(value).format("DD/MM/YY");
 
+// Format phone -------------------->
+export const formatterPhone = new StringMask("(00) 00000-0000");
+export const formatPhone = (value: string) => formatterPhone.apply(value);
+
+// Toast default options  -------------------->
 export const toastOptions = {
   variant: "solid",
   isClosable: true,
   position: "top" as ToastPosition,
 };
 
-export const formatterPhone = new StringMask("(00) 00000-0000");
-export const formatPhone = (value: string) => formatterPhone.apply(value);
+// Get category name based on value in database -------------------->
+export const getCategoryName = (inputProp: string = "") => {
+  type CategoryNameMap = {
+    input: string; // name in the database
+    output: string; // name to show
+  };
+  const categoryNameMap: CategoryNameMap[] = [
+    {
+      input: "salty pizza",
+      output: "Pizza salgada",
+    },
+    {
+      input: "sweet pizza",
+      output: "Pizza doce",
+    },
+    {
+      input: "arabic snack",
+      output: "Lanche árabe",
+    },
+    {
+      input: "drinks",
+      output: "Bebida",
+    },
+  ];
+
+  return categoryNameMap.find(({ input }) => input === inputProp)?.output || "";
+};
