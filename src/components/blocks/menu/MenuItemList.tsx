@@ -28,7 +28,7 @@ export default function MenuItemList({ category }: Props) {
       {mounted && (
         <VStack className="space-y-4">
           {data?.map((item) => (
-            <MenuItemCard asButton key={item._id} menuItem={item} />
+            <MenuItemCard hasPrice asButton key={item._id} menuItem={item} />
           ))}
 
           {isLoading && <MenuItemCardSkeleton />}
