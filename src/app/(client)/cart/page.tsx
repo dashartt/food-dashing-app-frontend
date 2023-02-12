@@ -27,7 +27,7 @@ export default function ShoppingCart() {
       {mounted && (
         <VStack className="items-start space-y-4 md:w-96">
           {/* Cart items list ------------> */}
-          <Text className="font-semibold text-xl">
+          <Text className="font-semibold text-xl p-4">
             Produtos escolhidos do seu pedido
           </Text>
           <VStack className="w-full space-y-4 px-4">
