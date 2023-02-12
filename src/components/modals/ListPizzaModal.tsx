@@ -13,7 +13,7 @@ import { useEffect } from "react";
 import useAnotherHalfPizzaState from "@/store/pizza/useAnotherHalfPizza";
 import { StoreCallback } from "@/utils";
 
-import MenuTabs from "../tabs/menu/MenuTabs";
+import MenuTabs from "../tabs/MenuTabs";
 
 export default function ListPizzasModal() {
   const { isOpen, onOpen, onClose } = useDisclosure();
