@@ -113,3 +113,22 @@ export const getCategoryName = (inputProp: string = "") => {
 
   return categoryNameMap.find(({ input }) => input === inputProp)?.output || "";
 };
+
+type IStoreCallback = {
+  key: string;
+  callback: Function;
+};
+export class StoreCallback {
+  static callbacks: IStoreCallback[] = [];
+
+  static setCallback({ key, callback }: { key: string; callback: Function }) {
+    StoreCallback.callbacks.push({
+      key,
+      callback,
+    });
+  }
+
+  static fireCallback({ key }: { key: string }) {
+    StoreCallback.callbacks.find((item) => item.key === key)?.callback();
+  }
+}
