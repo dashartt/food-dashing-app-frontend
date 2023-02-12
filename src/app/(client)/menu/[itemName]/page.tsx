@@ -67,7 +67,9 @@ export default function MenuItem({ params }: Params) {
 
             {/* Name and ingredients  ----------------> */}
             <VStack className="w-full items-start space-y-1">
-              <Text className="text-lg font-semibold">Recheio escolhido</Text>
+              {!item?.category.name.includes("drinks") && (
+                <Text className="text-lg font-semibold">Recheio escolhido</Text>
+              )}
               {isLoading && <MenuItemCardSimpleSkeleton />}
               {item && <MenuItemCard menuItem={item} />}
             </VStack>
