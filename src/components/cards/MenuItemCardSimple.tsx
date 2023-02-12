@@ -27,7 +27,7 @@ export default function MenuItemCardSimple({ menuItem }: Props) {
             <Heading size="md" className="font-medium">
               {menuItem.name}
             </Heading>
-            <Text className="line-clamp-3 text-gray-600">
+            <Text className="line-clamp-3 text-gray-600 font-semibold">
               {menuItem?.ingredients}
             </Text>
           </CardBody>
