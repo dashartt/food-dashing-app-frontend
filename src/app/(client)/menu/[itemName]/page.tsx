@@ -3,17 +3,18 @@
 import { Box, Text, Textarea, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import MenuItemCardSimple from "src/components/cards/MenuItemCardSimple";
-import ListPizzas from "src/components/selects/ListPizzas";
-import WholeOrHalfPizzaOption from "src/components/switchs/WholeOrHalfPizzaOption";
 import { getMenuItemByName } from "src/services/api";
 import useAnotherHalfPizzaState from "src/store/pizza/useAnotherHalfPizza";
 import usePizzaPrice from "src/store/pizza/usePizzaPrice";
 import usePizzaStuffing from "src/store/pizza/usePizzaStuffing";
 
 import AddToCart from "@/components/blocks/add-to-cart/AddToCart";
+import MenuItemCard from "@/components/cards/MenuItemCard";
+import ListPizzasModal from "@/components/modals/ListPizzaModal";
+import PizzaFillingRadio from "@/components/radios/PizzaFillingRadio";
 import MenuItemCardSimpleSkeleton from "@/components/skeletons/MenuItemCardSimpleSkeleton.";
 import useObservationPizzaState from "@/store/pizza/useObservationPizza";
+import { getCategoryName } from "@/utils";
 
 type Params = {
   params: {
@@ -36,11 +37,12 @@ export default function MenuItem({ params }: Params) {
     (state) => state.anotherHalfPizza
   );
   const getDefaultPrice = usePizzaPrice((state) => state.getDefaultPrice);
-  const isHalfPizza = usePizzaStuffing((state) => state.isHalf);
+  const { isHalf, resetStuffing } = usePizzaStuffing();
 
   useEffect(() => {
     setMounted(true);
     resetObservation();
+    resetStuffing();
     getDefaultPrice(item?.price || 0);
   }, []);
 
@@ -48,27 +50,38 @@ export default function MenuItem({ params }: Params) {
     <>
       {mounted && (
         <VStack className="items-start space-y-4 md:w-96">
-          {/* Name and back page btn  ----------------> */}
-
           <Box className="w-full space-y-4 px-4">
-            {/* Name and ingredients  ----------------> */}
-            <Box className="w-full">
-              {isLoading && <MenuItemCardSimpleSkeleton />}
-              <MenuItemCardSimple menuItem={item || null} />
-            </Box>
+            {/* Product chosen  ----------------> */}
+            <VStack className="items-start space-y-0">
+              <Text className="text-lg font-semibold">Produto escolhido</Text>
+              <Text>{getCategoryName(item?.category.name)}</Text>
+            </VStack>
 
             {/* Whole or half pizza option and get another half pizza */}
             {item?.category?.name.includes("pizza") && (
-              <Box className="">
-                <Text>Vou querer:</Text>
-                <WholeOrHalfPizzaOption />
-              </Box>
+              <VStack className="items-start space-y-1">
+                <Text className="text-lg font-semibold">Tipo de recheio</Text>
+                <PizzaFillingRadio />
+              </VStack>
             )}
-            {isHalfPizza && (
-              <>
-                <ListPizzas />
-                <MenuItemCardSimple menuItem={anotherHalfPizza} />
-              </>
+
+            {/* Name and ingredients  ----------------> */}
+            <VStack className="w-full items-start space-y-1">
+              <Text className="text-lg font-semibold">Recheio escolhido</Text>
+              {isLoading && <MenuItemCardSimpleSkeleton />}
+              {item && <MenuItemCard menuItem={item} />}
+            </VStack>
+
+            {isHalf && (
+              <VStack className="items-start space-y-1">
+                <Text className="text-lg font-semibold ">
+                  A outra metade do recheio
+                </Text>
+                <ListPizzasModal />
+                {anotherHalfPizza && (
+                  <MenuItemCard canRemove menuItem={anotherHalfPizza} />
+                )}
+              </VStack>
             )}
           </Box>
 
