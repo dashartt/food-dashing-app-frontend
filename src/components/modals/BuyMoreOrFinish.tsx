@@ -15,6 +15,7 @@ import {
 import { useRouter } from "next/navigation";
 import type { ReactNode } from "react";
 import { useEffect, useState } from "react";
+import useShoppingCartAux from "src/hooks/shared/useShoppingCart";
 import useAnotherHalfPizzaState from "src/store/pizza/useAnotherHalfPizza";
 import usePizzaStuffing from "src/store/pizza/usePizzaStuffing";
 import useShoppingCart from "src/store/useShoppingCart";
@@ -34,17 +35,22 @@ export default function BuyMoreOrFinish({ children, orderItem }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter();
 
-  const { addItem } = useShoppingCart();
+  const shoppingCart = useShoppingCart();
+  const shoppingCartAux = useShoppingCartAux();
   const { resetStuffing, isHalf } = usePizzaStuffing();
   const { resetAnotherHalf, anotherHalfPizza } = useAnotherHalfPizzaState();
   const { resetObservation } = useObservationPizzaState();
 
   const onAddItem = () => {
     onOpen(); // open modal to continue buying or finish purchase
-    addItem({
+
+    // add item to cart
+    const itemWithId = {
       _id: uuid(),
       ...orderItem,
-    }); // add item to cart
+    };
+    shoppingCart.addItem(itemWithId);
+    shoppingCartAux.addItem(itemWithId);
   };
 
   const afterAddGoTo = (path: string) => {
@@ -75,14 +81,14 @@ export default function BuyMoreOrFinish({ children, orderItem }: Props) {
             isOpen={isOpen}
           >
             <DrawerOverlay />
-            <DrawerContent className="w-full sm:w-96 mx-auto">
+            <DrawerContent className="mx-auto w-full sm:w-96">
               <DrawerCloseButton />
               <DrawerHeader className="border-b-2 border-gray-300">
                 Item adicionado ao carrinho
               </DrawerHeader>
               <DrawerBody className="p-4">
                 {/* Button options -----------> */}
-                <VStack className="py-4 space-y-4">
+                <VStack className="space-y-4 py-4">
                   <Button
                     onClick={() => afterAddGoTo("/")}
                     className="w-52 bg-[#1a95f3] py-2 text-center text-white"
