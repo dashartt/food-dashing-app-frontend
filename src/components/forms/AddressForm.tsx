@@ -118,7 +118,7 @@ export default function AddressForm({ addressId = "" }: Props) {
           className="w-full space-y-4 p-4"
         >
           <FormControl isInvalid={!!errors.addressName}>
-            <FormLabel htmlFor="addressName">Logradouro</FormLabel>
+            <FormLabel htmlFor="addressName">Endereço</FormLabel>
             <Input
               className="border border-gray-400 bg-gray-100 placeholder:text-gray-600"
               {...register("addressName")}
