@@ -1,8 +1,10 @@
 import type { BoxProps } from "@chakra-ui/react";
 import { Box, CloseButton, Flex } from "@chakra-ui/react";
 import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 import PizzariaInfo from "@/components/blocks/pizzaria-info/PizzariaInfo";
+import SidebarContentSkeleton from "@/components/skeletons/sidebar-menu/SidebarContentSkeleton";
 import useSessionState from "@/store/useSession";
 
 import { AdminLinkItems, ClientLinkItems } from "../nav/LinkItems";
@@ -19,6 +21,7 @@ export default function SidebarContent({
   isAdmin = false,
   ...rest
 }: SidebarContentProps) {
+  const [mounted, setMounted] = useState(false);
   const router = useRouter();
   const localPath = usePathname();
   const { session } = useSessionState();
@@ -30,29 +33,41 @@ export default function SidebarContent({
 
   const linkItemsHandler = () => (isAdmin ? AdminLinkItems : ClientLinkItems);
 
-  return (
-    <Box
-      className="fixed h-full w-full border-r-2 border-gray-200 bg-white md:w-72"
-      {...rest}
-    >
-      <Flex className="mb-4 h-20 items-center justify-between border-b-2 border-gray-300 px-4">
-        <PizzariaInfo />
-        <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
-      </Flex>
+  const NavItemsLink = () =>
+    linkItemsHandler()
+      .filter(({ path }) => (!isAdminPaths ? canShowThisNav(path) : true))
+      .map(({ icon, name, path }) => (
+        <NavItem
+          onClick={() => {
+            onClose();
+            router.push(path);
+          }}
+          key={name}
+          icon={icon}
+          name={name}
+        />
+      ));
 
-      {linkItemsHandler()
-        .filter(({ path }) => (!isAdminPaths ? canShowThisNav(path) : true))
-        .map(({ icon, name, path }) => (
-          <NavItem
-            onClick={() => {
-              onClose();
-              router.push(path);
-            }}
-            key={name}
-            icon={icon}
-            name={name}
-          />
-        ))}
-    </Box>
+  useEffect(() => setMounted(true), []);
+
+  return (
+    <>
+      {!mounted && <SidebarContentSkeleton />}
+      {mounted && (
+        <Box
+          className="fixed h-full w-full border-r-2 border-gray-200 bg-white md:w-72"
+          {...rest}
+        >
+          <Flex className="mb-4 h-20 items-center justify-between border-b-2 border-gray-300 px-4">
+            <PizzariaInfo />
+            <CloseButton
+              display={{ base: "flex", md: "none" }}
+              onClick={onClose}
+            />
+          </Flex>
+          {NavItemsLink()}
+        </Box>
+      )}
+    </>
   );
 }
