@@ -19,6 +19,7 @@ import useAnotherHalfPizzaState from "src/store/pizza/useAnotherHalfPizza";
 import usePizzaStuffing from "src/store/pizza/usePizzaStuffing";
 import useShoppingCart from "src/store/useShoppingCart";
 import type { ICartItem } from "src/types";
+import { v4 as uuid } from "uuid";
 
 import useObservationPizzaState from "@/store/pizza/useObservationPizza";
 
@@ -40,7 +41,10 @@ export default function BuyMoreOrFinish({ children, orderItem }: Props) {
 
   const onAddItem = () => {
     onOpen(); // open modal to continue buying or finish purchase
-    addItem(orderItem); // add item to cart
+    addItem({
+      _id: uuid(),
+      ...orderItem,
+    }); // add item to cart
   };
 
   const afterAddGoTo = (path: string) => {

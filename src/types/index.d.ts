@@ -44,6 +44,7 @@ export interface ICartItems extends Array<ICartItem> {}
 
 // SHOPPING CART ITEM TYPE ---------------------->
 export interface ICartItem {
+  _id?: string;
   item: IMenuItem[] | Array<IMenuItem | null>;
   quantity?: number;
   observation?: string;
