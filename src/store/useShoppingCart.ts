@@ -5,9 +5,11 @@ import type { ICartItem } from "@/types";
 
 interface ShoppingCartState {
   items: ICartItem[];
+
   addItem: (itemCart: ICartItem) => void;
-  // updateItem: (item: ICartItem) => void;
-  removeItem: (itemCart: ICartItem) => void;
+  updateItem: (_id: string, quantity: number) => void;
+  removeItem: (_id: string) => void;
+  getItemById: (_id: string) => ICartItem | null;
   getTotalCart: () => number;
   emptyCart: () => void;
 }
@@ -22,20 +24,20 @@ const useShoppingCart = create<ShoppingCartState>()(
           items: [...state.items, item],
         }));
       },
-      removeItem: ({ item }) =>
+      getItemById: (_id) =>
+        get().items.find((item) => item._id === _id) || null,
+      updateItem: (_id, quantity) =>
+        set((state) => ({
+          items: state.items.map((item) =>
+            item._id === _id ? { ...item, quantity } : item
+          ),
+        })),
+      removeItem: (_id = "") => {
         set((state) => ({
           ...state,
-          items: state.items.filter(({ item: item_ }) => {
-            const canRemovetItem = item_[0]?._id !== item[0]?._id;
-
-            if (item.length === 1) {
-              return canRemovetItem;
-            }
-
-            const canRemoveAnotherHalf = item_[1]?._id !== item[1]?._id;
-            return canRemovetItem && canRemoveAnotherHalf;
-          }),
-        })),
+          items: state.items.filter((item) => item._id === _id),
+        }));
+      },
       getTotalCart: () => {
         const updateTotalCart = get().items.reduce((_acc, value) => {
           return _acc + (value.item[0]?.price || 0) * (value.quantity || 1);
