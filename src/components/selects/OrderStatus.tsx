@@ -73,6 +73,7 @@ export default function OrderStatus({
           onChange={handlerStatus}
           className="border border-gray-400"
           value={status}
+          role="button"
         >
           <option value="" className="hidden">
             Status
