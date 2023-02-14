@@ -3,7 +3,7 @@ import { BsCardChecklist, BsCart3 } from "react-icons/bs";
 import { GiFireBowl } from "react-icons/gi";
 import { GoBook } from "react-icons/go";
 import { MdManageAccounts, MdOutlineDeliveryDining } from "react-icons/md";
-import { RiFileList3Line } from "react-icons/ri";
+import { RiFileList3Line, RiUserReceivedLine } from "react-icons/ri";
 
 interface LinkItemProps {
   path: string;
@@ -53,6 +53,11 @@ export const AdminLinkItems: Array<LinkItemProps> = [
     path: "/admin/orders/delivery",
     name: "Entregas",
     icon: MdOutlineDeliveryDining,
+  },
+  {
+    path: "/admin/orders/pick-up",
+    name: "Retiradas",
+    icon: RiUserReceivedLine,
   },
   {
     path: "/admin/orders/history",
