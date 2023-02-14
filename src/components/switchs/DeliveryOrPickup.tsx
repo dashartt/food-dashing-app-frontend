@@ -23,7 +23,7 @@ export default function DeliveryOrPickup() {
             >
               Delivery
             </Radio>
-            <Radio className="border border-gray-700" value="pick up">
+            <Radio className="border border-gray-700" value="pick-up">
               Buscar
             </Radio>
           </Stack>
