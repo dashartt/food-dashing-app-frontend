@@ -14,10 +14,12 @@ type Props = {
 };
 
 export default function OrderPage({ orderProps }: Props) {
+  const [mounted, setMounted] = useState(false);
   const [order, setOrder] = useState<IAdminOrder | null>(orderProps);
 
   useEffect(() => {
     if (!orderProps) notFound();
+    setMounted(true);
     Pusher.subscribe("client");
     // Beam.subscribe("update-order-status");
     Pusher.onEvent("update-order-status", (status: string) =>
@@ -26,22 +28,29 @@ export default function OrderPage({ orderProps }: Props) {
   }, []);
 
   return (
-    <VStack className="items-start md:w-96">
-      <VStack className="mb-8 w-full space-y-8">
-        {/* STATUS BLOCK */}
-        <Box className="w-full space-y-2 px-4">
-          <Text className="text-xl font-bold">Status</Text>
-          <Box className="max-w-sm rounded-md border border-gray-400 px-4 pt-4">
-            <OrderStatusStepper status={order?.status || "to-do"} />
-          </Box>
-        </Box>
+    <>
+      {mounted && order && (
+        <VStack className="items-start">
+          <VStack className="mb-8 w-full space-y-8">
+            {/* STATUS BLOCK */}
+            <Box className="w-full space-y-2 px-4">
+              <Text className="text-xl font-bold">Status</Text>
+              <Box className="w-full rounded-md border border-gray-400 px-4 pt-4">
+                <OrderStatusStepper
+                  isDelivery={order?.isDelivery}
+                  status={order?.status || "to-do"}
+                />
+              </Box>
+            </Box>
 
-        {/* ORDER SHEET BLOCK */}
-        <Box className="w-full px-4">
-          <Text className="mb-2 text-xl font-bold">Comanda</Text>
-          <OrderCard order={order} />
-        </Box>
-      </VStack>
-    </VStack>
+            {/* ORDER SHEET BLOCK */}
+            <Box className="w-full px-4">
+              <Text className="mb-2 text-xl font-bold">Comanda</Text>
+              <OrderCard order={order} />
+            </Box>
+          </VStack>
+        </VStack>
+      )}
+    </>
   );
 }

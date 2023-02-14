@@ -1,48 +1,51 @@
 import { Step, Steps, useSteps } from "chakra-ui-steps";
 import { useEffect } from "react";
 
-const steps = [
-  // { label: "A fazer" },
-  { label: "Montando" },
-  { label: "No forno" },
-  { label: "Saiu para entrega" },
-  {
-    label: "Entregue",
-  },
-];
+type Status = "to-do" | "in-progress" | "pick-up" | "delivery" | "completed";
+type StepDetailsMap = {
+  [status in Status]: {
+    step: number;
+    text: string;
+  };
+};
 
-const getStepByStatus = (status: string) => {
-  type MapSteps = {
-    [name: string]: number;
-  };
-  const mapSteps: MapSteps = {
-    "to-do": 0,
-    "in-progress": 1,
-    oven: 2,
-    delivery: 3,
-    completed: 4,
-  };
-  return mapSteps[status] || 0;
+const stepDetailsMap: StepDetailsMap = {
+  "to-do": { step: 0, text: "Recebemos seu pedido" },
+  "in-progress": { step: 1, text: "Preparando seu pedido" },
+  delivery: { step: 2, text: "Saiu para entrega" },
+  "pick-up": { step: 2, text: "Pronto para retirada no local" },
+  completed: { step: 3, text: "Concluido" },
+};
+const stepsMap = [...Object.values(stepDetailsMap)];
+
+const getStepDetails = (status: string) => {
+  const parseStatus = (status in Step ? status : "to-do") as Status;
+  return stepDetailsMap[parseStatus] || 0;
 };
 
 type Props = {
   status: string;
+  isDelivery: boolean;
 };
 
-export const OrderStatusStepper = ({ status }: Props) => {
+export const OrderStatusStepper = ({ status, isDelivery }: Props) => {
   const { activeStep, setStep } = useSteps({
     initialStep: 0,
   });
 
+  const steps = stepsMap.filter(({ text }) =>
+    isDelivery ? !text.includes("retirada") : !text.includes("entrega")
+  );
+
   useEffect(() => {
-    setStep(getStepByStatus(status));
+    setStep(getStepDetails(status).step);
   }, [status]);
 
   return (
     <>
       <Steps colorScheme="blue" orientation="vertical" activeStep={activeStep}>
-        {steps.map(({ label }) => (
-          <Step width="100%" label={label} key={label}>
+        {steps.map(({ step, text }) => (
+          <Step width="100%" label={text} key={step}>
             {/* <Contents my={1} index={index} /> */}
           </Step>
         ))}

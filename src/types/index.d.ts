@@ -75,6 +75,7 @@ export interface IOrder {
   addressId: string;
   items: IOrderItem;
   paymentType: string;
+  isDelivery: boolean;
   hasPayBack?: boolean;
   payback?: number;
 }
@@ -110,6 +111,7 @@ export interface IAdminOrder extends ITimestamps {
   ];
   status: string;
   orderCount: number;
+  isDelivery: boolean;
   paymentType: string;
   payback: number;
 }

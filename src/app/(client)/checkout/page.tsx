@@ -28,7 +28,7 @@ export default function Checkout() {
   const { session } = useSessionState();
   const { address, addresses } = useAddressesState();
   const { paymentType, hasPayBack, payback } = usePaymentState();
-  const { deliveryFee } = useApplyDeliveryFee();
+  const { deliveryFee, option } = useApplyDeliveryFee();
   const { emptyCart, items, getTotalPrice } = useShoppingCart();
 
   const onConfirmPurchase = async () => {
@@ -54,6 +54,7 @@ export default function Checkout() {
             ...(item_.observation && { observation: item_.observation }),
           })) as unknown as IOrderItem,
           paymentType,
+          isDelivery: option === "delivery",
           ...(hasPayBack && { hasPayBack }),
           ...(payback && { payback }),
         })
