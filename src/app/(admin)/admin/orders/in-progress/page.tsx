@@ -16,7 +16,7 @@ export default function AdminOrdersInProgress() {
   const { setOrders } = useOrderState();
 
   const orders_ = useQuery({
-    queryKey: ["admin/orders-in-progress"],
+    queryKey: ["admin/orders/in-progress"],
     queryFn: () => api.getOrders({ today: true, status: "in-progress" }),
     enabled: false,
   });

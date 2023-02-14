@@ -11,13 +11,13 @@ import * as api from "@/services/api";
 import useOrderState from "@/store/useOrder";
 import type { IAdminOrder } from "@/types";
 
-export default function AdminOrdersDelivery() {
+export default function AdminOrdersHistory() {
   const [mounted, setMounted] = useState(false);
   const { setOrders } = useOrderState();
 
   const orders_ = useQuery({
-    queryKey: ["admin/orders-delivery"],
-    queryFn: () => api.getOrders({ today: true, status: "delivery" }),
+    queryKey: ["admin/orders/history"],
+    queryFn: () => api.getOrders({ today: false, status: "completed" }),
     enabled: false,
   });
 
@@ -29,6 +29,8 @@ export default function AdminOrdersDelivery() {
 
   // when orders fetched, set orders state ---------------------
   useEffect(() => {
+    // console.log(orders_.data);
+
     if (orders_.isFetched) setOrders(orders_.data as IAdminOrder[]);
   }, [orders_.isFetched]);
 
@@ -36,7 +38,7 @@ export default function AdminOrdersDelivery() {
     <>
       {mounted && (
         <Box className="m-6">
-          <OrdersList isLoading={orders_.isLoading} status="delivery" />
+          <OrdersList isLoading={orders_.isLoading} status="completed" />
         </Box>
       )}
     </>

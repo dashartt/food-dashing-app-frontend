@@ -23,7 +23,7 @@ export default function AdminOrdersToDo() {
   const [orders_, order_] = useQueries({
     queries: [
       {
-        queryKey: ["admin/orders-to-do"],
+        queryKey: ["admin/orders/to-do"],
         queryFn: () => api.getOrders({ today: true, status: "to-do" }),
         enabled: false,
       },

@@ -16,7 +16,7 @@ export default function AdminOrdersOven() {
   const { setOrders } = useOrderState();
 
   const orders_ = useQuery({
-    queryKey: ["admin/orders-oven"],
+    queryKey: ["admin/orders/oven"],
     queryFn: () => api.getOrders({ today: true, status: "oven" }),
     enabled: false,
   });

@@ -45,17 +45,17 @@ export const AdminLinkItems: Array<LinkItemProps> = [
     icon: RiFileList3Line,
   },
   {
-    path: "/admin/oven",
+    path: "/admin/orders/oven",
     name: "Forno",
     icon: GiFireBowl,
   },
   {
-    path: "/admin/delivery",
+    path: "/admin/orders/delivery",
     name: "Entregas",
     icon: MdOutlineDeliveryDining,
   },
   {
-    path: "/admin/history",
+    path: "/admin/orders/history",
     name: "Histórico",
     icon: BsCardChecklist,
   },
