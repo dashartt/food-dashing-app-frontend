@@ -18,15 +18,19 @@ export const setHeaderTitle = (path: string) => {
     },
     {
       path: "/admin/orders/delivery/",
-      title: "Entregas",
+      title: "Pedidos para entregas",
+    },
+    {
+      path: "/admin/orders/pick-up/",
+      title: "Pedidos para retirar no local",
     },
     {
       path: "/admin/orders/oven/",
-      title: "Forno",
+      title: "Pedidos no forno",
     },
     {
       path: "/admin/orders/history/",
-      title: "Histórico",
+      title: "Histórico de pedidos",
     },
     {
       path: "/pizzaria-information",
