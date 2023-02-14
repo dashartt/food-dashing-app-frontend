@@ -1,26 +1,25 @@
 import { Step, Steps, useSteps } from "chakra-ui-steps";
 import { useEffect } from "react";
 
-type Status = "to-do" | "in-progress" | "pick-up" | "delivery" | "completed";
+// type Status = "to-do" | "in-progress" | "pick-up" | "delivery" | "completed";
 type StepDetailsMap = {
-  [status in Status]: {
+  [status: string]: {
     step: number;
     text: string;
   };
 };
 
 const stepDetailsMap: StepDetailsMap = {
-  "to-do": { step: 0, text: "Recebemos seu pedido" },
-  "in-progress": { step: 1, text: "Preparando seu pedido" },
-  delivery: { step: 2, text: "Saiu para entrega" },
-  "pick-up": { step: 2, text: "Pronto para retirada no local" },
-  completed: { step: 3, text: "Concluido" },
+  "to-do": { step: 1, text: "Recebemos seu pedido" },
+  "in-progress": { step: 2, text: "Preparando seu pedido" },
+  delivery: { step: 3, text: "Saiu para entrega" },
+  "pick-up": { step: 3, text: "Pronto para retirada no local" },
+  completed: { step: 4, text: "Concluido" },
 };
 const stepsMap = [...Object.values(stepDetailsMap)];
 
 const getStepDetails = (status: string) => {
-  const parseStatus = (status in Step ? status : "to-do") as Status;
-  return stepDetailsMap[parseStatus] || 0;
+  return stepDetailsMap[status];
 };
 
 type Props = {
@@ -38,7 +37,7 @@ export const OrderStatusStepper = ({ status, isDelivery }: Props) => {
   );
 
   useEffect(() => {
-    setStep(getStepDetails(status).step);
+    setStep(getStepDetails(status)?.step || 0);
   }, [status]);
 
   return (
