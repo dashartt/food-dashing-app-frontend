@@ -14,7 +14,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
       <head />
       <body id="__next">
         <AllInOneProvider>
-          <Container className="bg-black">
+          <Container className="bg-blue-400">
             <LayoutSidebarMenu>{children}</LayoutSidebarMenu>
           </Container>
         </AllInOneProvider>

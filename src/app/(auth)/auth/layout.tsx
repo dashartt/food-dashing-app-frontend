@@ -7,7 +7,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="en">
       <head />
-      <body id="__next" className="bg-[#637eab]">
+      <body id="__next" className="bg-blue-400">
         <AllInOneProvider>{children}</AllInOneProvider>
       </body>
     </html>
