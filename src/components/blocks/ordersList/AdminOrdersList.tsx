@@ -15,7 +15,9 @@ type Props = {
 
 export default function OrdersList({ status, isLoading }: Props) {
   const { getOrders } = useOrderState();
-  const orders_ = getOrders({ today: status !== "completed" });
+  const orders_ = getOrders({ today: status !== "completed" })
+    .filter((order) => order.status === status)
+    .sort(({ orderCount: current }, { orderCount: next }) => current - next);
 
   return (
     <>
@@ -34,17 +36,9 @@ export default function OrdersList({ status, isLoading }: Props) {
 
           {!isLoading &&
             orders_.length > 0 &&
-            orders_
-              .filter(
-                (order) => status === "completed" || order.status === status
-              )
-              .sort(
-                ({ orderCount: current }, { orderCount: next }) =>
-                  current - next
-              )
-              ?.map((order) => (
-                <OrderCard date key={order._id} order={order} isAdmin />
-              ))}
+            orders_?.map((order) => (
+              <OrderCard date key={order._id} order={order} isAdmin />
+            ))}
         </SimpleGrid>
       )}
     </>
