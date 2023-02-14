@@ -23,15 +23,16 @@ export default function OrderCard({
   const path = usePathname();
 
   const goToOrderDetails = () => {
-    if (path?.includes("history")) router.push(`/order/${order?._id}`);
+    if (path?.includes("history") && !isAdmin)
+      router.push(`/order/${order?._id}`);
   };
 
   if (!order) return <OrderCardSkeleton />;
   return (
     <Card
-      className="h-fit w-full rounded-md border border-gray-400 bg-white shadow-lg"
+      className="h-fit w-full min-w-[20rem] rounded-md border border-gray-400 bg-white shadow-lg"
       onClick={goToOrderDetails}
-      role="button"
+      {...(!isAdmin && { role: "button" })}
     >
       <CardBody className="m-0">
         <Box>
