@@ -10,15 +10,18 @@ import { getOrders } from "../../services/api";
 
 type Props = {
   queryKey: string[];
+  status: string;
 };
 
-export default function useOrdersPage({ queryKey }: Props) {
+export default function useOrdersPage({ queryKey, status }: Props) {
   const [mounted, setMounted] = useState(false);
   const { setOrders } = useOrderState();
 
+  const today = status !== "completed";
+
   const orders_ = useQuery({
     queryKey,
-    queryFn: () => getOrders({ today: true, status: "delivery" }),
+    queryFn: () => getOrders({ today, status }),
     enabled: false,
   });
 

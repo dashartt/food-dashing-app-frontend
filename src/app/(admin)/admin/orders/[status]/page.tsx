@@ -8,6 +8,7 @@ import useOrderSubscriber from "@/hooks/admin/useOrderSubscriber";
 
 export default function OrdersPage({ params }: { params: { status: string } }) {
   const { mounted, ordersQuery } = useOrdersPage({
+    status: params.status,
     queryKey: [`admin/orders/${params.status}`],
   });
 
