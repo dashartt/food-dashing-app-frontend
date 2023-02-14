@@ -47,6 +47,7 @@ export default function OrderCard({
               {isAdmin && (
                 <Box className="w-32">
                   <OrderStatus
+                    isDelivery={order.isDelivery}
                     orderId={order?._id || ""}
                     statusProp={order?.status || ""}
                   />

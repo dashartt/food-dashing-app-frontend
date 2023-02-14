@@ -9,13 +9,48 @@ import * as api from "../../services/api";
 type Props = {
   orderId: string;
   statusProp: string;
+  isDelivery: boolean;
 };
 
-export default function OrderStatus({ orderId, statusProp }: Props) {
+const optionsMap = [
+  {
+    value: "to-do",
+    text: "A fazer",
+  },
+  {
+    value: "in-progress",
+    text: "Montar",
+  },
+  {
+    value: "oven",
+    text: "Forno",
+  },
+  {
+    value: "delivery",
+    text: "Entrega",
+  },
+  {
+    value: "pick-up",
+    text: "Buscar",
+  },
+  {
+    value: "completed",
+    text: "Concluido",
+  },
+];
+
+export default function OrderStatus({
+  orderId,
+  statusProp,
+  isDelivery,
+}: Props) {
   const [mounted, setMounted] = useState(false);
   const { updateOrderStatus } = useOrderState();
   const [status, setStatus] = useState(statusProp);
 
+  const options = optionsMap.filter(({ value }) =>
+    isDelivery ? value !== "pick-up" : value !== "delivery"
+  );
   const handlerStatus: ChangeEventHandler<HTMLSelectElement> = async ({
     target,
   }) => {
@@ -33,7 +68,6 @@ export default function OrderStatus({ orderId, statusProp }: Props) {
 
   return (
     <>
-      {" "}
       {mounted && (
         <Select
           onChange={handlerStatus}
@@ -43,11 +77,11 @@ export default function OrderStatus({ orderId, statusProp }: Props) {
           <option value="" className="hidden">
             Status
           </option>
-          <option value="to-do">A fazer</option>
-          <option value="in-progress">Montando</option>
-          <option value="oven">Forno</option>
-          <option value="delivery">Entrega</option>
-          <option value="completed">Concluido</option>
+          {options.map(({ value, text }) => (
+            <option key={value} value={value}>
+              {text}
+            </option>
+          ))}
         </Select>
       )}
     </>
