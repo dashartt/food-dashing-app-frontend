@@ -33,6 +33,22 @@ const useShoppingCart = create<ShoppingCartState>()(
             item._id?.includes(_id) ? { ...item, quantity } : item
           ),
         })),
+      // {
+      //   const storage = JSON.parse(
+      //     localStorage.getItem("shopping-cart-storage") || "[]"
+      //   ) as { state: { items: ICartItem[] }; version: number };
+      //   localStorage.setItem(
+      //     "shopping-cart-storage",
+      //     JSON.stringify({
+      //       state: {
+      //         items: storage.state.items.map((item) =>
+      //           item._id === _id ? { ...item, quantity } : item
+      //         ),
+      //       },
+      //       version: 0,
+      //     })
+      //   );
+      // },
       removeItem: (_id = "") => {
         set((state) => ({
           items: state.items.filter((item) => item._id !== _id),
