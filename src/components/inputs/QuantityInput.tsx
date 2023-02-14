@@ -21,13 +21,13 @@ export default function QuantityInput({ onChange, initialQuantity }: Props) {
   }, [quantity]);
 
   return (
-    <HStack className=" rounded-lg w-fit border border-gray-400">
+    <HStack className=" rounded-lg w-fit border border-gray-300">
       {/* Decrement item -----------> */}
       <IconButton
         disabled={quantity === 1}
         onClick={decrement}
         aria-label="Remover uma quantidade"
-        className="text-lg"
+        className="text-lg bg-transparent"
         icon={<RiSubtractLine />}
       />
       {/* Item quantity -----------> */}
@@ -37,7 +37,7 @@ export default function QuantityInput({ onChange, initialQuantity }: Props) {
       <IconButton
         onClick={increment}
         aria-label="Adicionar mais uma unidade"
-        className="text-lg"
+        className="text-lg bg-transparent"
         icon={<RiAddLine />}
       />
     </HStack>

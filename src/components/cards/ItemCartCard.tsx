@@ -13,7 +13,7 @@ import { RiCloseLine } from "react-icons/ri";
 
 import useShoppingCart from "@/store/useShoppingCart";
 import type { ICartItem } from "@/types";
-import { formatCurrency } from "@/utils";
+import * as utils from "@/utils";
 
 import QuantityInput from "../inputs/QuantityInput";
 
@@ -45,16 +45,19 @@ export default function ItemCartCard({ itemCart }: Props) {
   return (
     <>
       {mounted && (
-        <Card className="w-full border  border-gray-400 bg-white shadow-lg">
+        <Card className="w-full border border-gray-400 bg-white shadow-lg">
           <CardBody>
             <VStack className="items-start">
               <HStack className="w-full justify-between">
-                <VStack className="-space-y-1">
-                  <Text className="w-full font-semibold">
+                <VStack className="-space-y-1 items-start">
+                  <Text className="py-1 px-2 border border-gray-300 rounded-md mb-4">
+                    {utils.getCategoryName(itemCart.item[0]?.category.name)}
+                  </Text>
+                  <Text className="text-xl">
                     {canSetOneHalf} {itemCart.item[0]?.name}
                   </Text>
                   {itemCart.item[1]?.name && (
-                    <Text className="w-full font-semibold">
+                    <Text className="text-xl">
                       {canSetOneHalf} {itemCart.item[1]?.name}
                     </Text>
                   )}
@@ -63,15 +66,15 @@ export default function ItemCartCard({ itemCart }: Props) {
                   onClick={onRemoveItem}
                   size="sm"
                   aria-label="Remover item do pedido"
-                  className="rounded-full bg-red-100"
+                  className="rounded-full bg-transparent border border-gray-300 self-start"
                   icon={<RiCloseLine className="text-2xl text-red-500 " />}
                 />
               </HStack>
               <HStack className="w-full justify-between">
                 <Text className="text-lg">
                   R$
-                  {formatCurrency(
-                    shoppingCart.getTotalItemPrice(itemCart._id || "")
+                  {utils.formatCurrency(
+                    utils.getTotalItemPrice(itemCart._id || "")
                   )}
                 </Text>
                 <QuantityInput
