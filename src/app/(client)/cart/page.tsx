@@ -7,13 +7,13 @@ import ItemCartCard from "src/components/cards/ItemCartCard";
 import { v4 as uuid } from "uuid";
 
 import EmptyCart from "@/components/blocks/cart/EmptyCart";
-import useShoppingCartAux from "@/hooks/shared/useShoppingCart";
+import useShoppingCart from "@/store/useShoppingCart";
 import { formatCurrency } from "@/utils";
 
 export default function ShoppingCart() {
   const [mounted, setMounted] = useState(false);
   const router = useRouter();
-  const { items, getTotalPrice } = useShoppingCartAux();
+  const { items, getTotalPrice } = useShoppingCart();
 
   useEffect(() => {
     setMounted(true);

@@ -11,7 +11,6 @@ import {
 import { useEffect, useState } from "react";
 import { RiCloseLine } from "react-icons/ri";
 
-import useShoppingCartAux from "@/hooks/shared/useShoppingCart";
 import useShoppingCart from "@/store/useShoppingCart";
 import type { ICartItem } from "@/types";
 import { formatCurrency } from "@/utils";
@@ -25,20 +24,18 @@ type Props = {
 export default function ItemCartCard({ itemCart }: Props) {
   const [mounted, setMounted] = useState(false);
   const shoppingCart = useShoppingCart();
-  const shoppingCartAux = useShoppingCartAux();
 
   const initialQuantity =
-    shoppingCart.getItem(itemCart._id || "")?.quantity || 1;
+    shoppingCart.getItemById(itemCart._id || "")?.quantity || 1;
 
   const canSetOneHalf = itemCart.item.length > 1 ? "½" : "-";
 
   const onUpdateQuantity = (quantity: number) => {
-    shoppingCartAux.updateItem(itemCart._id || "", quantity);
+    shoppingCart.updateItem(itemCart._id || "", quantity);
   };
 
   const onRemoveItem = () => {
     shoppingCart.removeItem(itemCart._id || "");
-    shoppingCartAux.removeItem(itemCart._id || "");
   };
 
   useEffect(() => {
@@ -74,7 +71,7 @@ export default function ItemCartCard({ itemCart }: Props) {
                 <Text className="text-lg">
                   R$
                   {formatCurrency(
-                    shoppingCartAux.getTotalItemPrice(itemCart._id || "")
+                    shoppingCart.getTotalItemPrice(itemCart._id || "")
                   )}
                 </Text>
                 <QuantityInput

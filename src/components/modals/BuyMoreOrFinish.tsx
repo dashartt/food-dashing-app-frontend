@@ -15,7 +15,6 @@ import {
 import { useRouter } from "next/navigation";
 import type { ReactNode } from "react";
 import { useEffect, useState } from "react";
-import useShoppingCartAux from "src/hooks/shared/useShoppingCart";
 import useAnotherHalfPizzaState from "src/store/pizza/useAnotherHalfPizza";
 import usePizzaStuffing from "src/store/pizza/usePizzaStuffing";
 import useShoppingCart from "src/store/useShoppingCart";
@@ -36,7 +35,6 @@ export default function BuyMoreOrFinish({ children, orderItem }: Props) {
   const router = useRouter();
 
   const shoppingCart = useShoppingCart();
-  const shoppingCartAux = useShoppingCartAux();
   const { resetStuffing, isHalf } = usePizzaStuffing();
   const { resetAnotherHalf, anotherHalfPizza } = useAnotherHalfPizzaState();
   const { resetObservation } = useObservationPizzaState();
@@ -45,12 +43,10 @@ export default function BuyMoreOrFinish({ children, orderItem }: Props) {
     onOpen(); // open modal to continue buying or finish purchase
 
     // add item to cart
-    const itemWithId = {
+    shoppingCart.addItem({
       _id: uuid(),
       ...orderItem,
-    };
-    shoppingCart.addItem(itemWithId);
-    shoppingCartAux.addItem(itemWithId);
+    });
   };
 
   const afterAddGoTo = (path: string) => {

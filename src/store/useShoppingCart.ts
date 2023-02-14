@@ -6,10 +6,11 @@ import type { ICartItem } from "@/types";
 interface ShoppingCartState {
   items: ICartItem[];
   getPrice: (_id: string) => number;
-  getItem: (_id: string) => ICartItem | null;
+  getItemById: (_id: string) => ICartItem | null;
   addItem: (itemCart: ICartItem) => void;
   updateItem: (_id: string, quantity: number) => void;
   removeItem: (_id: string) => void;
+  getTotalItemPrice: (_id: string) => number;
   getTotalPrice: () => number;
   emptyCart: () => void;
 }
@@ -18,9 +19,9 @@ const useShoppingCart = create<ShoppingCartState>()(
   persist(
     (set, get) => ({
       items: [],
-      getItem: (_id = "") =>
+      getItemById: (_id = "") =>
         get().items.find((item) => item._id === _id) || null,
-      getPrice: (_id = "") => get().getItem(_id)?.item[0]?.price || 1,
+      getPrice: (_id = "") => get().getItemById(_id)?.item[0]?.price || 1,
       addItem: (item) => {
         set((state) => ({
           items: [...state.items, item],
@@ -29,13 +30,17 @@ const useShoppingCart = create<ShoppingCartState>()(
       updateItem: (_id = "", quantity = 1) =>
         set((state) => ({
           items: state.items.map((item) =>
-            item._id === _id ? { ...item, quantity } : item
+            item._id?.includes(_id) ? { ...item, quantity } : item
           ),
         })),
       removeItem: (_id = "") => {
         set((state) => ({
           items: state.items.filter((item) => item._id !== _id),
         }));
+      },
+      getTotalItemPrice: (_id: string) => {
+        const item = get().getItemById(_id);
+        return (item?.quantity || 1) * (item?.item[0]?.price || 1);
       },
       getTotalPrice: () =>
         get().items.reduce((_acc, value) => {
@@ -45,8 +50,8 @@ const useShoppingCart = create<ShoppingCartState>()(
       emptyCart: () => set({ items: [] }),
     }),
     {
-      name: "shopping-cart-storage", // name of item in the storage (must be unique)
-      storage: createJSONStorage(() => localStorage), // (optional) by default the 'localStorage' is used
+      name: "shopping-cart-storage",
+      storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({
         items: state.items,
       }),

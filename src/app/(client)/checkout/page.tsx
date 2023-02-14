@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import Address from "src/components/blocks/address/Address";
 import Identification from "src/components/blocks/identification/Identification";
 import Payment from "src/components/blocks/payment/Payment";
-import useShoppingCartAux from "src/hooks/shared/useShoppingCart";
 import useAddressesState from "src/store/checkout/useAddresses";
 import usePaymentState from "src/store/checkout/usePayment";
 import useShoppingCart from "src/store/useShoppingCart";
@@ -30,8 +29,7 @@ export default function Checkout() {
   const { address, addresses } = useAddressesState();
   const { paymentType, hasPayBack, payback } = usePaymentState();
   const { deliveryFee } = useApplyDeliveryFee();
-  const { emptyCart } = useShoppingCart();
-  const shoppingCartAux = useShoppingCartAux();
+  const { emptyCart, items, getTotalPrice } = useShoppingCart();
 
   const onConfirmPurchase = async () => {
     if (
@@ -50,7 +48,7 @@ export default function Checkout() {
         .addOrder({
           clientId: session?._id || "",
           addressId: address?._id || "",
-          items: shoppingCartAux.items.map((item_) => ({
+          items: items.map((item_) => ({
             itemIds: item_.item.map((item__) => item__?._id),
             quantity: item_.quantity,
             ...(item_.observation && { observation: item_.observation }),
@@ -61,7 +59,6 @@ export default function Checkout() {
         })
         .then((orderId) => {
           emptyCart();
-          shoppingCartAux.emptyCart();
           router.push(`/order/${orderId}`);
         })
         .catch((_error) => {
@@ -73,7 +70,7 @@ export default function Checkout() {
   useEffect(() => {
     setMounted(true);
 
-    if (shoppingCartAux.items.length === 0) router.push("/");
+    if (items.length === 0) router.push("/");
     if (!session) router.push("/identification");
   }, []);
 
@@ -97,9 +94,7 @@ export default function Checkout() {
             <Box className="rounded-md border border-gray-400 p-4">
               <HStack className="justify-between">
                 <Text>Pedidos</Text>
-                <Text>
-                  R$ {formatCurrency(shoppingCartAux.getTotalPrice())}
-                </Text>
+                <Text>R$ {formatCurrency(getTotalPrice())}</Text>
               </HStack>
 
               <HStack className="justify-between">
@@ -111,9 +106,7 @@ export default function Checkout() {
                 <Text className="font-semibold">Total</Text>
                 <Text className="font-semibold">
                   R$
-                  {formatCurrency(
-                    shoppingCartAux.getTotalPrice() + deliveryFee
-                  )}
+                  {formatCurrency(getTotalPrice() + deliveryFee)}
                 </Text>
               </HStack>
             </Box>
