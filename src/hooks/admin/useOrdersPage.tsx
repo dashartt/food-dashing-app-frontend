@@ -1,23 +1,24 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
-"use client";
-
-import { Box } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 
-import OrdersList from "@/components/blocks/ordersList/AdminOrdersList";
-import * as api from "@/services/api";
 import useOrderState from "@/store/useOrder";
 import type { IAdminOrder } from "@/types";
 
-export default function AdminOrdersOven() {
+import { getOrders } from "../../services/api";
+
+type Props = {
+  queryKey: string[];
+};
+
+export default function useOrdersPage({ queryKey }: Props) {
   const [mounted, setMounted] = useState(false);
   const { setOrders } = useOrderState();
 
   const orders_ = useQuery({
-    queryKey: ["admin/orders/oven"],
-    queryFn: () => api.getOrders({ today: true, status: "oven" }),
+    queryKey,
+    queryFn: () => getOrders({ today: true, status: "delivery" }),
     enabled: false,
   });
 
@@ -32,13 +33,8 @@ export default function AdminOrdersOven() {
     if (orders_.isFetched) setOrders(orders_.data as IAdminOrder[]);
   }, [orders_.isFetched]);
 
-  return (
-    <>
-      {mounted && (
-        <Box className="m-6">
-          <OrdersList isLoading={orders_.isLoading} status="oven" />
-        </Box>
-      )}
-    </>
-  );
+  return {
+    mounted,
+    ordersQuery: orders_,
+  };
 }
