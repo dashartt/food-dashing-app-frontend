@@ -60,7 +60,7 @@ export const AdminLinkItems: Array<LinkItemProps> = [
     icon: RiUserReceivedLine,
   },
   {
-    path: "/admin/orders/history",
+    path: "/admin/orders/completed",
     name: "Histórico",
     icon: BsCardChecklist,
   },

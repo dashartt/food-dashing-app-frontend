@@ -29,7 +29,7 @@ export const setHeaderTitle = (path: string) => {
       title: "Pedidos no forno",
     },
     {
-      path: "/admin/orders/history/",
+      path: "/admin/orders/completed/",
       title: "Histórico de pedidos",
     },
     {
