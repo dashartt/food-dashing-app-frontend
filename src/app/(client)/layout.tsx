@@ -12,7 +12,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="en">
       <head />
-      <body id="__next">
+      <body id="__next" className="bg-[url(/static/bg-image.png)]">
         <AllInOneProvider>
           <Container className="bg-blue-400">
             <LayoutSidebarMenu>{children}</LayoutSidebarMenu>
