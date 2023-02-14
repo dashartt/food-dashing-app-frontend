@@ -4,7 +4,6 @@ import "../../styles/global.css";
 
 import type { PropsWithChildren } from "react";
 
-import Container from "@/components/helpers/Container";
 import LayoutSidebarMenu from "@/components/layouts/sidebar-menu";
 import AllInOneProvider from "@/components/providers/AllInOneProvider";
 
@@ -14,9 +13,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
       <head />
       <body id="__next" className="bg-[url(/static/bg-image.png)]">
         <AllInOneProvider>
-          <Container className="bg-blue-400">
-            <LayoutSidebarMenu>{children}</LayoutSidebarMenu>
-          </Container>
+          <LayoutSidebarMenu>{children}</LayoutSidebarMenu>
         </AllInOneProvider>
       </body>
     </html>
