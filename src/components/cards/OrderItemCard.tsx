@@ -89,14 +89,20 @@ export default function OrderCard({
           </HStack>
 
           {/*  ADDRESS NAME  --------------------------> */}
-          <VStack className="mt-2 items-start -space-y-1">
+          <VStack className="items-start -space-y-1 mb-1">
             <Text className="font-bold">Endereço:</Text>
-            <Text>{`${order?.addressId?.addressName}, ${order?.addressId?.addressNumber} ${order?.addressId?.complement} - ${order?.addressId?.districtName}`}</Text>
+            <Text>{`${order?.addressId?.addressName}, ${order?.addressId?.addressNumber} ${order?.addressId?.complement}`}</Text>
+            <Text>{order?.addressId?.districtName}</Text>
             <Text>{order?.addressId?.referencePoint}</Text>
           </VStack>
 
+          <HStack>
+            <Text className="font-bold">Opção de entrega: </Text>
+            <Text>{order.isDelivery ? "Entrega" : "Retirada no local"}</Text>
+          </HStack>
+
           {/*  PAYMENT AND PAYBACK --------------------------> */}
-          <HStack className="mt-2">
+          <HStack>
             <Text className="font-bold">Pagamento: </Text>
             <Text>{order?.paymentType === "cart" ? "Cartão" : "Dinheiro"}</Text>
           </HStack>
