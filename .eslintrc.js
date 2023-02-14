@@ -37,6 +37,7 @@ module.exports = {
         tsconfigRootDir: __dirname,
       },
       rules: {
+        "@typescript-eslint/naming-convention": "off",
         "import/no-named-as-default": "off",
         "import/no-unresolved": "error",
         "prettier/prettier": [
