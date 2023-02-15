@@ -66,7 +66,7 @@ export default function Identification() {
               role: response.data.role,
               addressesId: response.data.addressesId as unknown as string[],
             });
-            router.push("/checkout");
+            router.back();
           }
         });
     } else {
