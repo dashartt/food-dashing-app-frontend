@@ -3,6 +3,7 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
+  HStack,
   Input,
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -14,14 +15,15 @@ import type { IAddress } from "src/types";
 import zod from "zod";
 
 import * as api from "../../services/api";
+import AddressFieldTooltip from "../tooltips/AddressFieldTooltip";
 
 const addressSchema = zod.object({
   addressName: zod
     .string({
-      required_error: "Preeencha o logradouro, exemplo: Rua, Passeio, etc...",
+      required_error: "Preeencha o endereço",
     })
     .min(5, {
-      message: "Preeencha o logradouro, exemplo: Rua, Passeio, etc...",
+      message: "Preeencha o endereço",
     }),
   addressNumber: zod
     .string({
@@ -36,10 +38,10 @@ const addressSchema = zod.object({
     .optional(),
   districtName: zod
     .string({
-      required_error: "Preeencha o nome do bairro, exemplo: Jardim Aeroporto",
+      required_error: "Preeencha o nome do bairro",
     })
     .min(3, {
-      message: "Preeencha o nome do bairro, exemplo: Jardim Aeroporto",
+      message: "Preeencha o nome do bairro",
     }),
   referencePoint: zod
     .string()
@@ -115,15 +117,22 @@ export default function AddressForm({ addressId = "" }: Props) {
       {mounted && (
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="w-full space-y-4 p-4"
+          className="w-full space-y-6 p-4"
         >
           <FormControl isInvalid={!!errors.addressName}>
-            <FormLabel htmlFor="addressName">Endereço</FormLabel>
+            <HStack>
+              <FormLabel htmlFor="addressName" className="m-0 p-0">
+                Endereço
+              </FormLabel>
+              <AddressFieldTooltip
+                label="este endereço é Rua, Passeio, etc? Informe isso e depois digite o nome do endereço"
+                fieldName="endereço"
+              />
+            </HStack>
             <Input
-              className="border border-gray-400 bg-gray-100 placeholder:text-gray-600"
+              className="border border-gray-400 bg-white placeholder:text-gray-600"
               {...register("addressName")}
               id="addressName"
-              placeholder="ex: Rua Araras"
             />
 
             <FormErrorMessage>{errors.addressName?.message}</FormErrorMessage>
@@ -132,22 +141,28 @@ export default function AddressForm({ addressId = "" }: Props) {
           <FormControl isInvalid={!!errors.addressNumber}>
             <FormLabel htmlFor="addressNumber">Numero da residência</FormLabel>
             <Input
-              className="border border-gray-400 bg-gray-100 placeholder:text-gray-600"
+              className="border border-gray-400 bg-white placeholder:text-gray-600"
               {...register("addressNumber")}
               id="addressNumber"
-              placeholder="ex: 290"
             />
 
             <FormErrorMessage>{errors.addressNumber?.message}</FormErrorMessage>
           </FormControl>
 
           <FormControl isInvalid={!!errors.complement}>
-            <FormLabel htmlFor="complement">Complemento (opcional)</FormLabel>
+            <HStack>
+              <FormLabel htmlFor="complement" className="m-0 p-0">
+                Complemento (opcional)
+              </FormLabel>
+              <AddressFieldTooltip
+                label="em apartamentos e outros tipos de residência existem informações adicionais do número da residência para ser informado"
+                fieldName="complemento"
+              />
+            </HStack>
             <Input
-              className="border border-gray-400 bg-gray-100 placeholder:text-gray-600"
+              className="border border-gray-400 bg-white placeholder:text-gray-600"
               {...register("complement")}
               id="complement"
-              placeholder="ex: Apto 2B"
             />
 
             <FormErrorMessage>{errors.complement?.message}</FormErrorMessage>
@@ -156,22 +171,27 @@ export default function AddressForm({ addressId = "" }: Props) {
           <FormControl isInvalid={!!errors.districtName}>
             <FormLabel htmlFor="districtName">Bairro</FormLabel>
             <Input
-              className="border border-gray-400 bg-gray-100 placeholder:text-gray-600"
+              className="border border-gray-400 bg-white placeholder:text-gray-600"
               {...register("districtName")}
               id="districtName"
-              placeholder="ex: Jardim Aeroporto"
             />
 
             <FormErrorMessage>{errors.districtName?.message}</FormErrorMessage>
           </FormControl>
 
           <FormControl isInvalid={!!errors.referencePoint}>
-            <FormLabel htmlFor="referencePoint">
-              Ponto de referência (opcional)
-            </FormLabel>
+            <HStack>
+              <FormLabel htmlFor="referencePoint" className="m-0 p-0">
+                Ponto de referência (opcional)
+              </FormLabel>
+              <AddressFieldTooltip
+                label="diga algum lugar de referência para ajudar a localizar onde você está"
+                fieldName="ponto de referência"
+              />
+            </HStack>
 
             <Input
-              className="border border-gray-400 bg-gray-100 placeholder:text-gray-600"
+              className="border border-gray-400 bg-white placeholder:text-gray-600"
               {...register("referencePoint", {
                 validate: {
                   required: (value) => {
@@ -185,7 +205,6 @@ export default function AddressForm({ addressId = "" }: Props) {
                 },
               })}
               id="referencePoint"
-              placeholder="ex: Perto de, próximo de, ..."
             />
 
             <FormErrorMessage>
@@ -194,7 +213,7 @@ export default function AddressForm({ addressId = "" }: Props) {
           </FormControl>
 
           <Button
-            className="w-full bg-[#1195f3] py-2 text-center text-white"
+            className="w-full bg-gray-default py-2 text-center text-white"
             type="submit"
           >
             Salvar

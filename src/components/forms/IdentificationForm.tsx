@@ -26,7 +26,7 @@ export default function IdentificationForm() {
                   fullName: target.value || "",
                 })
               }
-              className="border border-gray-400 bg-gray-100"
+              className="border border-gray-400"
               id="fullName"
             />
           </FormControl>
@@ -43,7 +43,7 @@ export default function IdentificationForm() {
                   phone: target.value || "",
                 })
               }
-              className="border border-gray-400 bg-gray-100"
+              className="border border-gray-400"
               id="phone"
             />
           </FormControl>
