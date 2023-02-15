@@ -127,23 +127,25 @@ export default function Identification() {
                       <br />
                       {` ${address_.districtName}`}
                     </Text>
-                    <HStack className="space-x-2">
-                      <Link
-                        className="rounded-md border border-gray-300 bg-transparent p-[0.55rem]"
-                        href={{
-                          pathname: "/address",
-                          query: { addressId: address_._id },
-                        }}
-                      >
-                        <BiEditAlt className="text-xl" />
-                      </Link>
-                      <IconButton
-                        className="border border-gray-300 bg-transparent"
-                        aria-label="Excluir endereço"
-                        onClick={() => onRemoveAddress(address_._id || "")}
-                        icon={<RiCloseLine className="text-xl" />}
-                      />
-                    </HStack>
+                    {session?._id && (
+                      <HStack className="space-x-2">
+                        <Link
+                          className="rounded-md border border-gray-300 bg-transparent p-[0.55rem]"
+                          href={{
+                            pathname: "/address",
+                            query: { addressId: address_._id },
+                          }}
+                        >
+                          <BiEditAlt className="text-xl" />
+                        </Link>
+                        <IconButton
+                          className="border border-gray-300 bg-transparent"
+                          aria-label="Excluir endereço"
+                          onClick={() => onRemoveAddress(address_._id || "")}
+                          icon={<RiCloseLine className="text-xl" />}
+                        />
+                      </HStack>
+                    )}
                   </HStack>
                 ))
               )}
