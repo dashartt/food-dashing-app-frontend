@@ -21,7 +21,7 @@ export default function QuantityInput({ onChange, initialQuantity }: Props) {
   }, [quantity]);
 
   return (
-    <HStack className=" rounded-lg w-fit border border-gray-300">
+    <HStack className=" rounded-lg w-fit">
       {/* Decrement item -----------> */}
       <IconButton
         disabled={quantity === 1}
