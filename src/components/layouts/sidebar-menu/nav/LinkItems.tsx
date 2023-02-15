@@ -33,7 +33,7 @@ export const ClientLinkItems: Array<LinkItemProps> = [
     icon: RiFileList3Line,
   },
   {
-    path: "/identification",
+    path: "/account",
     name: "Conta",
     icon: MdManageAccounts,
   },

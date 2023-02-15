@@ -77,7 +77,7 @@ export default function Checkout() {
     setMounted(true);
 
     if (items.length === 0) router.push("/");
-    if (!session) router.push("/identification");
+    if (!session) router.push("/account");
   }, []);
 
   return (
@@ -89,7 +89,7 @@ export default function Checkout() {
             <HStack className="w-full justify-between bg-white px-4">
               <Text className="text-xl font-semibold">Identificação</Text>
               <Button
-                onClick={() => router.push("/identification")}
+                onClick={() => router.push("/account")}
                 className="bg-gray-default text-white"
               >
                 Editar

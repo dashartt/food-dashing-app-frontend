@@ -47,7 +47,7 @@ export const setHeaderTitle = (path_: string) => {
       title: "Detalhes do pedido",
     },
     {
-      path: "/identification",
+      path: "/account",
       title: "Informações da conta",
     },
     {

@@ -16,12 +16,7 @@ export default function AuthProvider({ children }: PropsWithChildren) {
   const router = useRouter();
   const path = usePathname() as string;
   const token = (getCookie("token") as string) || "";
-  const requiredAuthPaths = [
-    "/checkout",
-    "/address",
-    "/identification",
-    "/history",
-  ];
+  const requiredAuthPaths = ["/checkout", "/address", "/account", "/history"];
   const needAuth = requiredAuthPaths.some((path_) =>
     new RegExp(path_).test(path)
   );

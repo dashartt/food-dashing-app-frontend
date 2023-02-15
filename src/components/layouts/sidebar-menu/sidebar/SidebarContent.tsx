@@ -26,7 +26,7 @@ export default function SidebarContent({
   const localPath = usePathname();
   const { session } = useSessionState();
 
-  const navsToHide = ["/history", "/identification"];
+  const navsToHide = ["/history", "/account"];
   const isAdminPaths = localPath?.includes("admin");
   const canShowThisNav = (path: string) =>
     navsToHide.includes(path) ? !!session?._id : true;
