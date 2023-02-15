@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { RiArrowRightSLine } from "react-icons/ri";
 
-export default function PizzariaInformation() {
+export default function AboutPage() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {

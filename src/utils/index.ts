@@ -6,8 +6,8 @@ import type { ICartItem } from "@/types";
 const StringMask = require("string-mask");
 
 // Session title chosen based on path  -------------------->
-export const setHeaderTitle = (path: string) => {
-  const pathAndTitle = [
+export const setHeaderTitle = (path_: string) => {
+  const adminPathsAndTiles = [
     {
       path: "/admin/orders/to-do/",
       title: "Pedidos a fazer",
@@ -32,8 +32,10 @@ export const setHeaderTitle = (path: string) => {
       path: "/admin/orders/completed/",
       title: "Histórico de pedidos",
     },
+  ];
+  const clientPathsAndTitles = [
     {
-      path: "/pizzaria-information",
+      path: "/about",
       title: "Sobre a Pizzaria",
     },
     {
@@ -69,7 +71,11 @@ export const setHeaderTitle = (path: string) => {
       title: "Cardápio",
     },
   ];
-  return pathAndTitle.find((obj) => path.includes(obj.path))?.title;
+  return (
+    [...adminPathsAndTiles, ...clientPathsAndTitles].find(({ path }) =>
+      path_.includes(path)
+    )?.title || ""
+  );
 };
 
 // Format currency  -------------------->

@@ -1,5 +1,5 @@
 import type { IconType } from "react-icons";
-import { BsCardChecklist, BsCart3 } from "react-icons/bs";
+import { BsCardChecklist, BsCart3, BsInfoCircle } from "react-icons/bs";
 import { GiFireBowl } from "react-icons/gi";
 import { GoBook } from "react-icons/go";
 import { MdManageAccounts, MdOutlineDeliveryDining } from "react-icons/md";
@@ -12,6 +12,11 @@ interface LinkItemProps {
 }
 export const ClientLinkItems: Array<LinkItemProps> = [
   {
+    path: "/about",
+    name: "Sobre a pizzaria",
+    icon: BsInfoCircle,
+  },
+  {
     name: "Cardápio",
     path: "/",
     icon: GoBook,
@@ -21,6 +26,7 @@ export const ClientLinkItems: Array<LinkItemProps> = [
     name: "Carrinho",
     icon: BsCart3,
   },
+
   {
     path: "/history",
     name: "Pedidos",
