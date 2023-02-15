@@ -2,6 +2,9 @@ import { extendTheme } from "@chakra-ui/react";
 import { StepsTheme as Steps } from "chakra-ui-steps";
 
 const theme = extendTheme({
+  breakpoints: {
+    "3xl": "160rem",
+  },
   components: {
     Steps,
     Alert: {
