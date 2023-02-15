@@ -89,17 +89,17 @@ export const signup = async ({
 };
 
 export const signin = async ({
-  phone,
+  // phone,
   password,
 }: {
   password: string;
-  phone: string;
+  // phone: string;
 }) => {
   const response = await fetch(`${SERVER_URL}/account/signin`, {
     headers: { "Content-Type": "application/json" },
     method: "POST",
     mode: "cors",
-    body: JSON.stringify({ password, phone }),
+    body: JSON.stringify({ password /* phone */ }),
   });
 
   const responseData = (await response.json()) as {
