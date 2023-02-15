@@ -11,8 +11,7 @@ interface AddressesState {
   removeAddress: (addressId: string) => void;
 
   address: IAddress | null;
-  setAddress: (_id: string) => void;
-  resetAddress: () => void;
+  setAddress: (_id?: string) => void;
 }
 
 const useAddressesState = create<AddressesState>()(
@@ -35,19 +34,17 @@ const useAddressesState = create<AddressesState>()(
         get().addresses.find((address_) => address_._id === addressId) || null,
       removeAddress: (addressId) =>
         set((state) => ({
-          ...state,
           addresses: state.addresses.filter(
             (address) => address._id !== addressId
           ),
         })),
 
       address: null,
-      setAddress: (_id: string) =>
+      setAddress: (_id = "") =>
         set((state) => ({
-          ...state,
-          address: state.addresses.find((address_) => address_._id === _id),
+          address:
+            state.addresses.find((address_) => address_._id === _id) || null,
         })),
-      resetAddress: () => set((state) => ({ ...state, address: null })),
     }),
     {
       name: "addresses-storage", // name of item in the storage (must be unique)
