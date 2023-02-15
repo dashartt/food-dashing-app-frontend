@@ -4,8 +4,8 @@ import "../../styles/global.css";
 
 import type { PropsWithChildren } from "react";
 
-import LayoutSidebarMenu from "@/components/layouts/sidebar-menu";
 import AllInOneProvider from "@/components/providers/AllInOneProvider";
+import AuthProvider from "@/components/providers/AuthProvider";
 
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
@@ -13,7 +13,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
       <head />
       <body id="__next" className="bg-[url(/static/bg-image.png)]">
         <AllInOneProvider>
-          <LayoutSidebarMenu>{children}</LayoutSidebarMenu>
+          <AuthProvider>{children}</AuthProvider>
         </AllInOneProvider>
       </body>
     </html>
