@@ -32,7 +32,7 @@ const signUpSchema = zod.object({
       message: "Campo obrigatório e tem que ser maior que 5 caracteres",
     }),
 });
-type SignupValues = zod.TypeOf<typeof signUpSchema>;
+type SignupValues = { password: string };
 
 export default function SignInForm() {
   const router = useRouter();
