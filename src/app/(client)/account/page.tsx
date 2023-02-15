@@ -90,14 +90,6 @@ export default function Identification() {
 
   useEffect(() => {
     setMounted(true);
-
-    if (!session) {
-      toast({
-        title: "Você ainda não tem uma conta",
-        description: "Cadastra-se para continuar e confirmar seu pedido",
-        ...utils.toastOptions,
-      });
-    }
   }, []);
 
   return (

@@ -77,7 +77,14 @@ export default function Checkout() {
     setMounted(true);
 
     if (items.length === 0) router.push("/");
-    if (!session) router.push("/account");
+    if (!session?._id) {
+      toast({
+        title: "Você ainda não tem uma conta",
+        description: "Cadastra-se para continuar e confirmar seu pedido",
+        ...utils.toastOptions,
+      });
+      router.push("/account");
+    }
   }, []);
 
   return (
