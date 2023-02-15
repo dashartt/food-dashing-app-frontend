@@ -4,7 +4,7 @@ import { StepsTheme as Steps } from "chakra-ui-steps";
 const theme = extendTheme({
   colors: {
     gray: {
-      default: "#46434e",
+      default: "#44414c",
     },
   },
   breakpoints: {

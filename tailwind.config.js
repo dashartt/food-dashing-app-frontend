@@ -27,7 +27,7 @@ module.exports = {
     extend: {
       colors: {
         gray: {
-          default: "#46434e",
+          default: "#44414c",
           100: "#f7fafc",
           200: "#edf2f7",
           300: "#e2e8f0",
