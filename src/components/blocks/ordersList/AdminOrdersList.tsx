@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import { SimpleGrid } from "@chakra-ui/react";
+import { Wrap } from "@chakra-ui/react";
 import { v4 as uuid } from "uuid";
 
 import OrderCard from "@/components/cards/OrderItemCard";
@@ -24,11 +24,7 @@ export default function OrdersList({ status, isLoading }: Props) {
       {!isLoading && orders_.length === 0 && <EmptyOrders status={status} />}
 
       {orders_ && (
-        <SimpleGrid
-          columns={{ base: 1, md: 2, "2xl": 3, "3xl": 4 }}
-          spacing={10}
-          className="mx-auto max-w-fit"
-        >
+        <Wrap spacing={5} className="mx-auto max-w-fit">
           {isLoading &&
             Array(4)
               .fill(0)
@@ -39,7 +35,7 @@ export default function OrdersList({ status, isLoading }: Props) {
             orders_?.map((order) => (
               <OrderCard date key={order._id} order={order} isAdmin />
             ))}
-        </SimpleGrid>
+        </Wrap>
       )}
     </>
   );
