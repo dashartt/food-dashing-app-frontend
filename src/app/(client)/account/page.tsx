@@ -115,7 +115,7 @@ export default function Identification() {
             <HStack className="justify-between p-4">
               <Text className="text-xl font-semibold">Endereço</Text>
               <Button
-                className="bg-[#1a95f3] text-white "
+                className="bg-gray-default text-white "
                 onClick={() => router.push("/address")}
               >
                 Adicionar
@@ -160,7 +160,7 @@ export default function Identification() {
           <Box className="w-full p-4">
             <Button
               onClick={onConfirmRegistration}
-              className="w-full bg-[#1a95f3] text-white"
+              className="w-full bg-gray-default text-white"
             >
               Confirmar
             </Button>
