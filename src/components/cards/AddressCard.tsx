@@ -37,7 +37,7 @@ export default function AddressCard({
   return (
     <Card
       {...(asButton && buttonProps)}
-      className="w-full max-w-xs border border-gray-400 bg-white shadow-lg"
+      className="w-full max-w-sm border border-gray-400 bg-white shadow-lg"
       variant="outline"
     >
       <CardBody>
