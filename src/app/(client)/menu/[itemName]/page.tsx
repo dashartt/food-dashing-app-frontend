@@ -14,7 +14,6 @@ import ListPizzasModal from "@/components/modals/ListPizzaModal";
 import PizzaFillingRadio from "@/components/radios/PizzaFillingRadio";
 import MenuItemCardSimpleSkeleton from "@/components/skeletons/MenuItemCardSimpleSkeleton.";
 import useObservationPizzaState from "@/store/pizza/useObservationPizza";
-import { getCategoryName } from "@/utils";
 
 type Params = {
   params: {
@@ -50,34 +49,34 @@ export default function MenuItem({ params }: Params) {
     <>
       {mounted && (
         <VStack className="items-start space-y-4 md:w-96">
-          <Box className="w-full space-y-4 px-4">
+          <Box className="w-full space-y-6 px-4">
             {/* Product chosen  ----------------> */}
-            <VStack className="items-start space-y-0">
+            {/* <VStack className="items-start space-y-0">
               <Text className="text-lg font-semibold">Produto escolhido</Text>
               <Text>{getCategoryName(item?.category.name)}</Text>
-            </VStack>
-
-            {/* Whole or half pizza option and get another half pizza */}
-            {item?.category?.name.includes("pizza") && (
-              <VStack className="items-start space-y-1">
-                <Text className="text-lg font-semibold">Tipo de recheio</Text>
-                <PizzaFillingRadio />
-              </VStack>
-            )}
+            </VStack> */}
 
             {/* Name and ingredients  ----------------> */}
-            <VStack className="w-full items-start space-y-1">
-              {!item?.category.name.includes("drinks") && (
-                <Text className="text-lg font-semibold">Recheio escolhido</Text>
-              )}
+            <VStack className="w-full items-start">
+              <Text className="text-lg font-semibold">Sobre o produto</Text>
               {isLoading && <MenuItemCardSimpleSkeleton />}
               {item && <MenuItemCard menuItem={item} />}
             </VStack>
 
+            {/* Whole or half pizza option and get another half pizza */}
+            {item?.category?.name.includes("pizza") && (
+              <VStack className="items-start">
+                <Text className="text-lg font-semibold">
+                  Inteira ou metade?
+                </Text>
+                <PizzaFillingRadio />
+              </VStack>
+            )}
+
             {isHalf && (
-              <VStack className="items-start space-y-1">
+              <VStack className="items-start">
                 <Text className="text-lg font-semibold ">
-                  A outra metade do recheio
+                  Escolha a outra metade
                 </Text>
                 <ListPizzasModal />
                 {anotherHalfPizza && (
@@ -89,17 +88,16 @@ export default function MenuItem({ params }: Params) {
 
           {/* Observation ----------------> */}
           {item?.category.name !== "drinks" && (
-            <Box className="w-full space-y-2 p-4">
+            <VStack className="w-full items-start p-4">
               <Text className="text-lg  font-semibold">Observações</Text>
-              <Box>
-                <Textarea
-                  value={observation}
-                  onChange={({ target }) => setObservation(target.value)}
-                  placeholder="Ex: tirar cebola, ovo, etc"
-                  className="border-gray-400"
-                />
-              </Box>
-            </Box>
+
+              <Textarea
+                value={observation}
+                onChange={({ target }) => setObservation(target.value)}
+                placeholder="Ex: tirar cebola, ovo, etc"
+                className="border-gray-400 w-full max-h-32"
+              />
+            </VStack>
           )}
 
           {/* Change quantity and add to cart ----------------> */}

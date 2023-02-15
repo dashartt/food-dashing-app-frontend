@@ -67,7 +67,7 @@ export default function BuyMoreOrFinish({ children, orderItem }: Props) {
           <Button
             disabled={!anotherHalfPizza && isHalf}
             onClick={onAddItem}
-            className="space-x-4 bg-[#1a95f3] py-6 text-white"
+            className="space-x-4 bg-gray-default py-6 text-white"
           >
             {children}
           </Button>

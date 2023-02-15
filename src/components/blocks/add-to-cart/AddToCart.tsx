@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, HStack, IconButton, Text } from "@chakra-ui/react";
+import { HStack, IconButton, Text, VStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { RiAddLine, RiSubtractLine } from "react-icons/ri";
 import type { ICartItem } from "src/types";
@@ -31,9 +31,9 @@ export default function AddToCart({ orderItem }: Props) {
   return (
     <>
       {mounted && (
-        <Box className="w-full">
-          <HStack className="justify-between">
-            <HStack className="bg-gray-200 py-1 rounded-lg w-fit">
+        <VStack className="w-full space-y-4 items-start">
+          <HStack className="justify-between w-full items-center">
+            <HStack className="py-1 rounded-lg w-fit">
               {/* Decrement item -----------> */}
               <IconButton
                 disabled={disableDecrement}
@@ -55,14 +55,14 @@ export default function AddToCart({ orderItem }: Props) {
             </HStack>
             {/* Continue buying or finish purchase -----------> */}
             <BuyMoreOrFinish orderItem={{ ...orderItem, quantity }}>
-              <Text>Adicionar</Text>
+              <Text>Adicionar ao carrinho</Text>
             </BuyMoreOrFinish>
           </HStack>
-
-          <Text className="font-semibold text-xl mt-4">
-            Total R$ {((orderItem?.item[0]?.price || 0) * quantity).toFixed(2)}
+          <Text className="font-semibold text-xl">
+            Total R$
+            {((orderItem?.item[0]?.price || 0) * quantity).toFixed(2)}
           </Text>
-        </Box>
+        </VStack>
       )}
     </>
   );

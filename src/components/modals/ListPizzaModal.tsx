@@ -30,8 +30,11 @@ export default function ListPizzasModal() {
   return (
     <>
       {!anotherHalfPizza && (
-        <Button className="bg-blue-500 font-normal text-white" onClick={onOpen}>
-          Selecione a outra metade
+        <Button
+          className="bg-gray-default font-normal text-white"
+          onClick={onOpen}
+        >
+          Ver opções de pizzas
         </Button>
       )}
 

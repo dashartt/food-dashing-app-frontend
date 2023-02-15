@@ -56,7 +56,7 @@ export default function MenuItemCard({
     >
       <CardBody className="space-y-2">
         <HStack className="justify-between">
-          <Heading size="md" className="font-medium">
+          <Heading size="md" className="font-normal">
             {menuItem.name}
           </Heading>
           {canRemove && (
@@ -72,11 +72,7 @@ export default function MenuItemCard({
         <Text className="text-gray-600  line-clamp-3">
           {menuItem?.ingredients}
         </Text>
-        {hasPrice && (
-          <Text className="mt-2 text-xl font-semibold">
-            R$ {menuItem.price}
-          </Text>
-        )}
+        {hasPrice && <Text className="mt-2 text-xl">R$ {menuItem.price}</Text>}
       </CardBody>
     </Card>
   );
