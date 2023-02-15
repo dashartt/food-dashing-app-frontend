@@ -3,16 +3,20 @@
 import { Box, Button, HStack, Text, useToast, VStack } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import Address from "src/components/blocks/address/Address";
-import Identification from "src/components/blocks/identification/Identification";
-import Payment from "src/components/blocks/payment/Payment";
 import useAddressesState from "src/store/checkout/useAddresses";
-import usePaymentState from "src/store/checkout/usePayment";
 import useShoppingCart from "src/store/useShoppingCart";
 import type { IOrderItem } from "src/types";
 
-import DeliveryOrPickup from "@/components/switchs/DeliveryOrPickup";
+import AddressCard from "@/components/cards/AddressCard";
+import IdentificationCard from "@/components/cards/IdentificationCard";
+import PaybackInput from "@/components/inputs/PaybackInput";
+import SelectAddressModal from "@/components/modals/SelectAddressModal";
+import DeliveryTypeRadio from "@/components/radios/DeliveryTypeRadio";
+import NeedPaybackRadio from "@/components/radios/NeedPaybackRadio";
+import PaymentTypeRadio from "@/components/radios/PaymentTypeRadio";
 import useApplyDeliveryFee from "@/store/useApplyDeliveryFee";
+import useDeliveryType from "@/store/useDeliveryType";
+import usePaymentType from "@/store/usePaymentType";
 import useSessionState from "@/store/useSession";
 import { formatCurrency } from "@/utils";
 
@@ -24,11 +28,12 @@ export default function Checkout() {
   const toast = useToast();
   const router = useRouter();
 
-  // eslint-disable-next-line @typescript-eslint/naming-convention
   const { session } = useSessionState();
   const { address, addresses } = useAddressesState();
-  const { paymentType, hasPayBack, payback } = usePaymentState();
-  const { deliveryFee, option } = useApplyDeliveryFee();
+
+  const { needPayback, paymentType, paybackValue } = usePaymentType();
+  const { deliveryFee } = useApplyDeliveryFee();
+  const { deliveryType } = useDeliveryType();
   const { emptyCart, items, getTotalPrice } = useShoppingCart();
 
   const onConfirmPurchase = async () => {
@@ -36,7 +41,7 @@ export default function Checkout() {
       !address ||
       addresses.length === 0 ||
       !paymentType ||
-      (hasPayBack && payback === 0)
+      (needPayback && paybackValue === 0)
     ) {
       toast({
         title: "Faltam informações",
@@ -54,9 +59,9 @@ export default function Checkout() {
             ...(item_.observation && { observation: item_.observation }),
           })) as unknown as IOrderItem,
           paymentType,
-          isDelivery: option === "delivery",
-          ...(hasPayBack && { hasPayBack }),
-          ...(payback && { payback }),
+          isDelivery: deliveryType === "delivery",
+          ...(needPayback && { hasPayBack: needPayback }),
+          ...(paybackValue && { payback: paybackValue }),
         })
         .then((orderId) => {
           emptyCart();
@@ -79,16 +84,49 @@ export default function Checkout() {
     <>
       {mounted && (
         <VStack className="items-start md:w-96">
-          <Identification />
-          <Address />
+          {/* perfil container  */}
+          <Box className="w-full">
+            <HStack className="w-full justify-between bg-white px-4">
+              <Text className="text-xl font-semibold">Identificação</Text>
+              <Button
+                onClick={() => router.push("/identification")}
+                className="bg-gray-default text-white"
+              >
+                Editar
+              </Button>
+            </HStack>
 
+            <IdentificationCard />
+          </Box>
+
+          {/* address container  */}
+          <Box className="w-full">
+            <HStack className="mx-4 justify-between">
+              <Text className="text-xl font-semibold">Endereço </Text>
+              <Button
+                onClick={() => router.push("/address")}
+                className=" bg-gray-default text-white"
+              >
+                Adicionar
+              </Button>
+            </HStack>
+            <Box className="m-4">
+              <SelectAddressModal />
+              <AddressCard canRemove address={address} />
+            </Box>
+          </Box>
+
+          {/* delivery type container  */}
           <Box className="mx-4">
             <VStack className="items-start space-y-0">
-              <Text>Eu vou querer: </Text>
-              <DeliveryOrPickup />
+              <Text className="mb-2 text-xl font-semibold">
+                Tipo de entrega
+              </Text>
+              <DeliveryTypeRadio />
             </VStack>
           </Box>
 
+          {/* order prices details container */}
           <Box className="w-full space-y-2 p-4">
             <Text className="text-xl font-semibold">Total do pedido</Text>
 
@@ -100,25 +138,58 @@ export default function Checkout() {
 
               <HStack className="justify-between">
                 <Text>Taxa de entrega</Text>
-                <Text>R$ {deliveryFee}</Text>
+                <Text>R$ {deliveryType === "delivery" ? deliveryFee : 0}</Text>
               </HStack>
 
               <HStack className="justify-between">
                 <Text className="font-semibold">Total</Text>
                 <Text className="font-semibold">
                   R$
-                  {formatCurrency(getTotalPrice() + deliveryFee)}
+                  {formatCurrency(
+                    getTotalPrice() +
+                      (deliveryType === "delivery" ? deliveryFee : 0)
+                  )}
                 </Text>
               </HStack>
             </Box>
           </Box>
 
-          <Payment />
+          {/*  payment type container */}
+          <Box className="w-full space-y-4">
+            <Box className="space-y-2">
+              <Text className="mx-4 text-xl font-semibold">
+                Forma de pagamento
+              </Text>
+              <Box className="mx-4">
+                <PaymentTypeRadio />
+              </Box>
+            </Box>
+            {/* Payback container */}
+            {paymentType === "cash" && (
+              <HStack className="m-4 items-start justify-between">
+                <VStack className="items-start">
+                  <Text className="text-xl font-semibold">
+                    Precisa de troco?
+                  </Text>
+                  <NeedPaybackRadio />
+                </VStack>
+                {needPayback && (
+                  <VStack className="items-start">
+                    <Text className="text-xl font-semibold">
+                      Valor em troco?
+                    </Text>
+                    <PaybackInput />
+                  </VStack>
+                )}
+              </HStack>
+            )}
+          </Box>
 
-          <Box className="w-full p-4">
+          {/* confirm order container */}
+          <Box className="mt-4 w-full p-4">
             <Button
               onClick={onConfirmPurchase}
-              className="w-full bg-[#1a95f3] text-white"
+              className="w-full bg-gray-default text-white"
             >
               Confirmar
             </Button>
