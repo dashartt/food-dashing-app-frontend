@@ -3,7 +3,8 @@
 import { Avatar, Box, Heading, HStack, VStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
-import SignTabs from "@/components/tabs/SignTabs";
+// import SignTabs from "@/components/tabs/SignTabs";
+import SignInForm from "@/components/forms/SignInForm";
 
 export default function Auth() {
   const [mounted, setMounted] = useState(false);
@@ -26,7 +27,8 @@ export default function Auth() {
             </Heading>
 
             <Box className="w-full space-y-4 rounded-t-2xl border border-gray-400 p-8">
-              <SignTabs />
+              <SignInForm />
+              {/* <SignTabs /> */}
             </Box>
           </VStack>
         </HStack>

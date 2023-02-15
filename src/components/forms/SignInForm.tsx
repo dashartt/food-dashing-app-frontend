@@ -10,7 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { setCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import InputMask from "react-input-mask";
+// import InputMask from "react-input-mask";
 import zod from "zod";
 
 import useSessionState from "@/store/useSession";
@@ -19,11 +19,11 @@ import * as api from "../../services/api";
 import * as utils from "../../utils";
 
 const signUpSchema = zod.object({
-  phone: zod
-    .string({
-      required_error: "Digite seu celular",
-    })
-    .min(11, { message: "Campo obrigatório, digite seu celular" }),
+  // phone: zod
+  // .string({
+  //   required_error: "Digite seu celular",
+  // })
+  // .min(11, { message: "Campo obrigatório, digite seu celular" }),
   password: zod
     .string({
       required_error: "Digite sua senha",
@@ -50,7 +50,7 @@ export default function SignInForm() {
     api
       .signin({
         password: signupValues.password,
-        phone: signupValues.phone.replace(/[^\d]/g, ""),
+        // phone: signupValues.phone.replace(/[^\d]/g, ""),
       })
       .then((data) => {
         if (!data.isSuccess) {
@@ -83,7 +83,7 @@ export default function SignInForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col space-y-4">
-      <FormControl isInvalid={!!errors.phone}>
+      {/* <FormControl isInvalid={!!errors.phone}>
         <FormLabel htmlFor="phone">Celular</FormLabel>
 
         <Input
@@ -95,7 +95,7 @@ export default function SignInForm() {
         />
 
         <FormErrorMessage>{errors.phone?.message}</FormErrorMessage>
-      </FormControl>
+      </FormControl> */}
 
       <FormControl isInvalid={!!errors.password}>
         <FormLabel htmlFor="addressName">Senha</FormLabel>
