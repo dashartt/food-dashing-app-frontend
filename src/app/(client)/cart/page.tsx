@@ -26,9 +26,7 @@ export default function ShoppingCart() {
       {mounted && (
         <VStack className="items-start space-y-4 md:w-96">
           {/* Cart items list ------------> */}
-          <Text className="p-4 text-xl font-semibold">
-            Produtos escolhidos do seu pedido
-          </Text>
+          <Text className="p-4 text-xl">Produtos escolhidos do seu pedido</Text>
           <VStack className="w-full space-y-4 px-4">
             {items?.map((itemCart) => (
               <ItemCartCard key={uuid()} itemCart={itemCart} />
@@ -37,7 +35,7 @@ export default function ShoppingCart() {
 
           <Box className="w-full bg-white p-4">
             <HStack className="justify-between">
-              <Text className="text-lg font-semibold">
+              <Text className="text-lg">
                 Total: R$ {formatCurrency(getTotalPrice())}
               </Text>
               <Button

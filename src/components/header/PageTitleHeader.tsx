@@ -28,7 +28,7 @@ export default function PageTitleHeader({
       className={`w-full ${className} ${responsiveStyle} ${defaultStyles} h-20`}
     >
       {path !== "/" && <BackPageBtn />}
-      <Text className="text-black font-semibold text-xl">{title}</Text>
+      <Text className="text-black text-xl">{title}</Text>
     </HStack>
   );
 }

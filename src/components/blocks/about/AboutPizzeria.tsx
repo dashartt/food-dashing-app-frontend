@@ -8,7 +8,7 @@ export default function AboutPizzeria() {
       </Box>
       <VStack className="flex items-start space-y-0">
         <HStack className="space-x-0">
-          <Heading as="h1" className="truncate text-xl w-fit">
+          <Heading as="h1" className="truncate text-xl w-fit font-normal">
             Macaco Louco <br />
             Pizzaria
           </Heading>
