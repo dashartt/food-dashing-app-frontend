@@ -3,7 +3,7 @@ import { Box, CloseButton, Flex } from "@chakra-ui/react";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import PizzariaInfo from "@/components/blocks/pizzaria-info/PizzariaInfo";
+import AboutPizzeria from "@/components/blocks/about/AboutPizzeria";
 import SidebarContentSkeleton from "@/components/skeletons/sidebar-menu/SidebarContentSkeleton";
 import useSessionState from "@/store/useSession";
 
@@ -59,7 +59,7 @@ export default function SidebarContent({
           {...rest}
         >
           <Flex className="mb-4 h-20 items-center justify-between border-b-2 border-gray-300 px-4">
-            <PizzariaInfo />
+            <AboutPizzeria />
             <CloseButton
               display={{ base: "flex", md: "none" }}
               onClick={onClose}
