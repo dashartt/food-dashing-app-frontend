@@ -20,7 +20,7 @@ export default function EmptyCart() {
 
             <Button
               onClick={() => router.push("/")}
-              className="w-full rounded-none bg-[#1a95f3] text-white"
+              className="w-full rounded-none bg-gray-default text-white"
             >
               Voltar para o cardápio
             </Button>
