@@ -17,7 +17,7 @@ export default function LayoutSidebarMenu({ children }: LayoutProps) {
   const isAdmin = path.includes("admin");
 
   return (
-    <Box className="mx-auto min-h-screen max-w-7xl rounded-md border border-gray-300 bg-white">
+    <Box className="mx-auto min-h-screen min-w-full lg:min-w-[60rem] max-w-fit rounded-md border border-gray-300 bg-white">
       <MobileNav display={{ base: "flex", lg: "none" }} onOpen={onOpen} />
 
       <SidebarContent

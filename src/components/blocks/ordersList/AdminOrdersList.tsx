@@ -25,7 +25,7 @@ export default function OrdersList({ status, isLoading }: Props) {
 
       {orders_ && (
         <SimpleGrid
-          columns={{ base: 1, md: 2 }}
+          columns={{ base: 1, md: 2, "2xl": 3, "3xl": 4 }}
           spacing={10}
           className="mx-auto max-w-fit"
         >
