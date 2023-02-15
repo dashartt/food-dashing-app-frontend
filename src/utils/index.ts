@@ -44,7 +44,7 @@ export const setHeaderTitle = (path_: string) => {
     },
     {
       path: "/menu/",
-      title: "Detalhes do produto",
+      title: "Detalhes do pedido",
     },
     {
       path: "/identification",
