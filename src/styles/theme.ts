@@ -2,6 +2,11 @@ import { extendTheme } from "@chakra-ui/react";
 import { StepsTheme as Steps } from "chakra-ui-steps";
 
 const theme = extendTheme({
+  colors: {
+    gray: {
+      default: "#46434e",
+    },
+  },
   breakpoints: {
     "3xl": "160rem",
   },
