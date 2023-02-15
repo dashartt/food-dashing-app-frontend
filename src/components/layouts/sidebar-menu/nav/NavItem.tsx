@@ -10,7 +10,7 @@ export default function NavItem({ icon, name, ...rest }: NavItemProps) {
   return (
     <Flex
       role="group"
-      className="mx-4 cursor-pointer items-center rounded-md p-4 hover:bg-gray-800 hover:text-white"
+      className="mx-4 cursor-pointer items-center rounded-md p-4 hover:bg-gray-default hover:text-white"
       {...rest}
     >
       {icon && <Icon className="mr-4 text-2xl" as={icon} />}

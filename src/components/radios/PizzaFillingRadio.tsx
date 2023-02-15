@@ -22,7 +22,7 @@ function RadioCard(props: RadioCardProp) {
         {...checkbox}
         className="cursor-pointer rounded-md border border-gray-400 px-5 py-3 shadow-lg"
         _checked={{
-          bg: "blue.400",
+          bg: "gray.default",
           color: "white",
         }}
         _focus={{
