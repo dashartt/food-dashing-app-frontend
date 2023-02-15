@@ -50,7 +50,7 @@ export default function ItemCartCard({ itemCart }: Props) {
             <VStack className="items-start">
               <HStack className="w-full justify-between">
                 <VStack className="-space-y-1 items-start">
-                  <Text className="py-1 px-2 border border-gray-300 rounded-md mb-4">
+                  <Text className="py-1 px-2 rounded-md mb-4">
                     {utils.getCategoryName(itemCart.item[0]?.category.name)}
                   </Text>
                   <Text className="text-xl">
@@ -66,21 +66,21 @@ export default function ItemCartCard({ itemCart }: Props) {
                   onClick={onRemoveItem}
                   size="sm"
                   aria-label="Remover item do pedido"
-                  className="rounded-full bg-transparent border border-gray-300 self-start"
+                  className="rounded-full bg-transparent self-start"
                   icon={<RiCloseLine className="text-2xl text-red-500 " />}
                 />
               </HStack>
               <HStack className="w-full justify-between">
+                <QuantityInput
+                  initialQuantity={initialQuantity}
+                  onChange={onUpdateQuantity}
+                />
                 <Text className="text-lg">
                   R$
                   {utils.formatCurrency(
                     utils.getTotalItemPrice(itemCart._id || "")
                   )}
                 </Text>
-                <QuantityInput
-                  initialQuantity={initialQuantity}
-                  onChange={onUpdateQuantity}
-                />
               </HStack>
             </VStack>
           </CardBody>
