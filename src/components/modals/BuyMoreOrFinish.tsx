@@ -2,14 +2,13 @@
 
 import {
   Button,
-  Drawer,
-  DrawerBody,
-  DrawerCloseButton,
-  DrawerContent,
-  DrawerHeader,
-  DrawerOverlay,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
+  Text,
   useDisclosure,
-  useMediaQuery,
   VStack,
 } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
@@ -29,7 +28,6 @@ type Props = {
 };
 
 export default function BuyMoreOrFinish({ children, orderItem }: Props) {
-  const [isDesktop] = useMediaQuery("(min-width: 720px)");
   const [mounted, setMounted] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter();
@@ -71,36 +69,40 @@ export default function BuyMoreOrFinish({ children, orderItem }: Props) {
           >
             {children}
           </Button>
-          <Drawer
-            placement={isDesktop ? "top" : "bottom"}
+          <Modal
+            closeOnOverlayClick={false}
+            closeOnEsc={false}
+            isCentered
             onClose={onClose}
             isOpen={isOpen}
           >
-            <DrawerOverlay />
-            <DrawerContent className="mx-auto w-full sm:w-96">
-              <DrawerCloseButton />
-              <DrawerHeader className="border-b-2 border-gray-300">
-                Item adicionado ao carrinho
-              </DrawerHeader>
-              <DrawerBody className="p-4">
+            <ModalOverlay />
+            <ModalContent className="mx-auto w-full sm:w-96">
+              <ModalHeader className="border-b-2 border-gray-300">
+                <Text className="text-center font-normal">
+                  Adicionado ao carrinho
+                </Text>
+              </ModalHeader>
+
+              <ModalBody className="p-4">
                 {/* Button options -----------> */}
                 <VStack className="space-y-4 py-4">
                   <Button
                     onClick={() => afterAddGoTo("/")}
-                    className="w-52 bg-[#1a95f3] py-2 text-center text-white"
+                    className="w-52 bg-gray-default p-6 text-center text-white font-normal"
                   >
                     Voltar para o cardápio
                   </Button>
                   <Button
                     onClick={() => afterAddGoTo("/cart")}
-                    className="w-52 border border-gray-500 bg-white py-2 text-center"
+                    className="w-52 border border-gray-500 bg-white p-6 text-center font-normal"
                   >
                     Finalizar pedido
                   </Button>
                 </VStack>
-              </DrawerBody>
-            </DrawerContent>
-          </Drawer>
+              </ModalBody>
+            </ModalContent>
+          </Modal>
         </>
       )}
     </>
