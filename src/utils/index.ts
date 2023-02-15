@@ -48,7 +48,7 @@ export const setHeaderTitle = (path_: string) => {
     },
     {
       path: "/identification",
-      title: "Perfil",
+      title: "Informações da conta",
     },
     {
       path: "/history",
@@ -60,7 +60,7 @@ export const setHeaderTitle = (path_: string) => {
     },
     {
       path: "/cart",
-      title: "Carrinho",
+      title: "Carrinho de compras",
     },
     {
       path: "/address",
