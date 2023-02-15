@@ -24,7 +24,7 @@ export default function Address() {
             <Alert variant="blank" className="flex">
               <AlertIcon className="self-start" />
               <Text>
-                Clicque no icone de interrogação haverá mais detalhes sobre os
+                Clique no icone de interrogação haverá mais detalhes sobre os
                 campos a preencher
               </Text>
             </Alert>
