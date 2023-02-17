@@ -31,7 +31,7 @@ export default function ListPizzasModal() {
     <>
       {!anotherHalfPizza && (
         <Button
-          className="bg-gray-default font-normal text-white"
+          className="bg-white border border-gray-400 font-normal py-6 shadow-lg"
           onClick={onOpen}
         >
           Ver opções de pizzas
