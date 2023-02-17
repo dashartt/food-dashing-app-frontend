@@ -1,5 +1,5 @@
 import type { RadioProps } from "@chakra-ui/react";
-import { Box, useRadio } from "@chakra-ui/react";
+import { Box, Text, useRadio } from "@chakra-ui/react";
 
 type RadioCardProp = RadioProps & {
   inputValue: string;
@@ -25,7 +25,7 @@ export default function RadioCard(props: RadioCardProp) {
           boxShadow: "outline",
         }}
       >
-        {props.inputValue}
+        <Text className="font-normal">{props.inputValue}</Text>
       </Box>
     </Box>
   );
