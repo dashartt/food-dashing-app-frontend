@@ -11,6 +11,7 @@ import usePizzaStuffing from "src/store/pizza/usePizzaStuffing";
 import AddToCart from "@/components/blocks/add-to-cart/AddToCart";
 import MenuItemCard from "@/components/cards/MenuItemCard";
 import ListPizzasModal from "@/components/modals/ListPizzaModal";
+import PizzaBorderRadio from "@/components/radios/PizzaBorderRadio";
 import PizzaFillingRadio from "@/components/radios/PizzaFillingRadio";
 import MenuItemCardSimpleSkeleton from "@/components/skeletons/MenuItemCardSimpleSkeleton.";
 import useObservationPizzaState from "@/store/pizza/useObservationPizza";
@@ -48,7 +49,7 @@ export default function MenuItem({ params }: Params) {
   return (
     <>
       {mounted && (
-        <VStack className="items-start space-y-4 md:w-96">
+        <VStack className="items-start space-y-4">
           <Box className="w-full space-y-6 px-4">
             {/* Product chosen  ----------------> */}
             {/* <VStack className="items-start space-y-0">
@@ -72,7 +73,6 @@ export default function MenuItem({ params }: Params) {
                 <PizzaFillingRadio />
               </VStack>
             )}
-
             {isHalf && (
               <VStack className="items-start">
                 <Text className="text-lg font-semibold ">
@@ -86,16 +86,24 @@ export default function MenuItem({ params }: Params) {
             )}
           </Box>
 
+          {/* Pizza border type ------------------> */}
+          {item?.category?.name.includes("pizza") && (
+            <VStack className="items-start p-4 text-lg font-semibold">
+              <Text>Qual opção de borda?</Text>
+              <PizzaBorderRadio />
+            </VStack>
+          )}
+
           {/* Observation ----------------> */}
           {item?.category.name !== "drinks" && (
             <VStack className="w-full items-start p-4">
-              <Text className="text-lg  font-semibold">Observações</Text>
+              <Text className="text-lg font-semibold">Observações</Text>
 
               <Textarea
                 value={observation}
                 onChange={({ target }) => setObservation(target.value)}
                 placeholder="Ex: tirar cebola, ovo, etc"
-                className="border-gray-400 w-full max-h-32"
+                className="max-h-32 w-full border-gray-400"
               />
             </VStack>
           )}
