@@ -1,4 +1,4 @@
-import { Box, Button, Text, VStack } from "@chakra-ui/react";
+import { Button, Text, VStack } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -14,17 +14,15 @@ export default function EmptyCart() {
   return (
     <>
       {mounted && (
-        <VStack>
-          <Box className="space-y-8 p-4">
-            <Text className="text-xl font-bold">Nenhum item no carrinho</Text>
+        <VStack className="border border-gray-400 shadow-lg rounded-md space-y-8 p-8 rounded-md">
+          <Text className="text-2xl">Nenhum item no carrinho</Text>
 
-            <Button
-              onClick={() => router.push("/")}
-              className="w-full rounded-none bg-gray-default text-white"
-            >
-              Voltar para o cardápio
-            </Button>
-          </Box>
+          <Button
+            onClick={() => router.push("/")}
+            className="bg-gray-default text-white rounded-md p-8 font-normal text-xl"
+          >
+            Voltar para o cardápio
+          </Button>
         </VStack>
       )}
     </>

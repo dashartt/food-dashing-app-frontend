@@ -1,6 +1,6 @@
 "use client";
 
-import { Alert, AlertIcon, Box, Text, VStack } from "@chakra-ui/react";
+import { Alert, AlertIcon, Text, VStack } from "@chakra-ui/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import AddressForm from "src/components/forms/AddressForm";
@@ -20,16 +20,15 @@ export default function Address() {
     <>
       {mounted && (
         <VStack className="items-start md:w-96">
-          <Box className="px-7">
-            <Alert variant="blank" className="flex">
-              <AlertIcon className="self-start" />
-              <Text>
-                Clique no icone de interrogação haverá mais detalhes sobre os
-                campos a preencher
-              </Text>
-            </Alert>
-          </Box>
-          <VStack className="w-full px-4">
+          <Alert variant="blank" className="flex mb-8 max-w-sm">
+            <AlertIcon className="self-start" />
+            <Text>
+              Clique no icone de interrogação haverá mais detalhes sobre os
+              campos a preencher
+            </Text>
+          </Alert>
+
+          <VStack className="mx-auto border border-gray-400 rounded-md p-14">
             <AddressForm addressId={addressId || ""} />
           </VStack>
         </VStack>

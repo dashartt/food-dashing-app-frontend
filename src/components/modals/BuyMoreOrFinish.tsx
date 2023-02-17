@@ -79,7 +79,7 @@ export default function BuyMoreOrFinish({ children, orderItem }: Props) {
             <ModalOverlay />
             <ModalContent className="mx-auto w-full sm:w-96">
               <ModalHeader className="border-b-2 border-gray-300">
-                <Text className="text-center font-normal">
+                <Text className="text-center font-normal text-2xl">
                   Adicionado ao carrinho
                 </Text>
               </ModalHeader>

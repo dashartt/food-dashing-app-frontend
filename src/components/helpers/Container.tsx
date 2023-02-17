@@ -14,9 +14,6 @@ export default function Container({
   className = "",
   canFit = false,
 }: PropsWithChildren<Props>) {
-  // const path = usePathname();
-  // const needFit = !path?.includes("/history");
-  // const fitContent = needFit && canFit && "max-w-md md:max-w-lg";
-  const fitContent = canFit && "w-full sm:max-w-fit mx-auto";
+  const fitContent = canFit && "max-w-fit mx-auto";
   return <Box className={`${fitContent} ${className}`}>{children}</Box>;
 }

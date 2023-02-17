@@ -16,8 +16,8 @@ export default function AboutPage() {
     <>
       {mounted && (
         <VStack className="items-start md:w-96">
-          <Box className="w-full p-4 ">
-            <HStack className="rounded-md border border-gray-400">
+          <Box className="w-full p-4">
+            <HStack className="rounded-md border border-gray-400 shadow-lg">
               <Box className="rounded-full bg-white p-1">
                 <Avatar name="Pizzaria logo" size="lg" src="/static/logo.png" />
               </Box>
@@ -28,11 +28,11 @@ export default function AboutPage() {
             </HStack>
           </Box>
 
-          <Box className="m-4">
+          <Box className="m-4 space-y-2">
             <Text className="text-md text-xl font-semibold">Endereço</Text>
             <Link
               href="https://goo.gl/maps/pwPAsAXuVGV4AzBp6"
-              className="flex items-center justify-between rounded-md border border-gray-400 p-4"
+              className="flex items-center justify-between rounded-md border border-gray-400 p-4 shadow-lg"
             >
               <Text className="text-gray-700 ">
                 Rua O, 140 - Novo Horizonte, Ilha Solteira - SP, 15385-000,
@@ -42,22 +42,22 @@ export default function AboutPage() {
             </Link>
           </Box>
 
-          <Box className="w-full p-4">
+          <Box className="w-full p-4 space-y-2">
             <Text className="text-md text-xl font-semibold">
               Formas de pagamento
             </Text>
-            <VStack className="w-full items-start space-y-0 rounded-md border border-gray-400 p-4">
+            <VStack className="w-full items-start space-y-0 rounded-md border border-gray-400 p-4 shadow-lg">
               <Text>Cartões: crédito e débito</Text>
               <Text>Pix: (18) 98137-1989</Text>
               <Text>Dinheiro</Text>
             </VStack>
           </Box>
 
-          <Box className="w-full p-4">
+          <Box className="w-full p-4 space-y-2">
             <Text className="text-md text-xl font-semibold">
               Horário de atendimento
             </Text>
-            <Box className="space-y-4 rounded-md border border-gray-400 p-4">
+            <Box className="space-y-4 rounded-md border border-gray-400 p-4 shadow-lg">
               <Text>
                 De terça-feira à domingo <br />A partir de 19h00 até 23h30
               </Text>

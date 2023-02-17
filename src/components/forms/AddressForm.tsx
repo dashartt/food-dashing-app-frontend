@@ -74,7 +74,6 @@ export default function AddressForm({ addressId = "" }: Props) {
   });
 
   const onSubmit = async (adressDTO: IAddress) => {
-    console.log(adressDTO);
     if (addressId !== "") {
       api
         .updateAddress(addressId, {
@@ -115,10 +114,7 @@ export default function AddressForm({ addressId = "" }: Props) {
   return (
     <>
       {mounted && (
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="w-full space-y-6 p-4"
-        >
+        <form onSubmit={handleSubmit(onSubmit)} className="w-full space-y-6">
           <FormControl isInvalid={!!errors.addressName}>
             <HStack>
               <FormLabel htmlFor="addressName" className="m-0 p-0">

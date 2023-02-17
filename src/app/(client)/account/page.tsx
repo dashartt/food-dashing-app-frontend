@@ -2,23 +2,13 @@
 
 "use client";
 
-import {
-  Box,
-  Button,
-  HStack,
-  IconButton,
-  Text,
-  useToast,
-  VStack,
-} from "@chakra-ui/react";
-import Link from "next/link";
+import { Box, Button, HStack, Text, useToast, VStack } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { BiEditAlt } from "react-icons/bi";
-import { RiCloseLine } from "react-icons/ri";
 import IdentificationForm from "src/components/forms/IdentificationForm";
 import useAddressesState from "src/store/checkout/useAddresses";
 
+import AddressCard from "@/components/cards/AddressCard";
 import useSessionState from "@/store/useSession";
 import type { IAddress } from "@/types";
 
@@ -30,13 +20,8 @@ export default function Identification() {
 
   const toast = useToast();
   const { session, setSession } = useSessionState();
-  const { addresses, removeAddress } = useAddressesState();
+  const { addresses } = useAddressesState();
   const router = useRouter();
-
-  const onRemoveAddress = async (_id_: string) => {
-    removeAddress(_id_);
-    await api.removeAddress(_id_);
-  };
 
   const onConfirmRegistration = async () => {
     if (!session?.fullName || !session.phone || addresses.length === 0) {
@@ -95,10 +80,10 @@ export default function Identification() {
   return (
     <>
       {mounted && (
-        <VStack className="items-start md:w-96">
+        <VStack className="items-start space-y-6">
           <Box className="w-full">
             <Text className="p-4 text-xl font-semibold">Identificação</Text>
-            <Box className="mx-4 space-y-4">
+            <Box className="mx-4 space-y-4 rounded-md border border-gray-400 p-10 shadow-lg">
               <IdentificationForm />
             </Box>
           </Box>
@@ -118,40 +103,13 @@ export default function Identification() {
                 <Text>Nenhum endereço cadastrado</Text>
               ) : (
                 addresses.map((address_) => (
-                  <HStack
-                    key={address_?._id}
-                    className="justify-between rounded-md border border-gray-400 p-2"
-                  >
-                    <Text key={address_._id}>
-                      {`${address_.addressName} - ${address_.addressNumber} ${address_?.complement}`}
-                      <br />
-                      {` ${address_.districtName}`}
-                    </Text>
-                    {session?._id && (
-                      <HStack className="space-x-2">
-                        <Link
-                          className="rounded-md border border-gray-300 bg-transparent p-[0.55rem]"
-                          href={{
-                            pathname: "/address",
-                            query: { addressId: address_._id },
-                          }}
-                        >
-                          <BiEditAlt className="text-xl" />
-                        </Link>
-                        <IconButton
-                          className="border border-gray-300 bg-transparent"
-                          aria-label="Excluir endereço"
-                          onClick={() => onRemoveAddress(address_._id || "")}
-                          icon={<RiCloseLine className="text-xl" />}
-                        />
-                      </HStack>
-                    )}
-                  </HStack>
+                  <AddressCard key={address_._id} address={address_} />
                 ))
               )}
             </Box>
           </Box>
-          <Box className="w-full p-4">
+
+          <Box className="w-full p-4 mt-4">
             <Button
               onClick={onConfirmRegistration}
               className="w-full bg-gray-default text-white"

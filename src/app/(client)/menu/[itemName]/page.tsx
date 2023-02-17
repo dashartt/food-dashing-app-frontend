@@ -49,46 +49,38 @@ export default function MenuItem({ params }: Params) {
   return (
     <>
       {mounted && (
-        <VStack className="items-start space-y-4">
-          <Box className="w-full space-y-6 px-4">
-            {/* Product chosen  ----------------> */}
-            {/* <VStack className="items-start space-y-0">
-              <Text className="text-lg font-semibold">Produto escolhido</Text>
-              <Text>{getCategoryName(item?.category.name)}</Text>
-            </VStack> */}
+        <VStack className="items-start space-y-8">
+          {/* <Box className="space-y-6"> */}
+          {/* Name and ingredients  ----------------> */}
+          <VStack className="w-full items-start">
+            <Text className="text-lg font-semibold">Sobre o produto</Text>
+            {isLoading && <MenuItemCardSimpleSkeleton />}
+            {item && <MenuItemCard menuItem={item} />}
+          </VStack>
 
-            {/* Name and ingredients  ----------------> */}
-            <VStack className="w-full items-start">
-              <Text className="text-lg font-semibold">Sobre o produto</Text>
-              {isLoading && <MenuItemCardSimpleSkeleton />}
-              {item && <MenuItemCard menuItem={item} />}
+          {/* Whole or half pizza option and get another half pizza */}
+          {item?.category?.name.includes("pizza") && (
+            <VStack className="items-start">
+              <Text className="text-lg font-semibold">Inteira ou metade?</Text>
+              <PizzaFillingRadio />
             </VStack>
-
-            {/* Whole or half pizza option and get another half pizza */}
-            {item?.category?.name.includes("pizza") && (
-              <VStack className="items-start">
-                <Text className="text-lg font-semibold">
-                  Inteira ou metade?
-                </Text>
-                <PizzaFillingRadio />
-              </VStack>
-            )}
-            {isHalf && (
-              <VStack className="items-start">
-                <Text className="text-lg font-semibold ">
-                  Escolha a outra metade
-                </Text>
-                <ListPizzasModal />
-                {anotherHalfPizza && (
-                  <MenuItemCard canRemove menuItem={anotherHalfPizza} />
-                )}
-              </VStack>
-            )}
-          </Box>
+          )}
+          {isHalf && (
+            <VStack className="items-start">
+              <Text className="text-lg font-semibold ">
+                Escolha a outra metade
+              </Text>
+              <ListPizzasModal />
+              {anotherHalfPizza && (
+                <MenuItemCard canRemove menuItem={anotherHalfPizza} />
+              )}
+            </VStack>
+          )}
+          {/* </Box> */}
 
           {/* Pizza border type ------------------> */}
           {item?.category?.name.includes("pizza") && (
-            <VStack className="items-start p-4 text-lg font-semibold">
+            <VStack className="items-start text-lg font-semibold">
               <Text>Qual opção de borda?</Text>
               <PizzaBorderRadio />
             </VStack>
@@ -96,20 +88,20 @@ export default function MenuItem({ params }: Params) {
 
           {/* Observation ----------------> */}
           {item?.category.name !== "drinks" && (
-            <VStack className="w-full items-start p-4">
+            <VStack className="items-start w-full">
               <Text className="text-lg font-semibold">Observações</Text>
 
               <Textarea
                 value={observation}
                 onChange={({ target }) => setObservation(target.value)}
                 placeholder="Ex: tirar cebola, ovo, etc"
-                className="max-h-32 w-full border-gray-400"
+                className="max-h-32 w-full border-gray-400 max-w-md"
               />
             </VStack>
           )}
 
           {/* Change quantity and add to cart ----------------> */}
-          <Box className="w-full px-4">
+          <Box className="w-full">
             <AddToCart
               orderItem={{
                 item: anotherHalfPizza
