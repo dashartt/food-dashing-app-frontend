@@ -16,7 +16,7 @@ export default function PizzaFillingRadio() {
   };
 
   const { getRootProps, getRadioProps } = useRadioGroup({
-    name: "filling-option",
+    name: "pizza-filling-option",
     defaultValue: "whole",
     onChange: onChangeHandler,
   });
@@ -24,7 +24,7 @@ export default function PizzaFillingRadio() {
   const group = getRootProps();
 
   return (
-    <HStack {...group}>
+    <HStack {...group} spacing={4}>
       {options.map((value) => (
         <RadioCard
           key={value}
