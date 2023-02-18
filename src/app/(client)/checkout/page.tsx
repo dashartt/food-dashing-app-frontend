@@ -173,7 +173,7 @@ export default function Checkout() {
             </Box>
             {/* Payback container */}
             {paymentType === "cash" && (
-              <HStack className="m-4 items-start justify-between">
+              <VStack className="m-4 items-start space-y-4">
                 <VStack className="items-start">
                   <Text className="text-xl font-semibold">
                     Precisa de troco?
@@ -183,12 +183,12 @@ export default function Checkout() {
                 {needPayback && (
                   <VStack className="items-start">
                     <Text className="text-xl font-semibold">
-                      Valor em troco?
+                      Troco pra quanto?
                     </Text>
                     <PaybackInput />
                   </VStack>
                 )}
-              </HStack>
+              </VStack>
             )}
           </Box>
 

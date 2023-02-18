@@ -29,15 +29,15 @@ export default function ShoppingCart() {
           {/* <Box className="bg-white sticky top-20 z-10 w-full border-b-2 border-gray-400">
             <Text className="p-4 text-xl">Produtos escolhidos</Text>
           </Box> */}
-          <VStack className="w-full space-y-4 px-4">
+          <VStack className="w-full space-y-4 ">
             {items?.map((itemCart) => (
               <ItemCartCard key={uuid()} itemCart={itemCart} />
             ))}
           </VStack>
 
-          <Box className="w-full bg-white p-4 sticky bottom-0 z-10 border-t-2 border-gray-400">
+          <Box className="w-full bg-white p-4 sticky bottom-20 lg:bottom-0 z-10 border-t-2 border-gray-400">
             <HStack className="justify-between">
-              <Text className="text-lg">
+              <Text className="text-xl font-semibold">
                 Total: R$ {formatCurrency(getTotalPrice())}
               </Text>
               <Button
