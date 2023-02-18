@@ -30,7 +30,7 @@ export default function OrderCard({
   if (!order) return <OrderCardSkeleton />;
   return (
     <Card
-      className="h-fit w-full max-w-xs rounded-md border border-gray-400 bg-white shadow-lg"
+      className="h-fit min-w-[20rem] w-full max-w-xs rounded-md border border-gray-400 bg-white shadow-lg"
       onClick={goToOrderDetails}
       {...(!isAdmin && { role: "button" })}
     >
