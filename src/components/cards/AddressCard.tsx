@@ -21,12 +21,14 @@ type Props = {
   address: IAddress | null;
   canRemove?: boolean;
   asButton?: boolean;
+  canDeleteAndUpdate?: boolean;
 };
 
 export default function AddressCard({
   address,
   asButton = false,
   canRemove = false,
+  canDeleteAndUpdate = false,
 }: Props) {
   const { setAddress, removeAddress } = useAddressesState();
   const { session } = useSessionState();
@@ -59,7 +61,7 @@ export default function AddressCard({
             <Text>{address?.districtName}</Text>
             <Text>{address?.referencePoint}</Text>
           </VStack>
-          {session?._id && (
+          {session?._id && canDeleteAndUpdate && (
             <HStack className="space-x-2">
               <Link
                 className="rounded-md border border-gray-300 bg-transparent p-[0.55rem]"

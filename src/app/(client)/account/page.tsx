@@ -103,7 +103,11 @@ export default function Identification() {
                 <Text>Nenhum endereço cadastrado</Text>
               ) : (
                 addresses.map((address_) => (
-                  <AddressCard key={address_._id} address={address_} />
+                  <AddressCard
+                    key={address_._id}
+                    canDeleteAndUpdate
+                    address={address_}
+                  />
                 ))
               )}
             </Box>
