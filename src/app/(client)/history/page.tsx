@@ -2,7 +2,7 @@
 
 "use client";
 
-import { Alert, AlertIcon, SimpleGrid, Text, VStack } from "@chakra-ui/react";
+import { Alert, AlertIcon, Text, VStack, Wrap } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { v4 as uuid } from "uuid";
 
@@ -33,11 +33,7 @@ export default function History() {
           <Text className="text-2xl">Nenhum pedido encontrado</Text>
         </VStack>
       )}
-      <SimpleGrid
-        columns={{ base: 1, md: 2 }}
-        spacing={10}
-        className="mx-auto max-w-fit"
-      >
+      <Wrap spacing={10} className="mx-auto max-w-fit">
         {isLoading &&
           Array(3)
             .fill(0)
@@ -49,7 +45,7 @@ export default function History() {
           data?.map((order) => (
             <OrderCard key={order._id} order={order} date />
           ))}
-      </SimpleGrid>
+      </Wrap>
     </VStack>
   );
 }
