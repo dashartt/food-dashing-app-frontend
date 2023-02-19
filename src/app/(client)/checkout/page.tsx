@@ -10,6 +10,7 @@ import type { IOrderItem } from "src/types";
 import AddressCard from "@/components/cards/AddressCard";
 import IdentificationCard from "@/components/cards/IdentificationCard";
 import PaybackInput from "@/components/inputs/PaybackInput";
+// import PaymentModal from "@/components/modals/PaymentModal";
 import SelectAddressModal from "@/components/modals/SelectAddressModal";
 import DeliveryTypeRadio from "@/components/radios/DeliveryTypeRadio";
 import NeedPaybackRadio from "@/components/radios/NeedPaybackRadio";
@@ -171,6 +172,8 @@ export default function Checkout() {
                 <PaymentTypeRadio />
               </Box>
             </Box>
+
+            {/* {paymentType === "pix" && <PaymentModal />} */}
             {/* Payback container */}
             {paymentType === "cash" && (
               <VStack className="m-4 items-start space-y-4">

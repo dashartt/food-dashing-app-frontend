@@ -289,3 +289,18 @@ export const verifyAuth = async ({ token }: { token: string }) => {
   const session = await response.json();
   return session;
 };
+
+export const makePayment = async (details: any) => {
+  const token = process.env.NEXT_PUBLIC_MERCADOPAGO_ACCESS_TOKEN as string;
+  const response = await fetch("https://api.mercadopago.com/v1/payments", {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    method: "POST",
+    body: JSON.stringify(details),
+  });
+
+  const responseData = await response.json();
+  return responseData;
+};
