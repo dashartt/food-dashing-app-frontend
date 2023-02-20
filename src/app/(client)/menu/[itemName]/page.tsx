@@ -8,6 +8,7 @@ import useAnotherHalfPizzaState from "src/store/pizza/useAnotherHalfPizza";
 import usePizzaPrice from "src/store/pizza/usePizzaPrice";
 import usePizzaStuffing from "src/store/pizza/usePizzaStuffing";
 
+import AdditionalsAccordion from "@/components/accordions/AdditionalsAccordion";
 import AddToCart from "@/components/blocks/add-to-cart/AddToCart";
 import MenuItemCard from "@/components/cards/MenuItemCard";
 import ListPizzasModal from "@/components/modals/ListPizzaModal";
@@ -86,16 +87,23 @@ export default function MenuItem({ params }: Params) {
             </VStack>
           )}
 
+          {/* Additional container */}
+          {item?.category.name.includes("pizza") && (
+            <Box className="w-full rounded-md border border-gray-400 py-2">
+              <AdditionalsAccordion category={item.category.name} />
+            </Box>
+          )}
+
           {/* Observation ----------------> */}
           {item?.category.name !== "drinks" && (
-            <VStack className="items-start w-full">
+            <VStack className="w-full items-start">
               <Text className="text-lg font-semibold">Observações</Text>
 
               <Textarea
                 value={observation}
                 onChange={({ target }) => setObservation(target.value)}
                 placeholder="Ex: tirar cebola, ovo, etc"
-                className="max-h-32 w-full border-gray-400 max-w-md"
+                className="max-h-32 w-full max-w-md border-gray-400"
               />
             </VStack>
           )}

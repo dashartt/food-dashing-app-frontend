@@ -304,3 +304,15 @@ export const makePayment = async (details: any) => {
   const responseData = await response.json();
   return responseData;
 };
+
+export const getAdditionals = async () => {
+  const response = await fetch(`${SERVER_URL}/additional`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    method: "GET",
+  });
+
+  const responseData = await response.json();
+  return responseData;
+};
