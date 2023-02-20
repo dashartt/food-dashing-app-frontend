@@ -1,8 +1,9 @@
 import { Card, CardBody, HStack, Text } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ImCheckboxChecked } from "react-icons/im";
 import { SiAddthis } from "react-icons/si";
 
+import useAdditionals from "@/store/useAdditionals";
 import type { IAdditional } from "@/types";
 import { formatCurrency } from "@/utils";
 
@@ -12,8 +13,14 @@ type Props = {
 
 export default function AdditionalCard({ additional }: Props) {
   const [added, setAddeed] = useState(false);
+  const { addAdditional, removeAdditional } = useAdditionals();
 
   const onClickCard = () => setAddeed((prev) => !prev);
+
+  useEffect(() => {
+    if (added) addAdditional(additional);
+    else removeAdditional(additional._id || "");
+  }, [added]);
 
   return (
     <Card
@@ -28,7 +35,7 @@ export default function AdditionalCard({ additional }: Props) {
           <HStack>
             <Text>R$ {formatCurrency(additional.price)}</Text>
             {added ? (
-              <ImCheckboxChecked className="text-green-500 text-xl" />
+              <ImCheckboxChecked className="text-xl text-green-500" />
             ) : (
               <SiAddthis className="text-xl" />
             )}

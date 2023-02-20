@@ -16,6 +16,7 @@ import PizzaBorderRadio from "@/components/radios/PizzaBorderRadio";
 import PizzaFillingRadio from "@/components/radios/PizzaFillingRadio";
 import MenuItemCardSimpleSkeleton from "@/components/skeletons/MenuItemCardSimpleSkeleton.";
 import useObservationPizzaState from "@/store/pizza/useObservationPizza";
+import useAdditionals from "@/store/useAdditionals";
 
 type Params = {
   params: {
@@ -39,6 +40,7 @@ export default function MenuItem({ params }: Params) {
   );
   const getDefaultPrice = usePizzaPrice((state) => state.getDefaultPrice);
   const { isHalf, resetStuffing } = usePizzaStuffing();
+  const { setItemId } = useAdditionals();
 
   useEffect(() => {
     setMounted(true);
@@ -46,6 +48,10 @@ export default function MenuItem({ params }: Params) {
     resetStuffing();
     getDefaultPrice(item?.price || 0);
   }, []);
+
+  useEffect(() => {
+    setItemId(item?._id || "");
+  }, [item]);
 
   return (
     <>
