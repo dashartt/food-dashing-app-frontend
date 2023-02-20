@@ -1,4 +1,4 @@
-import { Card, CardBody, HStack, Text } from "@chakra-ui/react";
+import { Box, Card, CardBody, HStack, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { ImCheckboxChecked } from "react-icons/im";
 import { SiAddthis } from "react-icons/si";
@@ -23,22 +23,19 @@ export default function AdditionalCard({ additional }: Props) {
   }, [added]);
 
   return (
-    <Card
-      onClick={onClickCard}
-      className="w-full border border-gray-400"
-      role="button"
-    >
+    <Card className="border border-gray-400 w-full">
       <CardBody>
-        <HStack className="justify-between">
+        <HStack className="w-full justify-between">
           <Text>{additional.name}</Text>
 
           <HStack>
             <Text>R$ {formatCurrency(additional.price)}</Text>
-            {added ? (
-              <ImCheckboxChecked className="text-xl text-green-500" />
-            ) : (
-              <SiAddthis className="text-xl" />
-            )}
+            <Box onClick={onClickCard} role="button">
+              <ImCheckboxChecked
+                className={`text-xl text-green-500 ${!added && "hidden"}`}
+              />
+              <SiAddthis className={`text-xl ${added && "hidden"}`} />
+            </Box>
           </HStack>
         </HStack>
       </CardBody>
