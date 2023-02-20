@@ -18,7 +18,7 @@ import useAnotherHalfPizzaState from "@/store/pizza/useAnotherHalfPizza";
 import { StoreCallback } from "@/utils";
 
 type Props = {
-  menuItem: IMenuItem;
+  menuItem: IMenuItem | null;
   hasPrice?: boolean;
   canRemove?: boolean;
   asButton?: boolean;
@@ -36,7 +36,7 @@ export default function MenuItemCard({
   const { getAnotherHalf, resetAnotherHalf } = useAnotherHalfPizzaState();
 
   const clickHandler = () => {
-    if (path === "/") router.push(`/menu/${menuItem.name}`);
+    if (path === "/") router.push(`/menu/${menuItem?.name}`);
     if (path?.includes("/menu/")) {
       StoreCallback.fireCallback({ key: "ListPizzaModal/onClose" });
       getAnotherHalf(menuItem);
@@ -57,7 +57,7 @@ export default function MenuItemCard({
       <CardBody className="space-y-2">
         <HStack className="justify-between">
           <Heading size="md" className="font-normal">
-            {menuItem.name}
+            {menuItem?.name}
           </Heading>
           {canRemove && (
             <IconButton
@@ -72,7 +72,7 @@ export default function MenuItemCard({
         <Text className="text-gray-600  line-clamp-3">
           {menuItem?.ingredients}
         </Text>
-        {hasPrice && <Text className="mt-2 text-xl">R$ {menuItem.price}</Text>}
+        {hasPrice && <Text className="mt-2 text-xl">R$ {menuItem?.price}</Text>}
       </CardBody>
     </Card>
   );

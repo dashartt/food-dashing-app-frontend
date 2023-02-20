@@ -4,7 +4,7 @@ import type { IMenuItem } from "@/types";
 
 interface AnotherHalfPizzaState {
   anotherHalfPizza: IMenuItem | null;
-  getAnotherHalf: (menuItem: IMenuItem) => void;
+  getAnotherHalf: (menuItem: IMenuItem | null) => void;
   resetAnotherHalf: () => void;
 }
 
