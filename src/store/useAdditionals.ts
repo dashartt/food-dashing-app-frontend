@@ -9,9 +9,10 @@ interface AdditionalsState {
   setItemId: (_id: string) => void;
   addAdditional: (additional: IAdditional) => void;
   removeAdditional: (_id: string) => void;
+  getAdditionalsPrice: () => number;
 }
 
-const useAdditionals = create<AdditionalsState>((set) => ({
+const useAdditionals = create<AdditionalsState>((set, get) => ({
   itemId: "",
   additionals: [],
 
@@ -26,6 +27,9 @@ const useAdditionals = create<AdditionalsState>((set) => ({
         (additional_) => additional_._id !== _id
       ),
     })),
+
+  getAdditionalsPrice: () =>
+    get().additionals.reduce((acc, value) => acc + value.price, 0),
 }));
 
 export default useAdditionals;

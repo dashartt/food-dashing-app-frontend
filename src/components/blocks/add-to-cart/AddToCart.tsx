@@ -5,6 +5,9 @@ import { useEffect, useState } from "react";
 import { RiAddLine, RiSubtractLine } from "react-icons/ri";
 import type { ICartItem } from "src/types";
 
+import useAdditionals from "@/store/useAdditionals";
+import { formatCurrency } from "@/utils";
+
 import BuyMoreOrFinish from "../../modals/BuyMoreOrFinish";
 
 type Props = {
@@ -16,6 +19,7 @@ export default function AddToCart({ orderItem }: Props) {
 
   const [quantity, setQuantity] = useState(1);
   const [disableDecrement, setDisableDecrement] = useState(false);
+  const { getAdditionalsPrice } = useAdditionals();
 
   const decrementQtd = () => setQuantity((qtd) => (qtd > 1 ? qtd - 1 : qtd));
   const incrementQtd = () => setQuantity((qtd) => qtd + 1);
@@ -31,9 +35,9 @@ export default function AddToCart({ orderItem }: Props) {
   return (
     <>
       {mounted && (
-        <VStack className="w-full space-y-4 items-start">
-          <HStack className="justify-between w-full items-center">
-            <HStack className="py-1 rounded-lg w-fit">
+        <VStack className="w-full items-start space-y-4">
+          <HStack className="w-full items-center justify-between">
+            <HStack className="w-fit rounded-lg py-1">
               {/* Decrement item -----------> */}
               <IconButton
                 disabled={disableDecrement}
@@ -58,9 +62,12 @@ export default function AddToCart({ orderItem }: Props) {
               <Text>Adicionar ao carrinho</Text>
             </BuyMoreOrFinish>
           </HStack>
-          <Text className="font-semibold text-xl">
+          <Text className="text-xl font-semibold">
             Total R$
-            {((orderItem?.item[0]?.price || 0) * quantity).toFixed(2)}
+            {formatCurrency(
+              (orderItem?.item[0]?.price || 0) * quantity +
+                getAdditionalsPrice()
+            )}
           </Text>
         </VStack>
       )}
