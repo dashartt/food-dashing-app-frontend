@@ -20,7 +20,7 @@ export default function AdditionalsAccordion({ category }: Props) {
       <AccordionItem className="border-none">
         <AccordionButton _hover={{ bg: "bg-white" }} className="w-full">
           <HStack className="justify-between w-full">
-            <Text>Adicionais</Text>
+            <Text className="font-semibold">Adicionais</Text>
             <AccordionIcon />
           </HStack>
         </AccordionButton>
