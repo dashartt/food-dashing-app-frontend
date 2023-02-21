@@ -9,13 +9,16 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import { BiEditAlt } from "react-icons/bi";
 import { RiCloseLine } from "react-icons/ri";
 
+import useAdditionals from "@/store/useAdditionals";
 import useShoppingCart from "@/store/useShoppingCart";
 import type { ICartItem } from "@/types";
 import * as utils from "@/utils";
 
 import QuantityInput from "../inputs/QuantityInput";
+import ItemCartModal from "../modals/ItemCartModal";
 
 type Props = {
   itemCart: Omit<ICartItem, "quantity">;
@@ -23,7 +26,10 @@ type Props = {
 
 export default function ItemCartCard({ itemCart }: Props) {
   const [mounted, setMounted] = useState(false);
+  const [editModalVisible, setEditModalVisible] = useState(false);
+
   const shoppingCart = useShoppingCart();
+  const { setInitialValue } = useAdditionals();
 
   const initialQuantity =
     shoppingCart.getItemById(itemCart._id || "")?.quantity || 1;
@@ -31,10 +37,14 @@ export default function ItemCartCard({ itemCart }: Props) {
   const canSetOneHalf = itemCart.item.length > 1 ? "½" : "-";
 
   const onUpdateQuantity = (quantity: number) => {
-    shoppingCart.updateItem(itemCart._id || "", quantity);
+    shoppingCart.updateItem(itemCart._id || "", { ...itemCart, quantity });
   };
 
+  const onClickEditModal = () => setEditModalVisible((prev) => !prev);
+
   const onRemoveItem = () => {
+    if (itemCart.additionals && itemCart.additionals?.length > 0)
+      setInitialValue([]);
     shoppingCart.removeItem(itemCart._id || "");
   };
 
@@ -45,12 +55,12 @@ export default function ItemCartCard({ itemCart }: Props) {
   return (
     <>
       {mounted && (
-        <Card className="w-full border min-w-[20rem] border-gray-400 bg-white shadow-lg">
+        <Card className="w-full min-w-[20rem] border border-gray-400 bg-white shadow-lg">
           <CardBody>
             <VStack className="items-start">
               <HStack className="w-full justify-between">
-                <VStack className="-space-y-1 items-start">
-                  <Text className="py-1 px-2 rounded-md mb-4">
+                <VStack className="items-start -space-y-1">
+                  <Text className="mb-2 rounded-md py-1 px-2">
                     {utils.getCategoryName(itemCart.item[0]?.category.name)}
                   </Text>
                   <Text className="text-xl">
@@ -61,15 +71,62 @@ export default function ItemCartCard({ itemCart }: Props) {
                       {canSetOneHalf} {itemCart.item[1]?.name}
                     </Text>
                   )}
+
+                  <VStack className="items-start space-y-2 pt-2">
+                    {/* Border type ---------------> */}
+                    {itemCart.item[0]?.category.name.includes("pizza") && (
+                      <Text>
+                        {`borda:
+                        ${
+                          itemCart.borderType === "none"
+                            ? " sem borda"
+                            : itemCart.borderType
+                        }`}
+                      </Text>
+                    )}
+
+                    {/* Observation ------------> */}
+                    {itemCart.observation !== "" && (
+                      <Text className="leading-tight">
+                        observações: {itemCart.observation}
+                      </Text>
+                    )}
+
+                    {/* Additionals ----------------> */}
+                    {/pizza|arabic/.test(
+                      itemCart.item[0]?.category.name || "."
+                    ) &&
+                      itemCart.additionals &&
+                      itemCart.additionals?.length > 0 && (
+                        <Text className="lowercase leading-tight">
+                          {`adicionais:
+                          ${itemCart.additionals
+                            .map(({ name }) => name)
+                            .join(", ")}`}
+                        </Text>
+                      )}
+                  </VStack>
                 </VStack>
-                <IconButton
-                  onClick={onRemoveItem}
-                  size="sm"
-                  aria-label="Remover item do pedido"
-                  className="rounded-full bg-transparent self-start"
-                  icon={<RiCloseLine className="text-2xl text-red-500 " />}
-                />
+
+                <VStack className="self-start">
+                  <IconButton
+                    onClick={onRemoveItem}
+                    size="sm"
+                    aria-label="Remover item do pedido"
+                    className="self-start rounded-full bg-transparent"
+                    icon={<RiCloseLine className="text-2xl text-red-500 " />}
+                  />
+                  <IconButton
+                    onClick={onClickEditModal}
+                    size="sm"
+                    aria-label="editar item do carrinho"
+                    className="self-start rounded-full bg-transparent"
+                    icon={<BiEditAlt className="text-2xl" />}
+                  />
+                  {editModalVisible && <ItemCartModal item={itemCart} />}
+                </VStack>
               </HStack>
+
               <HStack className="w-full justify-between">
                 <QuantityInput
                   initialQuantity={initialQuantity}

@@ -19,7 +19,7 @@ export default function AdditionalsList({ category }: Props) {
   });
 
   useEffect(() => {
-    if (category.includes("pizza")) {
+    if (/pizza|arabic/.test(category)) {
       additionals.refetch();
     }
   }, []);

@@ -1,16 +1,24 @@
 import { useRadioGroup, Wrap } from "@chakra-ui/react";
+import { useEffect } from "react";
 
 import useBorderType from "@/store/pizza/useBorderType";
 
 import RadioCard from "./RadioCard";
 
-export default function PizzaBorderRadio() {
+type Props = {
+  defaultValue?: string;
+};
+
+export default function PizzaBorderRadio({ defaultValue = "" }: Props) {
   const options = ["catupiry", "cheddar", "none"];
   const { setBorderType } = useBorderType();
+  const defaultValueHandler = !defaultValue ? "catupiry" : defaultValue;
+
+  useEffect(() => setBorderType(defaultValueHandler), []);
 
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: "pizza-border-type",
-    defaultValue: "catupiry",
+    defaultValue: defaultValueHandler,
     onChange: setBorderType,
   });
 

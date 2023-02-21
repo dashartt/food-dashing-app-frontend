@@ -8,7 +8,7 @@ interface ShoppingCartState {
   getPrice: (_id: string) => number;
   getItemById: (_id: string) => ICartItem | null;
   addItem: (itemCart: ICartItem) => void;
-  updateItem: (_id: string, quantity: number) => void;
+  updateItem: (_id: string, item_: Partial<ICartItem>) => void;
   removeItem: (_id: string) => void;
   getTotalItemPrice: (_id: string) => number;
   getTotalPrice: () => number;
@@ -27,28 +27,13 @@ const useShoppingCart = create<ShoppingCartState>()(
           items: [...state.items, item],
         }));
       },
-      updateItem: (_id = "", quantity = 1) =>
+      updateItem: (_id, item_) =>
         set((state) => ({
           items: state.items.map((item) =>
-            item._id?.includes(_id) ? { ...item, quantity } : item
+            item._id?.includes(_id) ? { ...item, ...item_ } : item
           ),
         })),
-      // {
-      //   const storage = JSON.parse(
-      //     localStorage.getItem("shopping-cart-storage") || "[]"
-      //   ) as { state: { items: ICartItem[] }; version: number };
-      //   localStorage.setItem(
-      //     "shopping-cart-storage",
-      //     JSON.stringify({
-      //       state: {
-      //         items: storage.state.items.map((item) =>
-      //           item._id === _id ? { ...item, quantity } : item
-      //         ),
-      //       },
-      //       version: 0,
-      //     })
-      //   );
-      // },
+
       removeItem: (_id = "") => {
         set((state) => ({
           items: state.items.filter((item) => item._id !== _id),

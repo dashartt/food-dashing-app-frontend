@@ -13,9 +13,14 @@ type Props = {
 
 export default function AdditionalCard({ additional }: Props) {
   const [added, setAddeed] = useState(false);
-  const { addAdditional, removeAdditional } = useAdditionals();
+  const { addAdditional, removeAdditional, additionals } = useAdditionals();
 
   const onClickCard = () => setAddeed((prev) => !prev);
+
+  useEffect(() => {
+    const wasAdded = additionals.some((el) => el._id === additional._id);
+    if (wasAdded) setAddeed(true);
+  }, []);
 
   useEffect(() => {
     if (added) addAdditional(additional);

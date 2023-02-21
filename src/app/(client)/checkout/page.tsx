@@ -15,6 +15,7 @@ import SelectAddressModal from "@/components/modals/SelectAddressModal";
 import DeliveryTypeRadio from "@/components/radios/DeliveryTypeRadio";
 import NeedPaybackRadio from "@/components/radios/NeedPaybackRadio";
 import PaymentTypeRadio from "@/components/radios/PaymentTypeRadio";
+import useAdditionals from "@/store/useAdditionals";
 import useApplyDeliveryFee from "@/store/useApplyDeliveryFee";
 import useDeliveryType from "@/store/useDeliveryType";
 import usePaymentType from "@/store/usePaymentType";
@@ -36,6 +37,7 @@ export default function Checkout() {
   const { deliveryFee } = useApplyDeliveryFee();
   const { deliveryType } = useDeliveryType();
   const { emptyCart, items, getTotalPrice } = useShoppingCart();
+  const { getAdditionalsPrice } = useAdditionals();
 
   const onConfirmPurchase = async () => {
     if (
@@ -58,7 +60,14 @@ export default function Checkout() {
             itemIds: item_.item.map((item__) => item__?._id),
             quantity: item_.quantity,
             ...(item_.observation && { observation: item_.observation }),
-          })) as unknown as IOrderItem,
+            ...(item_.borderType !== "" && { borderType: item_?.borderType }),
+            ...(item_.additionals &&
+              item_.additionals.length > 0 && {
+                additionalIds: item_.additionals.map(
+                  (additional) => additional._id
+                ),
+              }),
+          })) as unknown as IOrderItem[],
           paymentType,
           isDelivery: deliveryType === "delivery",
           ...(needPayback && { hasPayBack: needPayback }),
@@ -141,7 +150,9 @@ export default function Checkout() {
             <Box className="rounded-md border border-gray-400 p-4">
               <HStack className="justify-between">
                 <Text>Pedidos</Text>
-                <Text>R$ {formatCurrency(getTotalPrice())}</Text>
+                <Text>
+                  R$ {formatCurrency(getTotalPrice() + getAdditionalsPrice())}
+                </Text>
               </HStack>
 
               <HStack className="justify-between">
@@ -155,6 +166,7 @@ export default function Checkout() {
                   R$
                   {formatCurrency(
                     getTotalPrice() +
+                      getAdditionalsPrice() +
                       (deliveryType === "delivery" ? deliveryFee : 0)
                   )}
                 </Text>

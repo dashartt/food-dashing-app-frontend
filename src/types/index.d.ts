@@ -55,7 +55,9 @@ export interface ICartItem {
   _id?: string;
   item: IMenuItem[] | Array<IMenuItem | null>;
   quantity?: number;
+  borderType?: string;
   observation?: string;
+  additionals?: IAdditional[] | [];
 }
 
 // ADDRESS STORE ZUSTAND TYPE --------------------->
@@ -76,12 +78,14 @@ export interface IOrderItem {
   itemIds: string[];
   quantity?: number;
   observation?: string;
+  borderType?: string;
+  additionalIds?: string[];
 }
 
 export interface IOrder {
   clientId: string;
   addressId: string;
-  items: IOrderItem;
+  items: IOrderItem[];
   paymentType: string;
   isDelivery: boolean;
   hasPayBack?: boolean;
@@ -110,11 +114,16 @@ export interface IAdminOrder extends ITimestamps {
           name: string;
           price: number;
           ingredients: string;
-          categoryId: string;
+          categoryId: {
+            _id: string;
+            name: string;
+          };
         }
       ];
-      observation?: string;
       quantity: number;
+      observation?: string;
+      borderType?: string;
+      additionalIds: IAdditional[];
     }
   ];
   status: string;

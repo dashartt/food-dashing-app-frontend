@@ -74,7 +74,19 @@ export default function OrderCard({
                             ))}
                           </VStack>
                         </HStack>
-                        <Text>{order_?.observation}</Text>
+                        <Text>Observações: {order_?.observation}</Text>
+                        {order_?.itemIds[0].categoryId.name.includes(
+                          "pizza"
+                        ) && <Text>Borda: {order_.borderType}</Text>}
+
+                        {order_?.additionalIds.length &&
+                          order_?.additionalIds.length > 0 && (
+                            <Text>
+                              {`Adicionais: ${order_?.additionalIds
+                                .map((additional) => additional.name)
+                                .join(", ")}`}
+                            </Text>
+                          )}
                       </Box>
                     );
                   })}

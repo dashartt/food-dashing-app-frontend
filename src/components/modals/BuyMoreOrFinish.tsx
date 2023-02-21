@@ -20,7 +20,9 @@ import useShoppingCart from "src/store/useShoppingCart";
 import type { ICartItem } from "src/types";
 import { v4 as uuid } from "uuid";
 
+import useBorderType from "@/store/pizza/useBorderType";
 import useObservationPizzaState from "@/store/pizza/useObservationPizza";
+import useAdditionals from "@/store/useAdditionals";
 
 type Props = {
   orderItem: ICartItem;
@@ -33,18 +35,29 @@ export default function BuyMoreOrFinish({ children, orderItem }: Props) {
   const router = useRouter();
 
   const shoppingCart = useShoppingCart();
+  const additionals = useAdditionals();
   const { resetStuffing, isHalf } = usePizzaStuffing();
   const { resetAnotherHalf, anotherHalfPizza } = useAnotherHalfPizzaState();
-  const { resetObservation } = useObservationPizzaState();
+  const { resetObservation, observation } = useObservationPizzaState();
+  const { borderType } = useBorderType();
 
   const onAddItem = () => {
     onOpen(); // open modal to continue buying or finish purchase
+    console.log(borderType);
 
     // add item to cart
     shoppingCart.addItem({
       _id: uuid(),
       ...orderItem,
+      observation,
+      ...(orderItem.item[0]?.category.name.includes("pizza") && {
+        borderType,
+      }),
+      ...(/pizza|arabic/.test(orderItem.item[0]?.category.name || "...") && {
+        additionals: additionals.additionals,
+      }),
     });
+    additionals.setInitialValue([]);
   };
 
   const afterAddGoTo = (path: string) => {
@@ -79,7 +92,7 @@ export default function BuyMoreOrFinish({ children, orderItem }: Props) {
             <ModalOverlay />
             <ModalContent className="mx-auto w-full sm:w-96">
               <ModalHeader className="border-b-2 border-gray-300">
-                <Text className="text-center font-normal text-2xl">
+                <Text className="text-center text-2xl font-normal">
                   Adicionado ao carrinho
                 </Text>
               </ModalHeader>
@@ -89,7 +102,7 @@ export default function BuyMoreOrFinish({ children, orderItem }: Props) {
                 <VStack className="space-y-4 py-4">
                   <Button
                     onClick={() => afterAddGoTo("/")}
-                    className="w-52 bg-gray-default p-6 text-center text-white font-normal"
+                    className="w-52 bg-gray-default p-6 text-center font-normal text-white"
                   >
                     Voltar para o cardápio
                   </Button>

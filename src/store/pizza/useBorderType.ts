@@ -6,7 +6,7 @@ interface BorderTypeState {
 }
 
 const useBorderType = create<BorderTypeState>((set) => ({
-  borderType: "catupiry",
+  borderType: "",
   setBorderType: (type) => set({ borderType: type }),
 }));
 

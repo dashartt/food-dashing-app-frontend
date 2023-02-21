@@ -40,18 +40,15 @@ export default function MenuItem({ params }: Params) {
   );
   const getDefaultPrice = usePizzaPrice((state) => state.getDefaultPrice);
   const { isHalf, resetStuffing } = usePizzaStuffing();
-  const { setItemId } = useAdditionals();
+  const additionals = useAdditionals();
 
   useEffect(() => {
     setMounted(true);
     resetObservation();
     resetStuffing();
+    additionals.setInitialValue([]);
     getDefaultPrice(item?.price || 0);
   }, []);
-
-  useEffect(() => {
-    setItemId(item?._id || "");
-  }, [item]);
 
   return (
     <>
@@ -94,9 +91,9 @@ export default function MenuItem({ params }: Params) {
           )}
 
           {/* Additional container */}
-          {item?.category.name.includes("pizza") && (
+          {/pizza|arabic/.test(item?.category.name || ".") && (
             <Box className="w-full rounded-md border border-gray-400 py-2">
-              <AdditionalsAccordion category={item.category.name} />
+              <AdditionalsAccordion category={item?.category.name || "."} />
             </Box>
           )}
 
@@ -121,7 +118,6 @@ export default function MenuItem({ params }: Params) {
                 item: anotherHalfPizza
                   ? [item || null, anotherHalfPizza]
                   : [item || null],
-                observation,
               }}
             />
           </Box>
