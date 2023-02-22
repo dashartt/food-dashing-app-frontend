@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Text, VStack } from "@chakra-ui/react";
+import { Alert, AlertIcon, Box, Text, VStack } from "@chakra-ui/react";
 import { notFound } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -30,25 +30,32 @@ export default function OrderPage({ orderProps }: Props) {
   return (
     <>
       {mounted && order && (
-        <VStack className="items-start">
-          <VStack className="mb-8 w-full space-y-8">
-            {/* STATUS BLOCK */}
-            <Box className="w-full space-y-2 px-4">
-              <Text className="text-xl font-bold">Status</Text>
-              <Box className="w-full rounded-md border border-gray-400 px-4 pt-4">
-                <OrderStatusStepper
-                  isDelivery={order?.isDelivery}
-                  status={order?.status || "to-do"}
-                />
-              </Box>
-            </Box>
+        <VStack className="mb-8 w-full space-y-8 items-start">
+          <Alert variant="blank" className="text-xl mx-auto mb-6 max-w-sm">
+            <AlertIcon className="self-start mt-1" />
+            <Text>
+              tempo estimado: 30m - 1h <br />
+              estaremos fazendo o possível para evitar atrasos ou se prolongar
+              mais do que o esperado
+            </Text>
+          </Alert>
 
-            {/* ORDER SHEET BLOCK */}
-            <Box className="w-full px-4">
-              <Text className="mb-2 text-xl font-bold">Comanda</Text>
-              <OrderCard order={order} />
+          {/* STATUS BLOCK */}
+          <Box className="w-full space-y-2 max-w-xs">
+            <Text className="text-xl font-bold">Status</Text>
+            <Box className="w-full rounded-md border border-gray-400 px-4 pt-4">
+              <OrderStatusStepper
+                isDelivery={order?.isDelivery}
+                status={order?.status || "to-do"}
+              />
             </Box>
-          </VStack>
+          </Box>
+
+          {/* ORDER SHEET BLOCK */}
+          <Box className="w-full">
+            <Text className="mb-2 text-xl font-bold">Comanda</Text>
+            <OrderCard order={order} />
+          </Box>
         </VStack>
       )}
     </>
