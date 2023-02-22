@@ -1,7 +1,7 @@
-import { Box, Card, CardBody, HStack, Text } from "@chakra-ui/react";
+import { Box, HStack, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import { GoDiffAdded } from "react-icons/go";
 import { ImCheckboxChecked } from "react-icons/im";
-import { SiAddthis } from "react-icons/si";
 
 import useAdditionals from "@/store/useAdditionals";
 import type { IAdditional } from "@/types";
@@ -28,22 +28,18 @@ export default function AdditionalCard({ additional }: Props) {
   }, [added]);
 
   return (
-    <Card className="border border-gray-400 w-full">
-      <CardBody>
-        <HStack className="w-full justify-between">
-          <Text>{additional.name}</Text>
+    <HStack className="w-full justify-between">
+      <Text>{additional.name}</Text>
 
-          <HStack>
-            <Text>R$ {formatCurrency(additional.price)}</Text>
-            <Box onClick={onClickCard} role="button">
-              <ImCheckboxChecked
-                className={`text-xl text-green-500 ${!added && "hidden"}`}
-              />
-              <SiAddthis className={`text-xl ${added && "hidden"}`} />
-            </Box>
-          </HStack>
-        </HStack>
-      </CardBody>
-    </Card>
+      <HStack className="space-x-4">
+        <Text>R$ {formatCurrency(additional.price)}</Text>
+        <Box onClick={onClickCard} role="button">
+          <ImCheckboxChecked
+            className={`text-xl text-green-500 ${!added && "hidden"}`}
+          />
+          <GoDiffAdded className={`text-xl ${added && "hidden"} t`} />
+        </Box>
+      </HStack>
+    </HStack>
   );
 }

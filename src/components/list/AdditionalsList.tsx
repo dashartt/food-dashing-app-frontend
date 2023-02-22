@@ -1,4 +1,4 @@
-import { VStack } from "@chakra-ui/react";
+import { Box, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 
@@ -27,7 +27,12 @@ export default function AdditionalsList({ category }: Props) {
   return (
     <VStack className="space-y-4">
       {additionals.data?.data?.map((additional: IAdditional) => (
-        <AdditionalCard key={additional._id} additional={additional} />
+        <Box
+          key={additional._id}
+          className="w-full border-b-2 pb-2 last:border-none"
+        >
+          <AdditionalCard additional={additional} />
+        </Box>
       ))}
     </VStack>
   );
