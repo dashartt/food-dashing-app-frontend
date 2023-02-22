@@ -43,7 +43,6 @@ export default function BuyMoreOrFinish({ children, orderItem }: Props) {
 
   const onAddItem = () => {
     onOpen(); // open modal to continue buying or finish purchase
-    console.log(borderType);
 
     // add item to cart
     shoppingCart.addItem({
@@ -57,13 +56,13 @@ export default function BuyMoreOrFinish({ children, orderItem }: Props) {
         additionals: additionals.additionals,
       }),
     });
-    additionals.setInitialValue([]);
   };
 
   const afterAddGoTo = (path: string) => {
     resetStuffing(); // reset pizza stuffing option
     resetAnotherHalf(); // reset another chosen half
     resetObservation(); // reset observation pizza
+    additionals.setInitialValue([]); // reset selected additionals
     router.push(path);
   };
 

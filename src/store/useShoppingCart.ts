@@ -1,7 +1,7 @@
 import create from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
-import type { ICartItem } from "@/types";
+import type { IAdditional, ICartItem } from "@/types";
 
 interface ShoppingCartState {
   items: ICartItem[];
@@ -40,12 +40,27 @@ const useShoppingCart = create<ShoppingCartState>()(
         }));
       },
       getTotalItemPrice: (_id: string) => {
-        const item = get().getItemById(_id);
-        return (item?.quantity || 1) * (item?.item[0]?.price || 1);
+        const item = get().getItemById(_id) as ICartItem;
+        const additionals = item.additionals as IAdditional[];
+
+        const itemPrice = (item?.quantity || 1) * (item?.item[0]?.price || 1);
+        const additionalsPrice = additionals.reduce(
+          (acc, value) => acc + value.price,
+          0
+        );
+
+        return itemPrice + additionalsPrice;
       },
       getTotalPrice: () =>
-        get().items.reduce((_acc, value) => {
-          return _acc + (value.item[0]?.price || 1) * (value.quantity || 1);
+        get().items.reduce((acc, value) => {
+          const additionals = value.additionals as IAdditional[];
+          const additionalsPrice = additionals.reduce(
+            (acc_, value_) => acc_ + value_.price,
+            0
+          );
+          const itemsPrice =
+            (value.item[0]?.price || 1) * (value.quantity || 1);
+          return acc + itemsPrice + additionalsPrice;
         }, 0) as number,
 
       emptyCart: () => set({ items: [] }),

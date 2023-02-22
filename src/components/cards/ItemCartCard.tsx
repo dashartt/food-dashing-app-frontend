@@ -135,7 +135,7 @@ export default function ItemCartCard({ itemCart }: Props) {
                 <Text className="text-lg">
                   R$
                   {utils.formatCurrency(
-                    utils.getTotalItemPrice(itemCart._id || "")
+                    shoppingCart.getTotalItemPrice(itemCart._id || "")
                   )}
                 </Text>
               </HStack>
