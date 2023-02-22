@@ -33,7 +33,7 @@ export default function ShoppingCart() {
     <>
       {mounted && (
         <VStack className="items-start space-y-4">
-          <Alert variant="blank" className="text-xl mx-auto">
+          <Alert variant="blank" className="text-xl mx-auto mb-6">
             <AlertIcon className="self-start mt-1" />
             <Text>tempo estimado: 30m - 1h </Text>
           </Alert>
