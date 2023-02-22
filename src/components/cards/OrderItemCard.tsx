@@ -23,8 +23,7 @@ export default function OrderCard({
   const path = usePathname();
 
   const goToOrderDetails = () => {
-    if (path?.includes("history") && !isAdmin)
-      router.push(`/order/${order?._id}`);
+    if (/history/.test(path) && !isAdmin) router.push(`/order/${order?._id}`);
   };
 
   if (!order) return <OrderCardSkeleton />;
