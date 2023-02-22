@@ -23,7 +23,8 @@ export default function OrderCard({
   const path = usePathname();
 
   const goToOrderDetails = () => {
-    if (/history/.test(path) && !isAdmin) router.push(`/order/${order?._id}`);
+    if (/history/.test(path || ".") && !isAdmin)
+      router.push(`/order/${order?._id}`);
   };
 
   if (!order) return <OrderCardSkeleton />;
@@ -75,7 +76,8 @@ export default function OrderCard({
                             ))}
                           </VStack>
                         </HStack>
-                        {order_?.observation !== "" && (
+
+                        {order_.observation && (
                           <Text>Observações: {order_?.observation}</Text>
                         )}
 
