@@ -21,7 +21,7 @@ export default function History() {
   });
 
   return (
-    <VStack className="mx-auto items-start md:w-96">
+    <VStack className="mx-auto items-start ">
       {isFetched && data && data.length > 0 && (
         <Alert variant="blank" className="mb-8 w-fit text-xl">
           <AlertIcon className="mt-1 self-start" />
@@ -33,7 +33,7 @@ export default function History() {
           <Text className="text-2xl">Nenhum pedido encontrado</Text>
         </VStack>
       )}
-      <Wrap spacing={10} className="mx-auto max-w-fit">
+      <Wrap spacing={10} className="">
         {isLoading &&
           Array(3)
             .fill(0)
