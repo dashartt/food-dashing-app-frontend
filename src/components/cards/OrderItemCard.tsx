@@ -62,31 +62,35 @@ export default function OrderCard({
                   order?.orderItemsId.map((order_) => {
                     const canSetOneHalf = order_.itemIds.length > 1 ? "½" : "-";
                     return (
-                      <Box key={order_._id} className="px-2 ">
+                      <Box
+                        key={order_._id}
+                        className="px-2 border-b-2 border-gray-300 last:border-none py-2"
+                      >
                         <HStack>
                           <Text>{order_.quantity}x</Text>
                           <VStack className="items-start -space-y-1">
                             {order_.itemIds.map((items_) => (
                               <Text className="font-bold" key={uuid()}>
-                                {canSetOneHalf}
-                                {items_.name}
+                                {canSetOneHalf} {items_.name}
                               </Text>
                             ))}
                           </VStack>
                         </HStack>
-                        <Text>Observações: {order_?.observation}</Text>
-                        {order_?.itemIds[0].categoryId.name.includes(
-                          "pizza"
-                        ) && <Text>Borda: {order_.borderType}</Text>}
+                        {order_?.observation !== "" && (
+                          <Text>Observações: {order_?.observation}</Text>
+                        )}
 
-                        {order_?.additionalIds.length &&
-                          order_?.additionalIds.length > 0 && (
-                            <Text>
-                              {`Adicionais: ${order_?.additionalIds
-                                .map((additional) => additional.name)
-                                .join(", ")}`}
-                            </Text>
-                          )}
+                        {/pizza/.test(order_?.itemIds[0].categoryId.name) && (
+                          <Text>Borda: {order_.borderType}</Text>
+                        )}
+
+                        {order_?.additionalIds.length > 0 && (
+                          <Text>
+                            {`Adicionais: ${order_?.additionalIds
+                              .map((additional) => additional.name)
+                              .join(", ")}`}
+                          </Text>
+                        )}
                       </Box>
                     );
                   })}
