@@ -17,6 +17,7 @@ export default function PaybackInput() {
           children={<MdAttachMoney className="text-xl mt-1" />}
         />
         <Input
+          type="number"
           onChange={({ target }) => setPaybackValue(Number(target.value) || 0)}
           className="border-gray-400 h-12 text-xl"
         />
