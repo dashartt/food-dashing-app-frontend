@@ -10,7 +10,7 @@ interface MobileProps extends FlexProps {
 export default function MobileNav({ onOpen, ...rest }: MobileProps) {
   return (
     <Flex
-      className="sm:px-20 sticky top-0 z-10 h-20 items-center justify-between border-b-2 border-gray-400 bg-white px-4 md:px-40"
+      className="mx-auto max-w-md sticky top-0 z-10 h-20 items-center justify-between bg-white px-4"
       {...rest}
     >
       <PageTitleHeader />
