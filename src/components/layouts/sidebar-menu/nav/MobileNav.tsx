@@ -17,6 +17,7 @@ export default function MobileNav({ onOpen, ...rest }: MobileProps) {
       <IconButton
         onClick={onOpen}
         aria-label="Abrir menu"
+        className="bg-white"
         icon={<FiMenu className="text-3xl" />}
       />
     </Flex>
