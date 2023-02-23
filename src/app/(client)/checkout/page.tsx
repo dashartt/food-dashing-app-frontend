@@ -15,7 +15,6 @@ import SelectAddressModal from "@/components/modals/SelectAddressModal";
 import DeliveryTypeRadio from "@/components/radios/DeliveryTypeRadio";
 import NeedPaybackRadio from "@/components/radios/NeedPaybackRadio";
 import PaymentTypeRadio from "@/components/radios/PaymentTypeRadio";
-import useAdditionals from "@/store/useAdditionals";
 import useApplyDeliveryFee from "@/store/useApplyDeliveryFee";
 import useDeliveryType from "@/store/useDeliveryType";
 import usePaymentType from "@/store/usePaymentType";
@@ -37,7 +36,6 @@ export default function Checkout() {
   const { deliveryFee } = useApplyDeliveryFee();
   const { deliveryType } = useDeliveryType();
   const { emptyCart, items, getTotalPrice } = useShoppingCart();
-  const { getAdditionalsPrice } = useAdditionals();
 
   const onConfirmPurchase = async () => {
     if (
@@ -150,9 +148,7 @@ export default function Checkout() {
             <Box className="rounded-md border border-gray-400 p-4">
               <HStack className="justify-between">
                 <Text>Pedidos</Text>
-                <Text>
-                  R$ {formatCurrency(getTotalPrice() + getAdditionalsPrice())}
-                </Text>
+                <Text>R$ {formatCurrency(getTotalPrice())}</Text>
               </HStack>
 
               <HStack className="justify-between">
@@ -166,7 +162,6 @@ export default function Checkout() {
                   R$
                   {formatCurrency(
                     getTotalPrice() +
-                      getAdditionalsPrice() +
                       (deliveryType === "delivery" ? deliveryFee : 0)
                   )}
                 </Text>
