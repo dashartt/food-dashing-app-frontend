@@ -43,23 +43,27 @@ const useShoppingCart = create<ShoppingCartState>()(
         const item = get().getItemById(_id) as ICartItem;
         const additionals = item.additionals as IAdditional[];
 
+        const additionalsPrice =
+          additionals.length === 0
+            ? 0
+            : additionals.reduce((acc_, value_) => acc_ + value_.price, 0);
+
         const itemPrice = (item?.quantity || 1) * (item?.item[0]?.price || 1);
-        const additionalsPrice = additionals.reduce(
-          (acc, value) => acc + value.price,
-          0
-        );
 
         return itemPrice + additionalsPrice;
       },
       getTotalPrice: () =>
         get().items.reduce((acc, value) => {
           const additionals = value.additionals as IAdditional[];
-          const additionalsPrice = additionals.reduce(
-            (acc_, value_) => acc_ + value_.price,
-            0
-          );
+
+          const additionalsPrice =
+            additionals.length === 0
+              ? 0
+              : additionals.reduce((acc_, value_) => acc_ + value_.price, 0);
+
           const itemsPrice =
             (value.item[0]?.price || 1) * (value.quantity || 1);
+
           return acc + itemsPrice + additionalsPrice;
         }, 0) as number,
 

@@ -27,8 +27,12 @@ const useAdditionals = create<AdditionalsState>()(
           ),
         })),
 
-      getAdditionalsPrice: () =>
-        get().additionals.reduce((acc, value) => acc + value.price, 0),
+      getAdditionalsPrice: () => {
+        const isEmpty = get().additionals.length === 0;
+        return isEmpty
+          ? 0
+          : get().additionals.reduce((acc, value) => acc + value.price, 0);
+      },
 
       setInitialValue: (additionals) => {
         set({
