@@ -1,8 +1,6 @@
 import type { ToastPosition } from "@chakra-ui/react";
 import moment from "moment";
 
-import type { ICartItem } from "@/types";
-
 const StringMask = require("string-mask");
 
 // Session title chosen based on path  -------------------->
@@ -145,42 +143,3 @@ export class StoreCallback {
     StoreCallback.callbacks.find((item) => item.key === key)?.callback();
   }
 }
-
-// method to handle items in shopping cart storage ----------->
-export const getShoppingCartStorage = () => {
-  const storage = JSON.parse(
-    localStorage.getItem("shopping-cart-storage") || "[]"
-  ) as { state: { items: ICartItem[] }; version: number };
-  return storage.state.items;
-};
-export const setShoppingCartStorage = (items: ICartItem[]) => {
-  localStorage.setItem(
-    "shopping-cart-storage",
-    JSON.stringify({
-      state: {
-        items,
-      },
-      version: 0,
-    })
-  );
-};
-export const getItemById = (_id: string) => {
-  const items = getShoppingCartStorage();
-  return items.find((item) => item._id === _id) || null;
-};
-export const getItemPrice = (_id: string) => {
-  const item = getItemById(_id);
-  return item?.item[0]?.price;
-};
-
-export const getTotalItemPrice = (_id: string) => {
-  const item = getItemById(_id);
-  return (item?.quantity || 1) * (item?.item[0]?.price || 1);
-};
-
-export const getTotalPrice = () => {
-  const items = getShoppingCartStorage();
-  return items.reduce((_acc, value) => {
-    return _acc + (value.item[0]?.price || 1) * (value.quantity || 1);
-  }, 0) as number;
-};
