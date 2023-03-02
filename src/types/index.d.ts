@@ -1,3 +1,5 @@
+import type { IAddress } from "./address.type";
+
 export interface ICredentials {
   phone: string;
   password: string;
@@ -59,18 +61,6 @@ export interface ICartItem {
   observation?: string;
   additionals?: IAdditional[] | [];
 }
-
-// ADDRESS STORE ZUSTAND TYPE --------------------->
-export interface IAddress {
-  _id?: string;
-  addressName: string;
-  addressNumber: string;
-  complement: string;
-  referencePoint: string;
-  districtName: string;
-}
-
-export interface IAddresses extends Array<IAddress> {}
 
 // CHECKOUT TYPE ---------------------->
 
