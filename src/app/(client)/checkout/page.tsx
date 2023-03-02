@@ -5,14 +5,14 @@ import { Box, Button, HStack, Text, VStack } from "@chakra-ui/react";
 import AddressCard from "@/components/cards/AddressCard";
 import IdentificationCard from "@/components/cards/IdentificationCard";
 import PaybackInput from "@/components/inputs/PaybackInput";
-import ScheduleTimeInput from "@/components/inputs/ScheduleTimeInput";
+// import ScheduleTimeInput from "@/components/inputs/ScheduleTimeInput";
 import AddAddressModal from "@/components/modals/AddAddressModal";
 // import PaymentModal from "@/components/modals/PaymentModal";
 import SelectAddressModal from "@/components/modals/SelectAddressModal";
 import DeliveryTypeRadio from "@/components/radios/DeliveryTypeRadio";
 import NeedPaybackRadio from "@/components/radios/NeedPaybackRadio";
 import PaymentTypeRadio from "@/components/radios/PaymentTypeRadio";
-import ScheduleOrderRadio from "@/components/radios/ScheduleOrderRadio";
+// import ScheduleOrderRadio from "@/components/radios/ScheduleOrderRadio";
 import useCheckout from "@/hooks/client/useCheckout";
 import { formatCurrency } from "@/utils";
 
@@ -51,14 +51,14 @@ export default function Checkout() {
           </Box>
 
           {/* schedule order container */}
-          <Box className="w-full">
+          {/* <Box className="w-full">
             <Text className="text-xl font-semibold">
               Pedir agora ou agendar horário?
             </Text>
             <ScheduleOrderRadio />
 
             {checkout.scheduleOption !== "now" && <ScheduleTimeInput />}
-          </Box>
+          </Box> */}
 
           {/* delivery type container  */}
           <Box>

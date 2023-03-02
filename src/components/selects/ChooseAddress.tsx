@@ -31,7 +31,9 @@ export default function ListAddress() {
           </option>
           {addresses?.map((address_) => (
             <option key={address_._id} value={address_._id}>
-              {`${address_.addressName} - ${address_.addressNumber} ${address_?.complement}, ${address_.districtName}`}
+              {`${address_.street} - ${address_.housenumber} ${
+                address_?.complement || ""
+              }, ${address_.suburb}`}
             </option>
           ))}
         </Select>

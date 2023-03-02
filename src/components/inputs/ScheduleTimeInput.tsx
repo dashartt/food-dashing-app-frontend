@@ -1,11 +1,9 @@
 "use client";
 
-import { Box } from "@chakra-ui/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { TimepickerUI } from "timepicker-ui";
 
 export default function ScheduleTimeInput() {
-  // const { chosenTime, setScheduleOrder } = useScheduleState();
   const tmRef = useRef(null);
   const [inputValue, setInputValue] = useState("12:00 PM");
 
