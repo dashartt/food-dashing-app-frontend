@@ -22,10 +22,10 @@ export default function Checkout() {
   return (
     <>
       {checkout.mounted && (
-        <VStack className="items-start md:w-96">
+        <Box className="space-y-6">
           {/* perfil container  */}
           <Box className="w-full">
-            <HStack className="w-full justify-between bg-white px-4">
+            <HStack className="w-full justify-between bg-white">
               <Text className="text-xl font-semibold">Identificação</Text>
               <Button
                 onClick={() => checkout.router.push("/account")}
@@ -40,18 +40,18 @@ export default function Checkout() {
 
           {/* address container  */}
           <Box className="w-full">
-            <HStack className="mx-4 justify-between">
+            <HStack className="justify-between">
               <Text className="text-xl font-semibold">Endereço </Text>
               <AddAddressModal />
             </HStack>
-            <Box className="m-4">
+            <Box>
               <SelectAddressModal />
               <AddressCard canRemove address={checkout.address} />
             </Box>
           </Box>
 
           {/* schedule order container */}
-          <Box className="mx-4 mb-4 w-full">
+          <Box className="w-full">
             <Text className="text-xl font-semibold">
               Pedir agora ou agendar horário?
             </Text>
@@ -61,17 +61,15 @@ export default function Checkout() {
           </Box>
 
           {/* delivery type container  */}
-          <Box className="mx-4">
+          <Box>
             <VStack className="items-start space-y-0">
-              <Text className="mb-2 text-xl font-semibold">
-                Tipo de entrega
-              </Text>
+              <Text className="text-xl font-semibold">Tipo de entrega</Text>
               <DeliveryTypeRadio />
             </VStack>
           </Box>
 
           {/* order prices details container */}
-          <Box className="w-full space-y-2 p-4">
+          <Box className="w-full">
             <Text className="text-xl font-semibold">Total do pedido</Text>
 
             <Box className="rounded-md border border-gray-400 p-4">
@@ -105,40 +103,27 @@ export default function Checkout() {
             </Box>
           </Box>
 
-          <Box className="w-full space-y-4">
-            <Box className="space-y-2">
-              <Text className="mx-4 text-xl font-semibold">
-                Forma de pagamento
-              </Text>
-              <Box className="mx-4">
-                <PaymentTypeRadio />
-              </Box>
+          <Box>
+            <Text className="text-xl font-semibold">Forma de pagamento</Text>
+            <Box>
+              <PaymentTypeRadio />
             </Box>
-
-            {/* {paymentType === "pix" && <PaymentModal />} */}
-
-            {checkout.paymentType === "cash" && (
-              <VStack className="mx-4 items-start space-y-4">
-                <VStack className="items-start">
-                  <Text className="text-xl font-semibold">
-                    Precisa de troco?
-                  </Text>
-                  <NeedPaybackRadio />
-                </VStack>
-                {checkout.needPayback && (
-                  <VStack className="items-start">
-                    <Text className="text-xl font-semibold">
-                      Troco pra quanto?
-                    </Text>
-                    <PaybackInput />
-                  </VStack>
-                )}
-              </VStack>
-            )}
           </Box>
+          {checkout.paymentType === "cash" && (
+            <Box>
+              <Text className="text-xl font-semibold">Precisa de troco?</Text>
+              <NeedPaybackRadio />
+            </Box>
+          )}
+          {checkout.paymentType === "cash" && checkout.needPayback && (
+            <Box>
+              <Text className="text-xl font-semibold">Troco pra quanto?</Text>
+              <PaybackInput />
+            </Box>
+          )}
 
           {/* confirm order container */}
-          <Box className="mt-4 w-full p-4">
+          <Box className="w-full ">
             <Button
               onClick={checkout.onConfirmPurchase}
               className="w-full bg-gray-default text-white"
@@ -146,7 +131,7 @@ export default function Checkout() {
               Confirmar
             </Button>
           </Box>
-        </VStack>
+        </Box>
       )}
     </>
   );

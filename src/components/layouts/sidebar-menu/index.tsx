@@ -17,7 +17,7 @@ export default function LayoutSidebarMenu({ children }: LayoutProps) {
   const isAdmin = path.includes("admin");
 
   return (
-    <Flex className="bg-gray-default min-w-full min-h-screen max-h-screen overflow-hidden items-center justify-center">
+    <Flex className="bg-gray-default min-w-full min-h-screen justify-center items-start">
       <HStack className="space-x-0 w-full bg-white max-w-screen-xl">
         <SidebarContent
           isAdmin={isAdmin}
@@ -29,7 +29,7 @@ export default function LayoutSidebarMenu({ children }: LayoutProps) {
           <SidebarContent isAdmin={isAdmin} onClose={onClose} />
         </SidebarContainer>
 
-        <VStack className="w-full max-h-screen overflow-auto">
+        <VStack className="w-full min-h-screen max-h-screen overflow-auto">
           <Box className="border-b-2 border-gray-400 w-full px-4 lg:hidden sticky top-0 z-10">
             <MobileNav onOpen={onOpen} />
           </Box>
