@@ -1,32 +1,52 @@
 import create from "zustand";
+import { devtools } from "zustand/middleware";
 
-interface PaymentState {
+interface PaymentTypeState {
   paymentType: string;
-  getPaymentType: (type: string) => void;
-  resetPaymentType: () => void;
+  needPayback: boolean;
+  paybackValue: number;
 
-  hasPayBack: boolean;
-  setHasPayBack: (has: boolean) => void;
-
-  payback: number;
-  getPayback: (payback: number) => void;
+  setPaymentType: (type: string) => void;
+  setNeedPayback: (doesItNeed: boolean) => void;
+  setPaybackValue: (amount: number) => void;
 }
 
-const usePaymentState = create<PaymentState>((set, _get) => ({
-  paymentType: "",
-  getPaymentType: (type) => set((state) => ({ ...state, paymentType: type })),
-  resetPaymentType: () =>
-    set((state) => ({
-      ...state,
-      paymentType: "",
-    })),
+const usePaymentType = create<PaymentTypeState>()(
+  devtools(
+    (set, get) => ({
+      paymentType: "cart",
+      needPayback: false,
+      paybackValue: 0,
 
-  hasPayBack: false,
-  setHasPayBack: (has) => set((state) => ({ ...state, hasPayBack: has })),
+      setPaymentType: (type) => {
+        const canResetCashDependencies = type === "cash";
 
-  payback: 0,
-  getPayback: (payback) => set((state) => ({ ...state, payback })),
-  resetPayback: () => set((state) => ({ ...state, payback: 0 })),
-}));
+        const resetCashDependenciesHandler = {
+          needPayback: canResetCashDependencies ? false : get().needPayback,
+          paybackValue: canResetCashDependencies ? 0 : get().paybackValue,
+        };
 
-export default usePaymentState;
+        set({
+          paymentType: type,
+          ...resetCashDependenciesHandler,
+        });
+      },
+      setNeedPayback: (doesItNeed) => {
+        const canResetPaybackValue = !doesItNeed;
+
+        const resetPaybackValueHandler = {
+          paybackValue: canResetPaybackValue ? 0 : get().paybackValue,
+        };
+
+        set({
+          needPayback: doesItNeed,
+          ...resetPaybackValueHandler,
+        });
+      },
+      setPaybackValue: (amount) => set({ paybackValue: amount }),
+    }),
+    { name: "usePaymentType" }
+  )
+);
+
+export default usePaymentType;

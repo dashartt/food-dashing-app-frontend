@@ -1,6 +1,4 @@
 import {
-  Alert,
-  AlertIcon,
   Button,
   Modal,
   ModalBody,
@@ -35,7 +33,7 @@ export default function SelectAddressModal() {
     <>
       {!address && (
         <Button
-          className="bg-gray-default font-normal text-white"
+          className="underline underline-offset-4 m-0 p-0 bg-white"
           onClick={onOpen}
         >
           Ver endereços
@@ -46,22 +44,25 @@ export default function SelectAddressModal() {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader className="border-b-2 border-gray-400">
-            <Alert
-              variant="blank"
-              className="text-xl font-semibold flex mx-auto border-none"
-            >
-              <AlertIcon className="self-start mt-1" />
-              <Text>Selecione algum endereço</Text>
-            </Alert>
-            <ModalCloseButton className="mt-5" />
+            Selecione algum endereço
+            <ModalCloseButton className="mt-2" />
           </ModalHeader>
 
-          <ModalBody className="m-4 mb-10">
-            <VStack className="space-y-4 max-h-[60vh] overflow-auto">
-              {addresses.map((address_) => (
-                <AddressCard key={address_._id} asButton address={address_} />
-              ))}
-            </VStack>
+          <ModalBody className="my-4 mb-10">
+            {addresses.length > 0 ? (
+              <VStack className="space-y-4 max-h-[60vh] overflow-auto">
+                {addresses.map((address_) => (
+                  <AddressCard
+                    canDeleteAndUpdate
+                    key={address_._id}
+                    asButton
+                    address={address_}
+                  />
+                ))}
+              </VStack>
+            ) : (
+              <Text className="text-xl">Nenhum endereço cadastrado</Text>
+            )}
           </ModalBody>
         </ModalContent>
       </Modal>

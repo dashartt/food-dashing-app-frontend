@@ -1,6 +1,6 @@
 import { Radio, RadioGroup, Stack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import useApplyDeliveryFee from "src/store/useApplyDeliveryFee";
+import useApplyDeliveryFee from "@/store/checkout/useDeliveryOption";
 
 export default function DeliveryOrPickup() {
   const [mounted, setMounted] = useState(false);

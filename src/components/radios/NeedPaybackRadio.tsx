@@ -1,6 +1,6 @@
 import { HStack, useRadioGroup } from "@chakra-ui/react";
 
-import usePaymentType from "@/store/usePaymentType";
+import usePaymentType from "@/store/checkout/usePayment";
 
 import RadioCard from "./RadioCard";
 

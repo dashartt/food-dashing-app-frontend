@@ -9,8 +9,9 @@ import IdentificationForm from "src/components/forms/IdentificationForm";
 import useAddressesState from "src/store/checkout/useAddresses";
 
 import AddressCard from "@/components/cards/AddressCard";
+import AddAddressModal from "@/components/modals/AddAddressModal";
 import useSessionState from "@/store/useSession";
-import type { IAddress } from "@/types";
+import type { IAddress } from "@/types/address.type";
 
 import * as api from "../../../services/api";
 import * as utils from "../../../utils";
@@ -91,13 +92,9 @@ export default function Identification() {
           <Box className="w-full space-y-0">
             <HStack className="justify-between p-4">
               <Text className="text-xl font-semibold">Endereço</Text>
-              <Button
-                className="bg-gray-default text-white "
-                onClick={() => router.push("/address")}
-              >
-                Adicionar
-              </Button>
+              <AddAddressModal />
             </HStack>
+
             <Box className="m-4 space-y-4">
               {addresses.length === 0 ? (
                 <Text>Nenhum endereço cadastrado</Text>
@@ -113,7 +110,7 @@ export default function Identification() {
             </Box>
           </Box>
 
-          <Box className="w-full p-4 mt-4">
+          <Box className="mt-4 w-full p-4">
             <Button
               onClick={onConfirmRegistration}
               className="w-full bg-gray-default text-white"

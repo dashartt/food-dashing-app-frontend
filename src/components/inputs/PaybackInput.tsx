@@ -3,7 +3,7 @@
 import { Box, Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
 import { MdAttachMoney } from "react-icons/md";
 
-import usePaymentType from "@/store/usePaymentType";
+import usePaymentType from "@/store/checkout/usePayment";
 
 export default function PaybackInput() {
   const { setPaybackValue } = usePaymentType();

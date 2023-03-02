@@ -1,10 +1,10 @@
 import create from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
-import type { IAddress, IAddresses } from "@/types";
+import type { IAddress } from "@/types/address.type";
 
 interface AddressesState {
-  addresses: IAddresses | [];
+  addresses: IAddress[];
   addAddress: (address_: IAddress) => void;
   updateAddress: (addressId: string, address: IAddress) => void;
   getAddress: (addressId: string) => IAddress | null;
@@ -20,12 +20,10 @@ const useAddressesState = create<AddressesState>()(
       addresses: [],
       addAddress: (address_) =>
         set((state) => ({
-          ...state,
           addresses: [...state.addresses, address_],
         })),
       updateAddress: (addressId, address_) =>
         set((state) => ({
-          ...state,
           addresses: state.addresses.map((address__) =>
             address__._id === addressId ? address_ : address__
           ),

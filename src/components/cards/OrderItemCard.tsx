@@ -110,8 +110,10 @@ export default function OrderCard({
           {/*  ADDRESS NAME  --------------------------> */}
           <VStack className="items-start -space-y-1 mb-1">
             <Text className="font-bold">Endereço:</Text>
-            <Text>{`${order?.addressId?.addressName}, ${order?.addressId?.addressNumber} ${order?.addressId?.complement}`}</Text>
-            <Text>{order?.addressId?.districtName}</Text>
+            <Text>{`${order?.addressId?.street}, ${
+              order?.addressId?.housenumber
+            } ${order?.addressId?.complement || ""} `}</Text>
+            <Text>{order?.addressId?.suburb}</Text>
             <Text>{order?.addressId?.referencePoint}</Text>
           </VStack>
 

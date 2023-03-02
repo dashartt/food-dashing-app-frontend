@@ -44,7 +44,7 @@ export default function ShoppingCart() {
             ))}
           </VStack>
 
-          <Box className="w-full bg-white p-4 sticky bottom-20 lg:bottom-0 z-10 border-t-2 border-gray-400">
+          <Box className="w-full bg-white p-4 sticky bottom-0 z-10 border-t-2 border-gray-400">
             <HStack className="justify-between">
               <Text className="text-xl font-semibold">
                 Total: R$ {formatCurrency(getTotalPrice())}

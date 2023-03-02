@@ -1,6 +1,5 @@
 import type {
   IAccount,
-  IAddress,
   IAdminOrder,
   IClientAccount,
   IMenu,
@@ -8,6 +7,7 @@ import type {
   IOrder,
   IOrderSearchParams,
 } from "@/types";
+import type { IAddress } from "@/types/address.type";
 
 const SERVER_URL = "https://macacoloucopizzaria-backend.vercel.app";
 // const SERVER_URL = "http://localhost:3003";
