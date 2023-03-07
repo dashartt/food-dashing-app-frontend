@@ -22,7 +22,7 @@ export default function Checkout() {
   return (
     <>
       {checkout.mounted && (
-        <Box className="space-y-6">
+        <Box className="space-y-6 min-w-[18rem] lg:w-96">
           {/* perfil container  */}
           <Box className="w-full">
             <HStack className="w-full justify-between bg-white">
