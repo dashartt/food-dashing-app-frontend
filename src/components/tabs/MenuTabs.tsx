@@ -1,18 +1,22 @@
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
 
-import MenuItemList from "@/components/blocks/menu/MenuItemList";
+import MenuItemList from "@/components/list/MenuItemList";
 
-type MenuItem = "salty pizza" | "sweet pizza" | "arabic snack" | "drinks";
+type ICategory = "salty pizza" | "sweet pizza" | "arabic snack" | "drinks";
 
-type MenuTabsProps = {
-  items: MenuItem[];
+type IMenuTabsProps = {
+  categories: ICategory[];
+  tabListClass?: string;
 };
 
-export default function MenuTabs({ items }: MenuTabsProps) {
+export default function MenuTabs({
+  categories,
+  tabListClass = "",
+}: IMenuTabsProps) {
   return (
     <Tabs isFitted className="w-full">
-      <TabList className="sticky top-0 z-10 bg-white">
-        {items.includes("salty pizza") && (
+      <TabList className={`${tabListClass}`}>
+        {categories.includes("salty pizza") && (
           <Tab
             _selected={{
               color: "black",
@@ -22,7 +26,7 @@ export default function MenuTabs({ items }: MenuTabsProps) {
             Pizza salgada
           </Tab>
         )}
-        {items.includes("sweet pizza") && (
+        {categories.includes("sweet pizza") && (
           <Tab
             _selected={{
               color: "black",
@@ -32,7 +36,7 @@ export default function MenuTabs({ items }: MenuTabsProps) {
             Pizza doce
           </Tab>
         )}
-        {items.includes("arabic snack") && (
+        {categories.includes("arabic snack") && (
           <Tab
             _selected={{
               color: "black",
@@ -42,7 +46,7 @@ export default function MenuTabs({ items }: MenuTabsProps) {
             Lanche árabe
           </Tab>
         )}
-        {items.includes("drinks") && (
+        {categories.includes("drinks") && (
           <Tab
             _selected={{
               color: "black",
@@ -55,22 +59,22 @@ export default function MenuTabs({ items }: MenuTabsProps) {
       </TabList>
 
       <TabPanels>
-        {items.includes("salty pizza") && (
+        {categories.includes("salty pizza") && (
           <TabPanel>
             <MenuItemList category="salty pizza" />
           </TabPanel>
         )}
-        {items.includes("sweet pizza") && (
+        {categories.includes("sweet pizza") && (
           <TabPanel>
             <MenuItemList category="sweet pizza" />
           </TabPanel>
         )}
-        {items.includes("arabic snack") && (
+        {categories.includes("arabic snack") && (
           <TabPanel>
             <MenuItemList category="arabic snack" />
           </TabPanel>
         )}
-        {items.includes("drinks") && (
+        {categories.includes("drinks") && (
           <TabPanel>
             <MenuItemList category="drinks" />
           </TabPanel>

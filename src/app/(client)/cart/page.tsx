@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 import ItemCartCard from "src/components/cards/ItemCartCard";
 import { v4 as uuid } from "uuid";
 
-import EmptyCart from "@/components/blocks/cart/EmptyCart";
+import EmptyCart from "@/components/empty/EmptyCart";
 import useShoppingCart from "@/store/useShoppingCart";
 import { formatCurrency } from "@/utils";
 

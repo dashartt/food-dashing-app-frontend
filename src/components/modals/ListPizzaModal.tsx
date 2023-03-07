@@ -44,7 +44,10 @@ export default function ListPizzasModal() {
           <ModalHeader className="">Cardápio</ModalHeader>
           <ModalCloseButton />
           <ModalBody className="relative max-h-[80vh] overflow-auto p-0">
-            <MenuTabs items={["salty pizza", "sweet pizza"]} />
+            <MenuTabs
+              tabListClass="sticky top-0 z-10 bg-white"
+              categories={["salty pizza", "sweet pizza"]}
+            />
           </ModalBody>
         </ModalContent>
       </Modal>

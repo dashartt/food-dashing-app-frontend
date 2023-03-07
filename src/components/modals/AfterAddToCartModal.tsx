@@ -29,7 +29,7 @@ type Props = {
   children: ReactNode | undefined;
 };
 
-export default function BuyMoreOrFinish({ children, orderItem }: Props) {
+export default function AfterAddToCartModal({ children, orderItem }: Props) {
   const [mounted, setMounted] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter();

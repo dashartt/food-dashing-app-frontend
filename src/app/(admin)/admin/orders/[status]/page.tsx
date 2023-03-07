@@ -2,7 +2,7 @@
 
 import { Box } from "@chakra-ui/react";
 
-import OrdersList from "@/components/blocks/ordersList/AdminOrdersList";
+import OrdersList from "@/components/list/AdminOrdersList";
 import useOrdersPage from "@/hooks/admin/useOrdersPage";
 import useOrderSubscriber from "@/hooks/admin/useOrderSubscriber";
 
