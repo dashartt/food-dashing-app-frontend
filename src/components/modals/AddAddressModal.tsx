@@ -3,6 +3,7 @@ import {
   FormControl,
   FormLabel,
   HStack,
+  IconButton,
   Input,
   Modal,
   ModalBody,
@@ -12,17 +13,18 @@ import {
   ModalHeader,
   ModalOverlay,
   Textarea,
+  Tooltip,
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
 import { useRef } from "react";
+import { BsQuestionCircle } from "react-icons/bs";
 
 import useAddressesState from "@/store/checkout/useAddresses";
 import type { IAddress } from "@/types/address.type";
 
 import * as api from "../../services/api";
 import SearchPlaceInput from "../inputs/SearchPlaceInput";
-import AddressFieldTooltip from "../tooltips/AddressFieldTooltip";
 
 type Props = {
   addressId?: string;
@@ -82,7 +84,7 @@ export default function AddAddressModal({ addressId, defaultValues }: Props) {
   return (
     <>
       <Button
-        className="underline underline-offset-4 m-0 p-0 bg-white"
+        className="m-0 bg-white p-0 underline underline-offset-4"
         onClick={onOpen}
       >
         Adicionar
@@ -108,10 +110,18 @@ export default function AddAddressModal({ addressId, defaultValues }: Props) {
                   <FormLabel htmlFor="complement" className="m-0">
                     Complemento (opcional)
                   </FormLabel>
-                  <AddressFieldTooltip
+                  <Tooltip
+                    hasArrow
+                    placement="top"
                     label="em alguns tipos de residências existem outro número para identificá-lo, por exemplo apartamento e é necessário informar tal número"
-                    fieldName="complement"
-                  />
+                    aria-label="mensagem para ajudar em caso de dúvida"
+                  >
+                    <IconButton
+                      className="bg-transparent"
+                      aria-label={`ver detalhes do campo ponto de complemento`}
+                      icon={<BsQuestionCircle className="text-xl" />}
+                    />
+                  </Tooltip>
                 </HStack>
                 <Input
                   id="complement"
