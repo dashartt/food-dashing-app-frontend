@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 
 import OrderCard from "@/components/cards/OrderItemCard";
 import OrderStatusStepper from "@/components/stepper/OrderStatusStepper";
+import Beam from "@/services/Beam";
 import Pusher from "@/services/Pusher";
 import type { IAdminOrder } from "@/types";
 
@@ -21,7 +22,7 @@ export default function OrderPage({ orderProps }: Props) {
     if (!orderProps) notFound();
     setMounted(true);
     Pusher.subscribe("client");
-    // Beam.subscribe("update-order-status");
+    Beam.subscribe("update-order-status");
     Pusher.onEvent("update-order-status", (status: string) =>
       setOrder((state) => (state ? { ...state, status } : state))
     );
@@ -30,9 +31,9 @@ export default function OrderPage({ orderProps }: Props) {
   return (
     <>
       {mounted && order && (
-        <VStack className="mb-8 w-full space-y-8 items-start">
-          <Alert variant="blank" className="text-xl mx-auto mb-6 max-w-sm">
-            <AlertIcon className="self-start mt-1" />
+        <VStack className="mb-8 w-full items-start space-y-8">
+          <Alert variant="blank" className="mx-auto mb-6 max-w-sm text-xl">
+            <AlertIcon className="mt-1 self-start" />
             <Text>
               tempo estimado: 30m - 1h <br />
               estaremos fazendo o possível para evitar atrasos ou se prolongar
@@ -41,7 +42,7 @@ export default function OrderPage({ orderProps }: Props) {
           </Alert>
 
           {/* STATUS BLOCK */}
-          <Box className="w-full space-y-2 max-w-xs">
+          <Box className="w-full max-w-xs space-y-2">
             <Text className="text-xl font-bold">Status</Text>
             <Box className="w-full rounded-md border border-gray-400 px-4 pt-4">
               <OrderStatusStepper

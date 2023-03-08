@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 
 import { getOrderById } from "@/services/api";
-// import Beam from "@/services/Beam";
+import Beam from "@/services/Beam";
 import Pusher from "@/services/Pusher";
 import useOrderState from "@/store/useOrder";
 import type { IAdminOrder } from "@/types";
@@ -19,7 +19,7 @@ export default function useOrderSubscriber() {
 
   useEffect(() => {
     Pusher.subscribe("admin");
-    // Beam.subscribe("new-order");
+    Beam.subscribe("new-order");
     Pusher.onEvent("new-order", (orderId_: string) => setOrderId(orderId_));
   }, []);
 
