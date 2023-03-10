@@ -45,6 +45,7 @@
     "react-icons": "^4.7.1",
     "react-input-mask": "^2.0.4",
     "react-multi-date-picker": "^3.3.4",
+    "react-select": "^5.7.0",
     "react-time-picker-input": "^2.0.10",
     "socket.io-client": "^4.5.4",
     "string-mask": "^0.3.0",

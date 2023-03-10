@@ -1,14 +1,14 @@
 import { Button, HStack } from "@chakra-ui/react";
 import { Step, Steps, useSteps } from "chakra-ui-steps";
 
-import ShopCategoriesStep from "./steps/ShopCategoriesStep";
+import ShopAdditionalSetup from "./steps/ShopAdditionalSetup";
 import ShopInfoStep from "./steps/ShopInfoStep";
 import ShopMenuStep from "./steps/ShopMenuStep";
 
 const steps = [
   { label: "Informações da loja", Content: ShopInfoStep },
-  { label: "Categorias", Content: ShopCategoriesStep },
   { label: "Cardápio", Content: ShopMenuStep },
+  { label: "Adicionais", Content: ShopAdditionalSetup },
 ];
 
 export default function ShopSetupStepper() {
