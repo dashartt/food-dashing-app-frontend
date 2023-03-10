@@ -12,6 +12,7 @@ export default function TimeInput() {
         width: "5rem",
         textAlign: "center",
         padding: "1.2rem 1.1rem",
+        border: "1px solid border-gray-400",
       }}
       format="HH:mm"
       disableDayPicker

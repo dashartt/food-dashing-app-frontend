@@ -22,12 +22,16 @@ export default function ShopInfoStep() {
     <VStack className=" items-start space-y-8">
       <FormControl className="w-fit">
         <FormLabel htmlFor="storeName">Nome da loja</FormLabel>
-        <Input id="storeName" className="w-fit" />
+        <Input id="storeName" className="w-fit border border-gray-400" />
       </FormControl>
 
       <FormControl className="w-fit">
         <FormLabel htmlFor="state">Estado</FormLabel>
-        <Select id="state" onChange={(event) => setState(event.target?.value)}>
+        <Select
+          id="state"
+          className="border border-gray-400"
+          onChange={(event) => setState(event.target?.value)}
+        >
           <option className="hidden" value="">
             Selecione o estado
           </option>
@@ -42,7 +46,11 @@ export default function ShopInfoStep() {
       {state !== "" && (
         <FormControl className="w-fit">
           <FormLabel htmlFor="city">Cidade</FormLabel>
-          <Select id="city" onChange={(event) => setCity(event.target?.value)}>
+          <Select
+            id="city"
+            className="border border-gray-400"
+            onChange={(event) => setCity(event.target?.value)}
+          >
             <option className="hidden" value="">
               Selecione a cidade
             </option>

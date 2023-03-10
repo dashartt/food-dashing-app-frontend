@@ -16,7 +16,7 @@ export default function ServiceDayCard(props: ServiceDayCardProps) {
       <input {...input} />
       <Box
         {...checkbox}
-        className="cursor-pointer rounded-md border border-gray-400 px-5 py-3 shadow-lg"
+        className="cursor-pointer rounded-md border border-gray-400 px-5 py-3"
         _checked={{
           bg: "gray.default",
           color: "white",
