@@ -40,7 +40,7 @@ export default function ShopAdditionalSetup() {
 
   return (
     <VStack className="items-start space-y-6">
-      <Accordion>
+      <Accordion allowToggle>
         <AccordionItem className="rounded-md border border-gray-400">
           <AccordionButton>
             <Text>Criar adicional</Text>

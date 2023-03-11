@@ -1,5 +1,4 @@
 import {
-  HStack,
   Tab,
   TabList,
   TabPanel,
@@ -7,9 +6,11 @@ import {
   Tabs,
   Text,
 } from "@chakra-ui/react";
+import { v4 as uuid } from "uuid";
 
 import type { IAdditional, ICategory } from "@/types/shop/menu";
-import { formatCurrency } from "@/utils/format.util";
+
+import AdditionalCard from "../cards/shop-setup/AdditionalCard";
 
 type Props = {
   categories: ICategory[];
@@ -21,27 +22,25 @@ export default function AdditionalTabs({ categories, additional }: Props) {
     <Tabs isFitted className="w-full">
       <TabList className="max-w-full overflow-x-auto overflow-y-hidden pb-4">
         {categories.map((category) => (
-          <Tab key={category.name}>{category.name}</Tab>
+          <Tab key={uuid()}>{category.name}</Tab>
         ))}
       </TabList>
 
       <TabPanels>
         {categories.map((category) => (
-          <TabPanel key={`${category.name.concat("-")}`}>
-            {additional.filter((additional_) =>
+          <TabPanel key={uuid()}>
+            {additional.length > 0 &&
+            additional.filter((additional_) =>
               additional_.categories.some(
                 (category_) => category_?.name === category.name
               )
             ).length > 0 ? (
               additional.map((additional_) => (
-                <HStack
-                  key={additional_.categories
-                    .join(", ")
-                    .concat("-", additional_.name)}
-                >
-                  <Text>{additional_.name}</Text>
-                  <Text>{`R$ ${formatCurrency(additional_.price)}`}</Text>
-                </HStack>
+                <AdditionalCard
+                  key={uuid()}
+                  additional={additional_}
+                  category={category}
+                />
               ))
             ) : (
               <Text>Nenhum adicional dessa categoria</Text>

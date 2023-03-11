@@ -4,9 +4,11 @@ import { Step, Steps, useSteps } from "chakra-ui-steps";
 import ShopAdditionalSetup from "./steps/ShopAdditionalSetup";
 import ShopInfoStep from "./steps/ShopInfoStep";
 import ShopMenuStep from "./steps/ShopMenuStep";
+import ShopSetupDeliveryFeeStep from "./steps/ShopSetupDeliveryFeeStep";
 
 const steps = [
   { label: "Informações da loja", Content: ShopInfoStep },
+  { label: "Taxas de entrega", Content: ShopSetupDeliveryFeeStep },
   { label: "Cardápio", Content: ShopMenuStep },
   { label: "Adicionais", Content: ShopAdditionalSetup },
 ];
