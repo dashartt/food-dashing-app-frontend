@@ -1,7 +1,6 @@
 import {
   Card,
   CardBody,
-  HStack,
   IconButton,
   Tab,
   TabList,
@@ -13,15 +12,26 @@ import {
 } from "@chakra-ui/react";
 import { MdClose } from "react-icons/md";
 
-import type { IMenu } from "@/types/shop/menu";
+import useMenu from "@/store/shop/setup/useMenu";
+import type { IItemCategory, IMenuItem } from "@/types/shop/menu.type";
 import { formatCurrency } from "@/utils/format.util";
 
 type Props = {
-  categories: string[];
-  menu: IMenu[];
+  categories: IItemCategory[];
+  menu: IMenuItem[];
 };
 
 export default function CreateableMenu({ categories, menu }: Props) {
+  const { setMenu } = useMenu();
+
+  const onRemoveMenuItem = (category: string, name: string) => {
+    setMenu(
+      menu.filter(
+        (item) => item.category.name !== category && item.name !== name
+      )
+    );
+  };
+
   return (
     <Tabs className="w-full">
       <TabList className="max-w-full overflow-x-auto overflow-y-hidden pb-4">
@@ -31,43 +41,50 @@ export default function CreateableMenu({ categories, menu }: Props) {
               color: "black",
               borderBottom: "4px solid black",
             }}
-            key={category}
+            key={category.name}
           >
-            {category}
+            {category.name}
           </Tab>
         ))}
       </TabList>
 
       <TabPanels>
-        {categories.map((categoryName) => (
-          <TabPanel key={categoryName}>
-            {menu.filter((item) => item.category === categoryName).length >
-            0 ? (
-              menu
-                .filter((item) => item.category === categoryName)
-                .map(({ item, category }) => (
-                  <Card key={`${category}-${item.name}`}>
-                    <CardBody>
-                      <HStack>
+        {categories.map((category_) => (
+          <TabPanel key={category_.name}>
+            <VStack className="w-full space-y-6">
+              {menu.filter((item) => item.category.name === category_.name)
+                .length > 0 ? (
+                menu
+                  .filter((item) => item.category.name === category_.name)
+                  .map(({ category, name, price, ingredients }) => (
+                    <Card
+                      key={`${category.name}-${name}`}
+                      className="relative w-full"
+                      variant="outline"
+                    >
+                      <CardBody>
                         <VStack className="w-full items-start">
-                          <Text>{item.name}</Text>
+                          <Text>{name}</Text>
                           <Text className="text-gray-600">
-                            {item.ingredients}
+                            {ingredients || ""}
                           </Text>
-                          <Text>{`R$ ${formatCurrency(item.price)}`}</Text>
+                          <Text>{`R$ ${formatCurrency(price)}`}</Text>
                         </VStack>
                         <IconButton
-                          className="self-start"
+                          onClick={() =>
+                            onRemoveMenuItem(category.name || "", name)
+                          }
+                          className="absolute top-0 right-0 self-start bg-white hover:bg-white active:bg-white"
                           aria-label="Excluir produto do cardápio"
                           icon={<MdClose />}
                         />
-                      </HStack>
-                    </CardBody>
-                  </Card>
-                ))
-            ) : (
-              <Text>Nenhum produto dessa categoria</Text>
-            )}
+                      </CardBody>
+                    </Card>
+                  ))
+              ) : (
+                <Text>Nenhum produto dessa categoria</Text>
+              )}
+            </VStack>
           </TabPanel>
         ))}
       </TabPanels>

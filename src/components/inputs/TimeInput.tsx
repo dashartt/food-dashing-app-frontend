@@ -16,7 +16,13 @@ export default function TimeInput() {
       }}
       format="HH:mm"
       disableDayPicker
-      plugins={[<TimePicker hideSeconds key={uuid()} />]}
+      plugins={[
+        <TimePicker
+          onSelect={(v) => console.log(v)}
+          hideSeconds
+          key={uuid()}
+        />,
+      ]}
     />
   );
 }

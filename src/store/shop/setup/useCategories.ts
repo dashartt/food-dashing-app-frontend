@@ -1,15 +1,9 @@
 import create from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
-type ICreateableSelectOption = {
-  label: string;
-  value: string;
-  __isNew__: boolean;
-};
-
 export interface CategoriesState {
-  categories: ICreateableSelectOption[] | [];
-  setCategories: (categories: unknown) => void;
+  categories: string[] | [];
+  setCategories: (categories: string[]) => void;
 }
 
 const useCategories = create<CategoriesState>()(
@@ -17,9 +11,7 @@ const useCategories = create<CategoriesState>()(
     (set) => ({
       categories: [],
       setCategories: (categories) => {
-        const categoriesTyped =
-          categories as unknown as ICreateableSelectOption[];
-        set({ categories: categoriesTyped });
+        set({ categories });
       },
     }),
     {

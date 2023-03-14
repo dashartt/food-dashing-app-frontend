@@ -10,11 +10,17 @@ import type { IAddressAutocompletePayload } from "@/types/geoapify.type";
 
 type Props = {
   onSelectAddress: (address: IAddress) => void;
+  city: string;
+  stateCode: string;
 };
 
-export default function SearchPlaceInput({ onSelectAddress }: Props) {
+export default function SearchPlaceInput({
+  onSelectAddress,
+  city,
+  stateCode,
+}: Props) {
   function preprocessHook(value: string) {
-    return `${value}, Ilha Solteira, SP`;
+    return `${value}, ${city}, ${stateCode}`;
   }
   function postprocessHook({ properties }: IAddressAutocompletePayload) {
     onSelectAddress({ ...properties });

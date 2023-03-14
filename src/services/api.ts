@@ -1,19 +1,25 @@
+import { Axios } from "axios";
+
 import type {
   IAccount,
   IAdminOrder,
-  IClientAccount,
   IMenu,
   IMenuItem,
   IOrder,
   IOrderSearchParams,
 } from "@/types";
 import type { IAddress } from "@/types/address.type";
+import type { ISignIn, ISignUp } from "@/types/auth.type";
 
-const SERVER_URL = "https://macacoloucopizzaria-backend.vercel.app";
-// const SERVER_URL = "http://localhost:3003";
+// const apiUrl = "https://macacoloucopizzaria-backend.vercel.app";
+const apiUrl = "http://localhost:3003";
+
+const request = new Axios({
+  baseURL: apiUrl,
+});
 
 export const getMenuItemByName = async (name: string) => {
-  const response = await fetch(`${SERVER_URL}/menu/item/${name}`, {
+  const response = await fetch(`${apiUrl}/menu/item/${name}`, {
     headers: { "Content-Type": "application/json" },
     method: "GET",
     mode: "cors",
@@ -26,7 +32,7 @@ export const getMenuItemByName = async (name: string) => {
 };
 
 export const getMenuItems = async () => {
-  const response = await fetch(`${SERVER_URL}/menu`, {
+  const response = await fetch(`${apiUrl}/menu`, {
     method: "GET",
     mode: "cors",
   });
@@ -39,7 +45,7 @@ export const getMenuItems = async () => {
 };
 
 export const getMenuItemsByCategory = async (category: string) => {
-  const response = await fetch(`${SERVER_URL}/menu/${category}`, {
+  const response = await fetch(`${apiUrl}/menu/${category}`, {
     method: "GET",
     mode: "cors",
   });
@@ -51,73 +57,34 @@ export const getMenuItemsByCategory = async (category: string) => {
   return data as IMenuItem[];
 };
 
-export const signup = async ({
-  fullName,
-  phone,
-  password,
-  role = "client",
-  addressesId,
-}: {
-  fullName: string;
-  password?: string;
-  phone: string;
-  role?: string;
-  addressesId?: string[];
-}) => {
-  const response = await fetch(`${SERVER_URL}/account/signup`, {
-    headers: { "Content-Type": "application/json" },
-    method: "POST",
-    mode: "cors",
-    body: JSON.stringify({
-      fullName,
-      phone,
-      ...(addressesId && { addressesId }),
-      ...(password && { password }),
-      role,
-    }),
+export const signup = async (values: ISignUp) => {
+  const response = await request.post("/user/signup", {
+    ...values,
   });
 
-  if (!response.ok) return null;
+  if (response.status !== 200)
+    return () => console.log("response statuts !== 200");
+  console.log(response.data);
 
-  const responseData = (await response.json()) as {
-    isSuccess: boolean;
-    message: string;
-    data: IClientAccount;
-  };
-
-  return responseData;
+  return response.data;
 };
 
-export const signin = async ({
-  // phone,
-  password,
-}: {
-  password: string;
-  // phone: string;
-}) => {
-  const response = await fetch(`${SERVER_URL}/account/signin`, {
-    headers: { "Content-Type": "application/json" },
-    method: "POST",
-    mode: "cors",
-    body: JSON.stringify({ password /* phone */ }),
+export const signin = async (values: ISignIn) => {
+  const response = await request.post("/user/signin", {
+    ...values,
   });
 
-  const responseData = (await response.json()) as {
-    isSuccess: boolean;
-    message: string;
-    data: {
-      token: string;
-      session: IClientAccount;
-    };
-  };
+  if (response.status !== 200)
+    return () => console.log("response statuts !== 200");
+  console.log(response.data);
 
-  return responseData;
+  return response.data;
 };
 
 export const updateClientAccount = async (
   clientDTO: Omit<IAccount, "password" | "role">
 ) => {
-  const response = await fetch(`${SERVER_URL}/account`, {
+  const response = await fetch(`${apiUrl}/account`, {
     headers: { "Content-Type": "application/json" },
     method: "PUT",
     mode: "cors",
@@ -138,7 +105,7 @@ export const updateClientAccount = async (
 };
 
 export const addAddress = async (addressDTO: IAddress) => {
-  const response = await fetch(`${SERVER_URL}/address`, {
+  const response = await fetch(`${apiUrl}/address`, {
     headers: { "Content-Type": "application/json" },
     method: "POST",
     mode: "cors",
@@ -153,7 +120,7 @@ export const addAddress = async (addressDTO: IAddress) => {
 };
 
 export const removeAddress = async (addressId: string) => {
-  const response = await fetch(`${SERVER_URL}/address/${addressId}`, {
+  const response = await fetch(`${apiUrl}/address/${addressId}`, {
     headers: { "Content-Type": "application/json" },
     method: "DELETE",
     mode: "cors",
@@ -173,7 +140,7 @@ export const updateAddress = async (
   addressId: string,
   addressDTO: IAddress
 ) => {
-  const response = await fetch(`${SERVER_URL}/address/${addressId}`, {
+  const response = await fetch(`${apiUrl}/address/${addressId}`, {
     headers: { "Content-Type": "application/json" },
     method: "PUT",
     mode: "cors",
@@ -192,7 +159,7 @@ export const updateAddress = async (
 };
 
 export const updateOrderStatus = async (orderId: string, status: string) => {
-  await fetch(`${SERVER_URL}/orders/${orderId}?status=${status}`, {
+  await fetch(`${apiUrl}/orders/${orderId}?status=${status}`, {
     headers: { "Content-Type": "application/json" },
     method: "PATCH",
     mode: "cors",
@@ -200,7 +167,7 @@ export const updateOrderStatus = async (orderId: string, status: string) => {
 };
 
 export const addOrder = async (orderDTO: IOrder) => {
-  const response = await fetch(`${SERVER_URL}/orders`, {
+  const response = await fetch(`${apiUrl}/orders`, {
     headers: { "Content-Type": "application/json" },
     method: "POST",
     mode: "cors",
@@ -217,7 +184,7 @@ export const addOrder = async (orderDTO: IOrder) => {
 export const getOrders = async ({ today, status }: IOrderSearchParams) => {
   const params = new URLSearchParams(JSON.stringify({ today, status }));
 
-  const response = await fetch(`${SERVER_URL}/orders?${params}`, {
+  const response = await fetch(`${apiUrl}/orders?${params}`, {
     headers: {
       "Content-Type": "application/json",
     },
@@ -233,7 +200,7 @@ export const getOrders = async ({ today, status }: IOrderSearchParams) => {
 };
 
 export const getClientOrders = async (clientId: string) => {
-  const response = await fetch(`${SERVER_URL}/orders/client/${clientId}`, {
+  const response = await fetch(`${apiUrl}/orders/client/${clientId}`, {
     headers: { "Content-Type": "application/json" },
     method: "GET",
     mode: "cors",
@@ -247,7 +214,7 @@ export const getClientOrders = async (clientId: string) => {
 };
 
 export const getOrderById = async (orderId: string) => {
-  const response = await fetch(`${SERVER_URL}/orders/${orderId}`, {
+  const response = await fetch(`${apiUrl}/orders/${orderId}`, {
     headers: {
       "Content-Type": "application/json",
     },
@@ -263,7 +230,7 @@ export const getOrderById = async (orderId: string) => {
 };
 
 export const accessAuth = async ({ password }: { password: string }) => {
-  const response = await fetch(`${SERVER_URL}/account/auth`, {
+  const response = await fetch(`${apiUrl}/account/auth`, {
     headers: { "Content-Type": "application/json" },
     method: "POST",
     mode: "cors",
@@ -277,7 +244,7 @@ export const accessAuth = async ({ password }: { password: string }) => {
 };
 
 export const verifyAuth = async ({ token }: { token: string }) => {
-  const response = await fetch(`${SERVER_URL}/account/auth`, {
+  const response = await fetch(`${apiUrl}/account/auth`, {
     headers: {
       "Content-Type": "application/json",
       Authorization: token,
@@ -306,7 +273,7 @@ export const makePayment = async (details: any) => {
 };
 
 export const getAdditionals = async () => {
-  const response = await fetch(`${SERVER_URL}/additional`, {
+  const response = await fetch(`${apiUrl}/additional`, {
     headers: {
       "Content-Type": "application/json",
     },

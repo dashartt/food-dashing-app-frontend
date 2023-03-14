@@ -6,6 +6,7 @@ import {
   ModalContent,
   ModalHeader,
   ModalOverlay,
+  Text,
   useDisclosure,
 } from "@chakra-ui/react";
 
@@ -33,10 +34,17 @@ export default function PreviewMenuModal() {
           <ModalHeader className="">Cardápio</ModalHeader>
           <ModalCloseButton />
           <ModalBody className="relative max-h-[80vh] overflow-auto p-4">
-            <CreateableMenu
-              menu={menu}
-              categories={categories.map((category) => category.label)}
-            />
+            {categories.length > 0 ? (
+              <CreateableMenu
+                menu={menu}
+                categories={categories.map((category) => ({ name: category }))}
+              />
+            ) : (
+              <Text>
+                Registre alguma categoria antes de visualizar algum produto do
+                cardápio
+              </Text>
+            )}
           </ModalBody>
         </ModalContent>
       </Modal>

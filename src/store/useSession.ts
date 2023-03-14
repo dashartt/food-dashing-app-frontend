@@ -2,11 +2,11 @@ import create from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 interface ISession {
-  role: string;
-  addressesId: string[] | [];
-  phone: string;
-  fullName: string;
   _id?: string;
+  fullName: string;
+  email: string;
+  addresses: string[] | [];
+  role: string;
 }
 
 interface SessionState {
@@ -22,12 +22,12 @@ const useSessionState = create<SessionState>()(
   persist(
     (set) => ({
       session: null,
-      setSession: (session) => set((state) => ({ ...state, session })),
-      clearSession: () => set((state) => ({ ...state, session: null })),
+      setSession: (session) => set({ session }),
+      clearSession: () => set({ session: null }),
 
       path: "",
       setPath: (path) =>
-        set((state) => ({ ...state, path: path !== "" ? path : state.path })),
+        set((state) => ({ path: path !== "" ? path : state.path })),
     }),
     {
       name: "session-storage", // name of item in the storage (must be unique)

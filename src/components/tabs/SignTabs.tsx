@@ -5,22 +5,31 @@ import SignInForm from "../forms/SignInForm";
 import SignUpForm from "../forms/SignUpForm";
 
 export default function SignTabs() {
-  const [tabIndex, setTabIndex] = useState(1);
-
-  const handleTabsChange = (index: number) => {
-    setTabIndex(index);
-  };
-
+  const [tabIndex, setTabIndex] = useState(0);
   return (
-    <Tabs isFitted isLazy index={tabIndex} onChange={handleTabsChange}>
+    <Tabs tabIndex={tabIndex} isFitted isLazy>
       <TabList>
-        <Tab>Criar conta</Tab>
-        <Tab>Entrar</Tab>
+        <Tab
+          _selected={{
+            borderBottomColor: "gray.default",
+            borderBottomWidth: "4px",
+          }}
+        >
+          Criar conta
+        </Tab>
+        <Tab
+          _selected={{
+            borderBottomColor: "gray.default",
+            borderBottomWidth: "4px",
+          }}
+        >
+          Entrar
+        </Tab>
       </TabList>
 
       <TabPanels>
         <TabPanel>
-          <SignUpForm handleTabsChange={handleTabsChange} />
+          <SignUpForm setTabIndex={setTabIndex} />
         </TabPanel>
         <TabPanel>
           <SignInForm />

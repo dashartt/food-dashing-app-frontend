@@ -1,4 +1,4 @@
-import "../../../styles/global.css";
+import "../../styles/global.css";
 
 import type { PropsWithChildren } from "react";
 import AllInOneProvider from "src/components/providers/AllInOneProvider";

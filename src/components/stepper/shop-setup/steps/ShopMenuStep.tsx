@@ -8,44 +8,57 @@ import {
   FormControl,
   FormLabel,
   Input,
+  Select,
   Spacer,
   Switch,
   Text,
   Textarea,
   VStack,
 } from "@chakra-ui/react";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
-import SelectInput from "react-select";
-import CreateableSelect from "react-select/creatable";
 
+import PreviewCategoriesModal from "@/components/modals/PreviewCategoriesModal";
 import PreviewMenuModal from "@/components/modals/PreviewMenuModal";
 import useCategories from "@/store/shop/setup/useCategories";
 import useMenu from "@/store/shop/setup/useMenu";
-import type { IMenu } from "@/types/menu.type";
+import useShopSettings from "@/store/shop/setup/useShopSetup";
+import type { IItemCategory, IMenuItem } from "@/types/shop/menu.type";
 
 export default function ShopMenuStep() {
-  const { handleSubmit, register, setValue } = useForm<IMenu>();
+  const { setShopSettings, shopSettings } = useShopSettings();
+  const categoryForm = useForm<IItemCategory>();
+  const menuItemForm = useForm<IMenuItem & { hasIngredients: boolean }>();
 
   const { categories, setCategories } = useCategories();
   const { menu, setMenu } = useMenu();
-  const [switchView, setSwitchView] = useState(false);
 
-  const onSubmit = ({
-    category,
-    item: { name, price, ingredients },
-  }: IMenu) => {
-    setMenu([
+  const onAddItemCategory = () => {
+    const categoriesUpdated = [...categories, categoryForm.getValues().name];
+    setCategories(categoriesUpdated);
+    setShopSettings({
+      ...shopSettings,
+      categories: categoriesUpdated.map((c) => ({ name: c })),
+    });
+    categoryForm.resetField("name");
+  };
+
+  const onAddMenuItem = () => {
+    const { name, price, ingredients, category } = menuItemForm.getValues();
+    const menuUpdated = [
       ...menu,
       {
-        category,
-        item: {
-          name,
-          price,
-          ...(ingredients && { ingredients }),
-        },
+        category: { name: category.name },
+        name,
+        price,
+        ...(ingredients && { ingredients }),
       },
-    ]);
+    ];
+    setMenu(menuUpdated);
+    setShopSettings({
+      ...shopSettings,
+      menu: menuUpdated,
+    });
+    menuItemForm.reset();
   };
 
   return (
@@ -57,18 +70,18 @@ export default function ShopMenuStep() {
             <Spacer />
             <AccordionIcon />
           </AccordionButton>
-          <AccordionPanel className="pt-6">
-            <FormControl className="w-fit">
-              <FormLabel>Nome da categoria</FormLabel>
-              <CreateableSelect
-                menuPortalTarget={document.getElementById("__next")}
-                isMulti
-                options={categories.map((category) => ({
-                  label: category.label,
-                }))}
-                onChange={(categories_) => setCategories(categories_)}
+          <AccordionPanel className="flex flex-col pt-6">
+            <FormControl className="w-fit" id="categoryPortal">
+              <FormLabel htmlFor="categoryName">Nome da categoria</FormLabel>
+              <Input
+                {...categoryForm.register("name")}
+                className="border border-gray-400"
+                id="categoryName"
               />
             </FormControl>
+            <Button className="self-end" onClick={onAddItemCategory}>
+              Criar
+            </Button>
           </AccordionPanel>
         </AccordionItem>
         <AccordionItem className="w-fit min-w-[15rem] rounded-md border border-gray-400">
@@ -78,30 +91,33 @@ export default function ShopMenuStep() {
             <AccordionIcon />
           </AccordionButton>
           <AccordionPanel>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form>
               <VStack className="w-fit items-start space-y-6 p-4">
                 <FormControl>
                   <FormLabel htmlFor="productCategory">
                     Categoria do produto
                   </FormLabel>
-                  <SelectInput
+                  <Select
                     id="productCategory"
-                    menuPortalTarget={document.getElementById("__next")}
-                    isClearable
                     isDisabled={categories.length === 0}
-                    {...register("category")}
-                    onChange={(value) =>
-                      setValue("category", value?.label || "")
-                    }
-                    options={categories}
+                    {...menuItemForm.register("category.name")}
                     className="w-fit min-w-[12rem]"
-                  />
+                  >
+                    <option className="hidden" value="">
+                      Escolher
+                    </option>
+                    {categories.map((category) => (
+                      <option key={category} value={category}>
+                        {category}
+                      </option>
+                    ))}
+                  </Select>
                 </FormControl>
 
                 <FormControl className="w-fit">
                   <FormLabel htmlFor="productName">Nome do produto</FormLabel>
                   <Input
-                    {...register("item.name")}
+                    {...menuItemForm.register("name")}
                     id="productName"
                     className="border border-gray-400"
                   />
@@ -110,7 +126,7 @@ export default function ShopMenuStep() {
                 <FormControl className="flex flex-col justify-start">
                   <FormLabel htmlFor="productPrice">Preço do produto</FormLabel>
                   <Input
-                    {...register("item.price")}
+                    {...menuItemForm.register("price")}
                     id="productPrice"
                     type="number"
                     className="w-20 border border-gray-400"
@@ -126,22 +142,26 @@ export default function ShopMenuStep() {
                   </FormLabel>
                   <Switch
                     id="hasIngredients"
-                    onChange={(e) => setSwitchView(e.target.checked)}
+                    {...menuItemForm.register("hasIngredients")}
                   />
                 </FormControl>
-                {switchView && (
+
+                {menuItemForm.watch("hasIngredients") && (
                   <FormControl className="flex flex-col justify-start">
                     <FormLabel htmlFor="productIngredientes">
                       Ingredientes
                     </FormLabel>
                     <Textarea
-                      {...register("item.ingredients")}
+                      {...menuItemForm.register("ingredients")}
                       id="productIngredientes"
                       className="max-h-32 w-fit border border-gray-400"
                     />
                   </FormControl>
                 )}
-                <Button type="submit" className="bg-blue-400 text-white">
+                <Button
+                  onClick={onAddMenuItem}
+                  className="self-end bg-blue-500 text-white"
+                >
                   Salvar
                 </Button>
               </VStack>
@@ -149,6 +169,7 @@ export default function ShopMenuStep() {
           </AccordionPanel>
         </AccordionItem>
       </Accordion>
+      <PreviewCategoriesModal />
       <PreviewMenuModal />
     </VStack>
   );

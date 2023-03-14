@@ -1,18 +1,18 @@
 import create from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
-import type { IMenu } from "@/types/menu.type";
+import type { IMenuItem } from "@/types/shop/menu.type";
 
 export interface DeliveryOptionState {
-  menu: IMenu[] | [];
-  setMenu: (menu: IMenu[] | []) => void;
+  menu: IMenuItem[] | [];
+  setMenu: (menu: IMenuItem[]) => void;
 }
 
 const useMenu = create<DeliveryOptionState>()(
   persist(
     (set) => ({
       menu: [],
-      setMenu: (menu = []) => {
+      setMenu: (menu) => {
         set({ menu });
       },
     }),

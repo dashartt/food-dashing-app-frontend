@@ -8,10 +8,11 @@ import {
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import InputMask from "react-input-mask";
 import zod from "zod";
 
-import * as api from "../../services/api";
+import useSignParams from "@/hooks/shared/useSignParams";
+
+import { signup } from "../../services/API/user.service";
 import * as utils from "../../utils";
 
 const signUpSchema = zod.object({
@@ -20,11 +21,11 @@ const signUpSchema = zod.object({
       required_error: "Digite seu nome completo",
     })
     .min(10, { message: "Campo obrigatório, digite seu nome completo" }),
-  phone: zod
+  email: zod
     .string({
       required_error: "Digite seu celular",
     })
-    .min(11, { message: "Campo obrigatório, digite seu celular" }),
+    .email({ message: "Email inválido" }),
   password: zod
     .string({
       required_error: "Digite sua senha",
@@ -36,11 +37,13 @@ const signUpSchema = zod.object({
 type SignupValues = zod.TypeOf<typeof signUpSchema>;
 
 type Props = {
-  handleTabsChange: (index: number) => void;
+  setTabIndex: (tabIndex: number) => void;
 };
 
-export default function SignUpForm({ handleTabsChange }: Props) {
+export default function SignUpForm({ setTabIndex }: Props) {
   const toast = useToast();
+  const { shopId, isAdmin } = useSignParams();
+
   const {
     handleSubmit,
     register,
@@ -49,20 +52,21 @@ export default function SignUpForm({ handleTabsChange }: Props) {
     resolver: zodResolver(signUpSchema),
   });
 
-  const onSubmit = ({ fullName, password, phone }: SignupValues) => {
-    api
-      .signup({
-        fullName,
-        password,
-        phone: phone.replace(/[^\d]/g, ""),
-      })
+  const onSubmit = async ({ fullName, password, email }: SignupValues) => {
+    signup({
+      fullName,
+      password,
+      email,
+      role: isAdmin ? "admin" : "customer",
+      ...(shopId !== "" && { shopId }),
+    })
       .then(() => {
         toast({
           title: "Conta criada",
           description: "Agora, entre com sua conta para continuar",
           ...utils.toastOptions,
         });
-        handleTabsChange(1);
+        setTabIndex(1);
       })
       .catch((error) =>
         toast({
@@ -86,18 +90,16 @@ export default function SignUpForm({ handleTabsChange }: Props) {
         <FormErrorMessage>{errors.fullName?.message}</FormErrorMessage>
       </FormControl>
 
-      <FormControl isInvalid={!!errors.phone}>
-        <FormLabel htmlFor="phone">Celular</FormLabel>
+      <FormControl isInvalid={!!errors.email}>
+        <FormLabel htmlFor="email">Email</FormLabel>
 
         <Input
-          as={InputMask}
-          mask="(99) 99999-9999"
           className="border border-gray-400 bg-gray-100 placeholder:text-gray-600"
-          {...register("phone")}
-          id="phone"
+          {...register("email")}
+          id="email"
         />
 
-        <FormErrorMessage>{errors.phone?.message}</FormErrorMessage>
+        <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
       </FormControl>
 
       <FormControl isInvalid={!!errors.password}>

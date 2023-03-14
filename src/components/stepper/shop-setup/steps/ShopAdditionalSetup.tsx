@@ -12,30 +12,40 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
+import { useRef } from "react";
 import { useForm } from "react-hook-form";
 import SelectInput from "react-select";
+import type Select from "react-select/dist/declarations/src/Select";
 
 import PreviewAdditionalModal from "@/components/modals/PreviewAdditionalModal";
 import useAdditional from "@/store/shop/setup/useAdditionals";
 import useCategories from "@/store/shop/setup/useCategories";
-import type { IAdditional } from "@/types/shop/menu";
+import useShopSettings from "@/store/shop/setup/useShopSetup";
+import type { IAdditional } from "@/types/shop/menu.type";
 
 export default function ShopAdditionalSetup() {
-  const { handleSubmit, register, setValue } = useForm<IAdditional>();
+  const { setShopSettings, shopSettings } = useShopSettings();
+
+  const additionalForm = useForm<IAdditional>();
+  const { ref: additionalRegisterRef, ...rest } =
+    additionalForm.register("categories");
+
+  const categoriesInputRef = useRef<Select>(null);
+
   const { additional, setAdditional } = useAdditional();
   const { categories } = useCategories();
 
-  const onSubmit = (values: IAdditional) => {
-    setAdditional([
+  const onAddAdditional = () => {
+    const values = additionalForm.getValues();
+    const additionalUpdated = [
       ...additional,
-      {
-        name: values.name,
-        price: values.price,
-        categories: values.categories.map((category) => ({
-          name: category?.name || "",
-        })),
-      },
-    ]);
+      { ...values, price: Number(values.price) },
+    ];
+    setAdditional(additionalUpdated);
+    setShopSettings({ ...shopSettings, additional: additionalUpdated });
+
+    additionalForm.reset();
+    categoriesInputRef.current?.clearValue();
   };
 
   return (
@@ -48,34 +58,39 @@ export default function ShopAdditionalSetup() {
             <AccordionIcon />
           </AccordionButton>
           <AccordionPanel>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form>
               <VStack className="items-start space-y-6">
                 <FormControl>
                   <FormLabel htmlFor="additionalCategory">Categoria</FormLabel>
 
                   <SelectInput
+                    ref={(ref) => {
+                      additionalRegisterRef(ref);
+                      categoriesInputRef.current = ref;
+                    }}
                     id="additionalCategory"
-                    menuPortalTarget={document.getElementById("__next")}
-                    isClearable
+                    backspaceRemovesValue={false}
                     isMulti
                     isDisabled={categories.length === 0}
-                    {...register("categories")}
+                    {...rest}
                     onChange={(value) =>
-                      setValue("categories", [
+                      additionalForm.setValue("categories", [
                         ...value.map((v) => ({
                           name: v.label,
                         })),
                       ])
                     }
-                    options={categories}
-                    className="w-fit min-w-[12rem]"
+                    options={categories.map((category) => ({
+                      label: category,
+                      value: category,
+                    }))}
                   />
                 </FormControl>
                 <FormControl>
                   <FormLabel htmlFor="additionalName">Nome</FormLabel>
                   <Input
                     id="additionalName"
-                    {...register("name")}
+                    {...additionalForm.register("name")}
                     className="border border-gray-400"
                   />
                 </FormControl>
@@ -84,12 +99,12 @@ export default function ShopAdditionalSetup() {
                   <Input
                     id="additionalPrice"
                     type="number"
-                    {...register("price")}
+                    {...additionalForm.register("price")}
                     className="w-20 border border-gray-400"
                   />
                 </FormControl>
                 <Button
-                  type="submit"
+                  onClick={onAddAdditional}
                   className="self-end bg-blue-500 text-white"
                 >
                   Salvar

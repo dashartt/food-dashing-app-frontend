@@ -12,39 +12,6 @@ const theme = extendTheme({
   },
   components: {
     Steps,
-    Alert: {
-      variants: {
-        blank: {
-          container: {
-            bg: "white",
-            borderWidth: "1px",
-            borderRadius: "0.375rem",
-            borderColor: "gray.300",
-          },
-          title: {
-            fontSize: "1.4rem",
-            marginBottom: "10px",
-          },
-          icon: {
-            color: "gray.600",
-          },
-        },
-        solid: {
-          container: {
-            bg: "#333",
-          },
-          title: {
-            color: "white",
-            fontSize: "1.4rem",
-            marginBottom: "10px",
-          },
-          description: {
-            color: "white",
-            fontSize: "1.2rem",
-          },
-        },
-      },
-    },
   },
 });
 

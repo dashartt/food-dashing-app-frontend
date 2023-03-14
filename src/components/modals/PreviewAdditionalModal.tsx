@@ -36,7 +36,7 @@ export default function PreviewAdditionalModal() {
             <AdditionalTabs
               additional={additional}
               categories={categories.map((category) => ({
-                name: category.label,
+                name: category,
               }))}
             />
           </ModalBody>

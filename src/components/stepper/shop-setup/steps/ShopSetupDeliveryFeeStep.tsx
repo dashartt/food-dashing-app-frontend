@@ -14,17 +14,22 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { useForm } from "react-hook-form";
+import { useForm, useFormContext } from "react-hook-form";
 import { AiOutlinePlus } from "react-icons/ai";
 import { MdClose } from "react-icons/md";
 import { v4 as uuid } from "uuid";
 
 import useDeliveryFees from "@/store/shop/setup/useDeliveryFees";
-import type { IDeliveryFeeByDistance } from "@/types/shop/settings";
+import type {
+  IDeliveryFeeByDistance,
+  IShopSettings,
+} from "@/types/shop/settings.type";
 import { formatCurrency } from "@/utils/format.util";
 
 export default function ShopSetupDeliveryFeeStep() {
-  const { register, handleSubmit } = useForm<IDeliveryFeeByDistance>();
+  const shopSettingsForm = useFormContext<Partial<IShopSettings>>();
+  const deliveryFeeForm = useForm<IDeliveryFeeByDistance>();
+
   const { deliveryFees, setDeliveryFee } = useDeliveryFees();
 
   const onRemoveDeliveryFee = ({ upToKm, price }: IDeliveryFeeByDistance) => {
@@ -36,22 +41,31 @@ export default function ShopSetupDeliveryFeeStep() {
     );
   };
 
-  const onSubmit = (values: IDeliveryFeeByDistance) => {
-    setDeliveryFee([...deliveryFees, values]);
+  const onAddDeliveryFee = () => {
+    const { price, upToKm } = deliveryFeeForm.getValues();
+    const deliveryFeesUpdated = [
+      ...deliveryFees,
+      { price: Number(price), upToKm: Number(upToKm) },
+    ];
+
+    setDeliveryFee(deliveryFeesUpdated);
+    shopSettingsForm.setValue("deliveryFees", deliveryFeesUpdated);
+
+    deliveryFeeForm.reset();
   };
 
   return (
     <VStack className="items-start space-y-6">
-      <form className="flex w-fit space-x-2" onSubmit={handleSubmit(onSubmit)}>
+      <form className="flex w-fit space-x-2">
         <FormControl className="flex flex-col items-start">
           <FormLabel htmlFor="upToKmDistance" className="w-full">
             Acima de (km)
           </FormLabel>
           <Input
             id="upToKmDistance"
+            {...deliveryFeeForm.register("upToKm")}
             type="number"
             step={0.1}
-            {...register("upToKm")}
             className="w-24 border border-gray-400"
           />
         </FormControl>
@@ -60,14 +74,14 @@ export default function ShopSetupDeliveryFeeStep() {
           <FormLabel htmlFor="deliveryFee">Valor</FormLabel>
           <Input
             id="deliveryFee"
+            {...deliveryFeeForm.register("price")}
             type="number"
-            {...register("price")}
             className="w-24 border border-gray-400"
           />
         </FormControl>
 
         <IconButton
-          type="submit"
+          onClick={onAddDeliveryFee}
           aria-label="Adicionar taxa de entrega por km de distância"
           className="m-0 self-end bg-blue-500 p-0 text-2xl hover:bg-blue-500 active:bg-blue-500"
           icon={<AiOutlinePlus className="text-white" />}

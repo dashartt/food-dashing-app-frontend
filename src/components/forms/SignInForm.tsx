@@ -13,17 +13,18 @@ import { useForm } from "react-hook-form";
 // import InputMask from "react-input-mask";
 import zod from "zod";
 
+import useSignParams from "@/hooks/shared/useSignParams";
+import { signin } from "@/services/API/user.service";
 import useSessionState from "@/store/useSession";
 
-import * as api from "../../services/api";
 import * as utils from "../../utils";
 
 const signUpSchema = zod.object({
-  // phone: zod
-  // .string({
-  //   required_error: "Digite seu celular",
-  // })
-  // .min(11, { message: "Campo obrigatório, digite seu celular" }),
+  email: zod
+    .string({
+      required_error: "Digite seu email",
+    })
+    .email({ message: "Formato de email inválido" }),
   password: zod
     .string({
       required_error: "Digite sua senha",
@@ -32,45 +33,40 @@ const signUpSchema = zod.object({
       message: "Campo obrigatório e tem que ser maior que 5 caracteres",
     }),
 });
-type SignupValues = zod.TypeOf<typeof signUpSchema>;
+type SignInValues = zod.TypeOf<typeof signUpSchema>;
 
 export default function SignInForm() {
   const router = useRouter();
+  const { shopId } = useSignParams();
   const toast = useToast();
   const { path, setSession } = useSessionState();
   const {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<SignupValues>({
+  } = useForm<SignInValues>({
     resolver: zodResolver(signUpSchema),
   });
 
-  const onSubmit = (signupValues: SignupValues) => {
-    api
-      .signin({
-        password: signupValues.password,
-        // phone: signupValues.phone.replace(/[^\d]/g, ""),
-      })
-      .then((data) => {
-        if (!data.isSuccess) {
-          toast({
-            title: "Ops, ocorreu algum erro",
-            description: data?.message,
-            ...utils.toastOptions,
-          });
-        } else {
-          setSession({
-            ...data?.data?.session,
-            addressesId: data?.data?.session.addressesId || [],
-          });
-          setCookie("token", data?.data.token);
-          const role = data?.data.session.role;
-          const redirectByRole =
-            role === "client" ? "/" : "/admin/orders/to-do";
-          const isPathEmpty = path === "";
-          router.push(isPathEmpty ? redirectByRole : path);
-        }
+  const onSubmit = (values: SignInValues) => {
+    signin({
+      email: values.email,
+      password: values.password,
+      ...(shopId !== "" && { shopId }),
+    })
+      .then((response) => {
+        setSession({
+          ...response?.data?.user,
+        });
+        setCookie("token", response?.data.token);
+
+        const role = response?.data.user.role;
+        if (role === "admin" && path.startsWith("")) router.push("/dashboard");
+        // const role = response?.data.user.role;
+        // const redirectByRole = role === "client" ? "/" : "/admin/orders/to-do";
+        // const isPathEmpty = path === "";
+
+        // router.push(isPathEmpty ? redirectByRole : path);
       })
       .catch((error) =>
         toast({
@@ -83,22 +79,20 @@ export default function SignInForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col space-y-4">
-      {/* <FormControl isInvalid={!!errors.phone}>
-        <FormLabel htmlFor="phone">Celular</FormLabel>
+      <FormControl isInvalid={!!errors.email}>
+        <FormLabel htmlFor="email">Email</FormLabel>
 
         <Input
-          as={InputMask}
-          mask="(99) 99999-9999"
           className="border border-gray-400 bg-gray-100 placeholder:text-gray-600"
-          {...register("phone")}
-          id="phone"
+          {...register("email")}
+          id="email"
         />
 
-        <FormErrorMessage>{errors.phone?.message}</FormErrorMessage>
-      </FormControl> */}
+        <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
+      </FormControl>
 
       <FormControl isInvalid={!!errors.password}>
-        <FormLabel htmlFor="addressName">Senha</FormLabel>
+        <FormLabel htmlFor="password">Senha</FormLabel>
         <Input
           className="border border-gray-400 bg-gray-100 placeholder:text-gray-600"
           {...register("password")}

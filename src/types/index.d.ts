@@ -1,5 +1,9 @@
 import type { IAddress } from "./address.type";
 
+export type IUuid = {
+  _id?: string;
+};
+
 export interface ICredentials {
   phone: string;
   password: string;

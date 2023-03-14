@@ -1,5 +1,8 @@
 import { Button, HStack } from "@chakra-ui/react";
 import { Step, Steps, useSteps } from "chakra-ui-steps";
+import { FormProvider, useForm } from "react-hook-form";
+
+import type { IShopSettings } from "@/types/shop/settings.type";
 
 import ShopAdditionalSetup from "./steps/ShopAdditionalSetup";
 import ShopInfoStep from "./steps/ShopInfoStep";
@@ -14,11 +17,13 @@ const steps = [
 ];
 
 export default function ShopSetupStepper() {
-  const { nextStep, prevStep, activeStep } = useSteps({
+  const { activeStep, nextStep, prevStep } = useSteps({
     initialStep: 0,
   });
+  const methods = useForm<IShopSettings>();
+
   return (
-    <>
+    <FormProvider {...methods}>
       <Steps
         className="w-full"
         colorScheme="blue"
@@ -27,26 +32,31 @@ export default function ShopSetupStepper() {
       >
         {steps.map(({ label, Content }) => (
           <Step className="w-full" label={label} key={label}>
-            <Content />
+            <>
+              <Content />
+              <HStack className="mt-4 w-fit border-t-2 border-gray-400">
+                <Button
+                  className="bg-white active:bg-white hover:bg-white"
+                  disabled={activeStep === 0}
+                  onClick={prevStep}
+                >
+                  Anterior
+                </Button>
+                <Button
+                  className="bg-white active:bg-white hover:bg-white"
+                  disabled={activeStep === 3}
+                  onClick={nextStep}
+                >
+                  Proximo
+                </Button>
+              </HStack>
+            </>
           </Step>
         ))}
       </Steps>
-      {activeStep !== steps.length && (
-        <HStack className="w-full justify-end">
-          <Button
-            isDisabled={activeStep === 0}
-            mr={4}
-            onClick={prevStep}
-            size="sm"
-            variant="ghost"
-          >
-            Anterior
-          </Button>
-          <Button size="sm" onClick={nextStep}>
-            {activeStep === steps.length - 1 ? "Finalizar" : "Próximo"}
-          </Button>
-        </HStack>
-      )}
-    </>
+      <Button onClick={() => console.log(methods.getValues())}>
+        View form state
+      </Button>
+    </FormProvider>
   );
 }
