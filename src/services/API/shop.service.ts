@@ -1,42 +1,54 @@
 import axios from "axios";
 
-import type { IApiResponse, ICheckShopNameResponse } from "@/types/api.type";
+import type {
+  IApiResponse,
+  ICheckDataDuplicityResponse,
+} from "@/types/api.type";
 import type { IShopSettings } from "@/types/shop.type";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL as string;
 
-export const addShop = async (payload: Partial<IShopSettings>) => {
-  const response = await fetch(`${API_URL}/shops`, {
-    headers: { "Content-Type": "application/json" },
-    method: "POST",
-    mode: "cors",
-    body: JSON.stringify({ ...payload }),
-  });
-
-  const responseData = await response.json();
-  if (response.status !== 201) {
-    return responseData as { message: string; data: null };
-  }
-  return responseData as { message: string; data: IShopSettings };
-};
+export const addShop = async (shopInfo: Partial<IShopSettings>) =>
+  axios
+    .post(`${API_URL}/shops`, shopInfo)
+    .then((response) => response.data as IApiResponse<IShopSettings>)
+    .catch((error) => error.response.data as IApiResponse);
 
 export const checkShopNameDuplicity = async (shopName: string) =>
   axios
     .get(`${API_URL}/shops/?shopName=${shopName}`)
-    .then((response) => response.data as IApiResponse<ICheckShopNameResponse>)
+    .then(
+      (response) => response.data as IApiResponse<ICheckDataDuplicityResponse>
+    )
     .catch(
-      (error) => error.response.data as IApiResponse<ICheckShopNameResponse>
+      (error) =>
+        error.response.data as IApiResponse<ICheckDataDuplicityResponse>
     );
 
-export const getShops = async (ownerId: string) => {
-  const response = await fetch(`${API_URL}/user/${ownerId}/shops`, {
-    method: "GET",
-    mode: "cors",
-  });
+export const checkShopAddressDuplicity = async (
+  placeId: string,
+  houseNumber: string
+) =>
+  axios
+    .get(
+      `${API_URL}/shops/?addressPlaceIdAndHouseNumber=${placeId}|${houseNumber}`
+    )
+    .then(
+      (response) => response.data as IApiResponse<ICheckDataDuplicityResponse>
+    )
+    .catch(
+      (error) =>
+        error.response.data as IApiResponse<ICheckDataDuplicityResponse>
+    );
 
-  const responseData = await response.json();
-  if (response.status === 200) {
-    return responseData as { message: string; data: IShopSettings[] };
-  }
-  return responseData as { message: string; data: null };
-};
+// export const checkShopAddressDuplicity = async (addressExternalId: string) =>
+//   axios
+//     .get(`${API_URL}/shops/?addressExternalId=${addressExternalId}`)
+//     .then((response) => response.data as IApiResponse<IShopSettings[]>)
+//     .catch((error) => error.response.data as IApiResponse<IShopSettings[]>);
+
+export const getShopsByOwnerId = async (ownerId: string) =>
+  axios
+    .get(`${API_URL}/shops/?ownerId=${ownerId}`)
+    .then((response) => response.data as IApiResponse<IShopSettings[]>)
+    .catch((error) => error.response.data as IApiResponse<IShopSettings[]>);

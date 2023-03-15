@@ -1,4 +1,4 @@
-import type { AlertStatus } from "@chakra-ui/react";
+import { AlertStatus, useToast } from "@chakra-ui/react";
 import {
   Alert,
   AlertIcon,
@@ -17,10 +17,11 @@ import { useState } from "react";
 import { DebounceInput } from "react-debounce-input";
 import { useForm } from "react-hook-form";
 
-import ServiceDaysCheckbox from "@/components/inputs/checkbox/ServiceDaysInput";
 import SearchPlaceInput from "@/components/inputs/SearchPlaceInput";
 import { checkShopNameDuplicity } from "@/services/API/shop.service";
+import useSessionState from "@/store/useSession";
 import type { IShopSettings } from "@/types/shop.type";
+import { addShop } from "@/services/API/shop.service";
 
 type IOnCheckShopNameAPI = {
   status: string;
@@ -28,26 +29,42 @@ type IOnCheckShopNameAPI = {
 } | null;
 
 export default function AddShop() {
-  const [onCheckShopNameAPI, setOnCheckShopNameAPI] =
+  const toast = useToast();
+  const [checkShopNameResponse, setCheckShopNameResponse] =
     useState<IOnCheckShopNameAPI>(null);
-  const methodsForm = useForm<IShopSettings>();
+  const { session } = useSessionState();
+  const methodsForm = useForm<Partial<IShopSettings>>();
 
   const onCheckShopName = (shopName: string) => {
     if (shopName === "") {
-      setOnCheckShopNameAPI(null);
+      setCheckShopNameResponse(null);
       return;
     }
 
     checkShopNameDuplicity(shopName).then(({ data, message }) => {
-      setOnCheckShopNameAPI({
+      setCheckShopNameResponse({
         message,
         status: data?.isDuplicated ? "error" : "success",
       });
     });
   };
 
+  const onAddShop = () => {
+    console.log(methodsForm.getValues());
+
+    // addShop({
+    //   ...methodsForm.getValues(),
+    //   owner: { _id: session?._id },
+    // }).then(({ data, message }) => {
+    //   toast({
+    //     title: message,
+    //     position: "top",
+    //   });
+    // });
+  };
+
   return (
-    <Box className="rounded-md bg-white p-10">
+    <Box className="rounded-md bg-white p-10 max-w-fit">
       <Text className="mb-4 text-4xl">Adicionar loja</Text>
       <VStack className=" items-start space-y-6">
         <VStack className="items-start">
@@ -62,19 +79,19 @@ export default function AddShop() {
               className="w-full border border-gray-400 "
             />
           </FormControl>
-          {onCheckShopNameAPI && (
+          {checkShopNameResponse && (
             <Alert
               className="rounded-md"
-              status={onCheckShopNameAPI.status as AlertStatus}
+              status={checkShopNameResponse.status as AlertStatus}
             >
               <AlertIcon alignSelf="self-start" />
-              <Text>{onCheckShopNameAPI.message}</Text>
+              <Text>{checkShopNameResponse.message}</Text>
             </Alert>
           )}
         </VStack>
 
-        {onCheckShopNameAPI?.status === "success" && (
-          <>
+        {checkShopNameResponse?.status === "success" && (
+          <Box className="space-y-4">
             <FormControl className="w-fit">
               <FormLabel htmlFor="state">Estado</FormLabel>
               <Select
@@ -131,46 +148,13 @@ export default function AddShop() {
               </FormControl>
             )}
 
-            <VStack className="items-start">
-              <Text>Dias de atendimento</Text>
-              <ServiceDaysCheckbox
-                onChange={(values) =>
-                  methodsForm.setValue("shopOpeningHours.daysOfWeek", values)
-                }
-              />
-            </VStack>
-
-            <VStack className="items-start ">
-              <Text>Horário de atendimento</Text>
-              <HStack className="space-x-4">
-                <FormControl className="w-fit">
-                  <FormLabel htmlFor="starts">Início</FormLabel>
-                  <Input
-                    {...methodsForm.register("shopOpeningHours.hours.starts")}
-                    type="number"
-                    className="w-20 border border-gray-400 text-center"
-                    id="starts"
-                  />
-                </FormControl>
-                <FormControl className="w-fit ">
-                  <FormLabel htmlFor="ends">Fim</FormLabel>
-                  <Input
-                    {...methodsForm.register("shopOpeningHours.hours.ends")}
-                    type="number"
-                    className="w-20 border border-gray-400 text-center"
-                    id="ends"
-                  />
-                </FormControl>
-              </HStack>
-            </VStack>
-
             <Button
-              // onClick={() => onConfirmShopPerfil(methodsForm.getValues())}
-              className="w-32 self-end bg-gray-default text-white"
+              onClick={onAddShop}
+              className="w-32 self-end bg-blue-500 text-white"
             >
               Criar
             </Button>
-          </>
+          </Box>
         )}
       </VStack>
     </Box>

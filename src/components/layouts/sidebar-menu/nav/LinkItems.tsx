@@ -1,73 +1,176 @@
-import type { IconType } from "react-icons";
-import { BsCardChecklist, BsCart3, BsInfoCircle } from "react-icons/bs";
-import { GiFireBowl } from "react-icons/gi";
-import { GoBook } from "react-icons/go";
-import { MdManageAccounts, MdOutlineDeliveryDining } from "react-icons/md";
-import { RiFileList3Line, RiUserReceivedLine } from "react-icons/ri";
+import {
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
+  Box,
+  Spacer,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { v4 as uuid } from "uuid";
 
-interface LinkItemProps {
-  path: string;
-  name: string;
-  icon: IconType;
-}
-export const ClientLinkItems: Array<LinkItemProps> = [
+// import NavItem from "./NavItem";
+
+type IShopNavCommomProps = {
+  path?: string;
+  label: string;
+  value: string;
+};
+type IShopNavItem = IShopNavCommomProps & {
+  items?: IShopNavCommomProps[];
+};
+
+export const ShopNavItems: IShopNavItem[] = [
   {
+    label: "Sobre a loja",
+    value: "about",
     path: "/about",
-    name: "Sobre a pizzaria",
-    icon: BsInfoCircle,
   },
   {
-    name: "Cardápio",
+    label: "Cardápio",
+    value: "menu",
     path: "/",
-    icon: GoBook,
   },
   {
+    label: "Carrinho",
+    value: "cart",
     path: "/cart",
-    name: "Carrinho",
-    icon: BsCart3,
   },
-
   {
+    label: "Pedidos",
+    value: "orders",
     path: "/history",
-    name: "Pedidos",
-    icon: RiFileList3Line,
   },
   {
+    label: "Conta",
+    value: "account",
     path: "/account",
-    name: "Conta",
-    icon: MdManageAccounts,
   },
 ];
 
-export const AdminLinkItems: Array<LinkItemProps> = [
+export const ShopAdminNavItems: IShopNavItem[] = [
   {
-    path: "/admin/orders/to-do",
-    name: "Pedidos a fazer",
-    icon: RiFileList3Line,
+    label: "Pedidos",
+    value: "orders",
+    items: [
+      {
+        path: "/admin/orders/to-do",
+        label: "A fazer",
+        value: "to-do",
+      },
+      {
+        path: "/admin/orders/in-progress",
+        label: "Em andamento",
+        value: "in-progress",
+      },
+      {
+        path: "/admin/orders/delivery",
+        label: "Entregas",
+        value: "delivery",
+      },
+      {
+        path: "/admin/orders/pick-up",
+        label: "Retiradas",
+        value: "pick-up",
+      },
+      {
+        path: "/admin/orders/completed",
+        label: "Histórico",
+        value: "completed",
+      },
+    ],
   },
   {
-    path: "/admin/orders/in-progress",
-    name: "Pedidos em andamento",
-    icon: RiFileList3Line,
-  },
-  {
-    path: "/admin/orders/oven",
-    name: "Forno",
-    icon: GiFireBowl,
-  },
-  {
-    path: "/admin/orders/delivery",
-    name: "Entregas",
-    icon: MdOutlineDeliveryDining,
-  },
-  {
-    path: "/admin/orders/pick-up",
-    name: "Retiradas",
-    icon: RiUserReceivedLine,
-  },
-  {
-    path: "/admin/orders/completed",
-    name: "Histórico",
-    icon: BsCardChecklist,
+    label: "Configurações",
+    value: "settings",
+    items: [
+      {
+        label: "Informações da loja",
+        value: "shopInfo",
+        path: "/admin/settings/shop-info",
+      },
+      {
+        label: "Categorias",
+        value: "categories",
+        path: "/admin/settings/categories",
+      },
+      {
+        label: "Produtos",
+        value: "items",
+        path: "/admin/settings/items",
+      },
+      {
+        label: "Adicionais",
+        value: "additional",
+        path: "/admin/settings/additional",
+      },
+    ],
   },
 ];
+
+export default function NavItemHandler() {
+  const path = usePathname();
+  const router = useRouter();
+  const [, shopId = "", rolePath = ""] = path?.split("/") || [""];
+
+  return (
+    <Accordion allowToggle className="w-full">
+      {(rolePath === "admin" ? ShopAdminNavItems : ShopNavItems).map((nav) => (
+        <AccordionItem key={uuid()} className="w-full rounded-md border-none">
+          <AccordionButton
+            onClick={() =>
+              rolePath !== "admin" && nav.path && router.push(nav.path)
+            }
+          >
+            <Text>{nav.label}</Text>
+            <Spacer />
+            {nav.items && <AccordionIcon />}
+          </AccordionButton>
+
+          {nav.items && (
+            <AccordionPanel>
+              <VStack className="items-start space-y-0 border-l-2 border-gray-400">
+                {nav.items?.map((subItem) => (
+                  <Box key={subItem.path} className="w-full p-2">
+                    <Link href={`/${shopId}/${subItem.path}`}>
+                      <Text className="ml-4">{subItem.label}</Text>
+                    </Link>
+                  </Box>
+                ))}
+              </VStack>
+            </AccordionPanel>
+          )}
+        </AccordionItem>
+      ))}
+    </Accordion>
+  );
+}
+
+// ShopAdminNavItems.map((nav) => (
+//   <AccordionItem key={uuid()} className="w-full rounded-md border-none">
+//     <AccordionButton>
+//       <Text>{nav.label}</Text>
+//       <Spacer />
+//       <AccordionIcon />
+//     </AccordionButton>
+//     <AccordionPanel>
+//       <VStack className="items-start space-y-0 border-l-2 border-gray-400">
+//         {nav.items.map((subItem) => (
+//           <Box key={subItem.path} className="w-full p-2">
+//             <Link
+//               href={`/${shopId}${rolePath === "admin" && "/admin"}/${
+//                 subItem.path
+//               }`}
+//             >
+//               <Text className="ml-4">{subItem.label}</Text>
+//             </Link>
+//           </Box>
+//         ))}
+//       </VStack>
+//     </AccordionPanel>
+//   </AccordionItem>
+// ))}

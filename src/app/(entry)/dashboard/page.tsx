@@ -6,50 +6,30 @@ import {
   CardBody,
   Container,
   HStack,
-  IconButton,
+  Icon,
   Text,
   VStack,
   Wrap,
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { toast } from "react-hot-toast";
-import { BsPlusSquare } from "react-icons/bs";
+import { MdArrowForwardIos } from "react-icons/md";
 
-import ShopInfoStep from "@/components/stepper/shop-setup/steps/ShopInfoStep";
+import AddShopDrawner from "@/components/modals/AddShopDrawner";
+import { getShopsByOwnerId } from "@/services/API/shop.service";
 import useSessionState from "@/store/useSession";
-import type { IShopSettings } from "@/types/shop/settings.type";
-
-import { addShop, getShops } from "../../../services/API/shop.service";
-import AddShop from "@/components/pages/admin/dashboard/AddShop";
 
 export default function LadingPage() {
   const [mounted, setMounted] = useState(false);
+  const router = useRouter();
   const { session } = useSessionState();
 
   const { data: shops, refetch } = useQuery({
     queryKey: [`food-dashing-app/${session?._id}/dashboard/`],
-    queryFn: () => getShops(session?._id || ""),
+    queryFn: () => getShopsByOwnerId(session?._id || ""),
     enabled: false,
   });
-
-  const onConfirmShopPerfil = (values: IShopSettings) => {
-    addShop({
-      ...values,
-      owner: { _id: session?._id },
-    })
-      .then((response) => {
-        toast.success(response.message);
-
-        if (response.data) {
-          //
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-        toast.error("Algum erro inesperado aconteceu");
-      });
-  };
 
   useEffect(() => {
     setMounted(true);
@@ -68,26 +48,29 @@ export default function LadingPage() {
                 {/* <HStack> */}
                 <HStack>
                   <Text className="text-4xl">Lojas</Text>
-
-                  <IconButton
-                    aria-label="Cadastrar loja"
-                    className="bg-white"
-                    icon={<BsPlusSquare className="text-3xl" />}
-                  />
+                  <AddShopDrawner />
                 </HStack>
 
                 {shops?.data && shops.data.length > 0 ? (
                   <Wrap>
                     {shops.data.map((shop) => (
-                      <Card key={shop._id}>
+                      <Card
+                        key={shop._id}
+                        variant="outline"
+                        role="button"
+                        onClick={() => router.replace(`/${shop._id}/admin`)}
+                      >
                         <CardBody>
-                          <VStack>
-                            <Text>{shop.shopName}</Text>
-                            <Text>
-                              {shop.shopAddress.city} -{" "}
-                              {shop.shopAddress.state_code}
-                            </Text>
-                          </VStack>
+                          <HStack className="space-x-6">
+                            <VStack className="items-start">
+                              <Text>{shop.shopName}</Text>
+                              <Text>
+                                {`${shop.shopAddress?.city} -
+                              ${shop.shopAddress?.state_code}`}
+                              </Text>
+                            </VStack>
+                            <Icon as={MdArrowForwardIos} />
+                          </HStack>
                         </CardBody>
                       </Card>
                     ))}
@@ -97,8 +80,6 @@ export default function LadingPage() {
                 )}
               </Box>
             </Box>
-
-            <AddShop />
           </Container>
         </Box>
       )}

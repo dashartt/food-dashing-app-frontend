@@ -1,8 +1,8 @@
-export type IApiResponse<T> = {
+export type IApiResponse<T = null> = {
   data: T | null;
   message: string;
 };
 
-export type ICheckShopNameResponse = {
+export type ICheckDataDuplicityResponse = {
   isDuplicated: boolean;
 };

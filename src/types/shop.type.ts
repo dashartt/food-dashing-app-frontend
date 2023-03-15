@@ -27,7 +27,7 @@ export type IShopOpeningHours = {
 export type IDeliveryFeeByDistance = { upToKm: number; price: number };
 
 export type IShopSettings = IUuid & {
-  owner: IUser;
+  owner: Partial<IUser>;
   shopName: string;
   shopAddress: IAddress;
   shopOpeningHours: IShopOpeningHours;

@@ -21,7 +21,7 @@ export default function OrdersList({ status, isLoading }: Props) {
 
   return (
     <>
-      {!isLoading && orders_.length === 0 && <EmptyOrders status={status} />}
+      {!isLoading && orders_.length === 0 && <EmptyOrders />}
 
       {orders_ && (
         <Wrap spacing={5} className="mx-auto max-w-fit">

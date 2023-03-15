@@ -13,7 +13,7 @@ import { useForm } from "react-hook-form";
 
 import ServiceDaysCheckbox from "@/components/inputs/checkbox/ServiceDaysInput";
 import SearchPlaceInput from "@/components/inputs/SearchPlaceInput";
-import type { IShopSettings } from "@/types/shop/settings.type";
+import type { IShopSettings } from "@/types/shop.type";
 
 type Props = {
   onConfirmShopPerfil: (values: IShopSettings) => void;
