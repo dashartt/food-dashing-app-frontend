@@ -1,5 +1,4 @@
 import { Box, Flex, HStack, useDisclosure, VStack } from "@chakra-ui/react";
-import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 
 import ContentBesideSidebar from "./content/ContentBesideSidebar";
@@ -13,20 +12,17 @@ type LayoutProps = {
 
 export default function LayoutSidebarMenu({ children }: LayoutProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const path = usePathname() || "";
-  const isAdmin = path.includes("admin");
 
   return (
-    <Flex className="bg-gray-default min-w-full min-h-screen justify-center items-start">
+    <Flex className="bg-gradient-to-r from-green-400 to-blue-500 min-w-full min-h-screen justify-center items-start">
       <HStack className="space-x-0 w-full bg-white max-w-screen-xl">
         <SidebarContent
-          isAdmin={isAdmin}
           onClose={() => onClose}
           display={{ base: "none", lg: "block" }}
         />
 
-        <SidebarContainer isAdmin={isAdmin} isOpen={isOpen} onClose={onClose}>
-          <SidebarContent isAdmin={isAdmin} onClose={onClose} />
+        <SidebarContainer isOpen={isOpen} onClose={onClose}>
+          <SidebarContent onClose={onClose} />
         </SidebarContainer>
 
         <VStack className="w-full min-h-screen max-h-screen overflow-auto">

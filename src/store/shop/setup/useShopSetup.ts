@@ -1,19 +1,21 @@
 import create from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
-import type { IShopSettings } from "@/types/shop/settings.type";
+import type { IShopSettings } from "@/types/shop.type";
 
 export interface ShopSettingsState {
-  shopSettings: IShopSettings | {};
+  shopSettings: Partial<IShopSettings> | null;
   setShopSettings: (shopSettings: Partial<IShopSettings>) => void;
 }
 
 const useShopSettings = create<ShopSettingsState>()(
   persist(
     (set, get) => ({
-      shopSettings: {},
+      shopSettings: null,
       setShopSettings: (shopSettings) => {
-        set({ shopSettings: { ...get().shopSettings, ...shopSettings } });
+        set({
+          shopSettings: { ...get().shopSettings, ...shopSettings },
+        });
       },
     }),
     {

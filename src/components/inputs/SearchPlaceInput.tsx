@@ -9,12 +9,14 @@ import type { IAddress } from "@/types/address.type";
 import type { IAddressAutocompletePayload } from "@/types/geoapify.type";
 
 type Props = {
+  defaultValue?: string;
   onSelectAddress: (address: IAddress) => void;
   city: string;
   stateCode: string;
 };
 
 export default function SearchPlaceInput({
+  defaultValue,
   onSelectAddress,
   city,
   stateCode,
@@ -34,6 +36,7 @@ export default function SearchPlaceInput({
         skipIcons
         allowNonVerifiedHouseNumber
         skipDetails
+        value={defaultValue || ""}
         lang="br"
         countryCodes={["br"]}
         postprocessHook={postprocessHook}

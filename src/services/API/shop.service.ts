@@ -52,3 +52,21 @@ export const getShopsByOwnerId = async (ownerId: string) =>
     .get(`${API_URL}/shops/?ownerId=${ownerId}`)
     .then((response) => response.data as IApiResponse<IShopSettings[]>)
     .catch((error) => error.response.data as IApiResponse<IShopSettings[]>);
+
+export const getShopById = async (shopId: string) =>
+  axios
+    .get(`${API_URL}/shops/?shopId=${shopId}`)
+    .then((response) => response.data as IApiResponse<IShopSettings>)
+    .catch((error) => error.response.data as IApiResponse);
+
+// SAVE SHOP SETTINGS ------------------------------>
+export const saveShopSettings = (
+  shopId: string,
+  values: Partial<IShopSettings>
+) =>
+  axios
+    .patch(`${API_URL}/shops/${shopId}`, {
+      ...values,
+    })
+    .then((response) => response.data as IApiResponse<IShopSettings>)
+    .catch((error) => error.response.data as IApiResponse);

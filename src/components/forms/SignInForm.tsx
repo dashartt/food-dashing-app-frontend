@@ -56,12 +56,17 @@ export default function SignInForm() {
     })
       .then((response) => {
         setSession({
-          ...response?.data?.user,
+          _id: response.data?.user._id,
+          fullName: response.data?.user.fullName || "",
+          email: response.data?.user.email || "",
+          addresses: [],
+          role: response.data?.user.role || "",
         });
-        setCookie("token", response?.data.token);
+        setCookie("token", response?.data?.token);
 
-        const role = response?.data.user.role;
+        const role = response?.data?.user?.role;
         if (role === "admin" && path.startsWith("")) router.push("/dashboard");
+
         // const role = response?.data.user.role;
         // const redirectByRole = role === "client" ? "/" : "/admin/orders/to-do";
         // const isPathEmpty = path === "";

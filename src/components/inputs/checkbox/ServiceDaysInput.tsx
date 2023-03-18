@@ -3,27 +3,33 @@ import { useEffect } from "react";
 
 import ServiceDayCard from "./ServiceDayCard";
 
+const options = [
+  { label: "dom", value: "sun" },
+  { label: "seg", value: "mon" },
+  { label: "ter", value: "tue" },
+  { label: "qua", value: "wed" },
+  { label: "qui", value: "thu" },
+  { label: "sex", value: "fri" },
+  { label: "sab", value: "sat" },
+];
+
+const getDaysOfWeekSelected = (values: string[]) =>
+  options.filter((option) => values.some((value_) => value_ === option.label));
+
 type Props = {
   onChange: (values: { label: string; value: string }[]) => void;
+  defaultValues: string[];
 };
 
-export default function ServiceDaysCheckbox({ onChange }: Props) {
-  const options = [
-    { label: "dom", value: "sun" },
-    { label: "seg", value: "mon" },
-    { label: "ter", value: "tue" },
-    { label: "qua", value: "wed" },
-    { label: "qui", value: "thu" },
-    { label: "sex", value: "fri" },
-    { label: "sab", value: "sat" },
-  ];
+export default function ServiceDaysCheckbox({
+  onChange,
+  defaultValues = [""],
+}: Props) {
+  const { getCheckboxProps, value, setValue } = useCheckboxGroup();
 
-  const { getCheckboxProps, value } = useCheckboxGroup();
-
-  const getDaysOfWeekSelected = (values: string[]) =>
-    options.filter((option) =>
-      values.some((value_) => value_ === option.label)
-    );
+  useEffect(() => {
+    setValue(defaultValues);
+  }, []);
 
   useEffect(() => {
     onChange(getDaysOfWeekSelected(value as string[]));

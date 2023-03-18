@@ -6,3 +6,14 @@ export type IApiResponse<T = null> = {
 export type ICheckDataDuplicityResponse = {
   isDuplicated: boolean;
 };
+
+export type ISignInResponse = {
+  token: string;
+  user: {
+    _id: string;
+    role: string;
+    fullName: string;
+    email: string;
+    // add
+  };
+};

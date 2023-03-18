@@ -58,7 +58,9 @@ export default function LadingPage() {
                         key={shop._id}
                         variant="outline"
                         role="button"
-                        onClick={() => router.replace(`/${shop._id}/admin`)}
+                        onClick={() =>
+                          router.push(`/dashboard/shop/${shop._id}`)
+                        }
                       >
                         <CardBody>
                           <HStack className="space-x-6">

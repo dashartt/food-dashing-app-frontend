@@ -9,9 +9,9 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
 import { v4 as uuid } from "uuid";
+
+import useShopSegmentURL from "@/hooks/shared/useShopSegmentURL";
 
 // import NavItem from "./NavItem";
 
@@ -28,27 +28,27 @@ export const ShopNavItems: IShopNavItem[] = [
   {
     label: "Sobre a loja",
     value: "about",
-    path: "/about",
+    path: "/shop/[shopId]/about",
   },
   {
     label: "Cardápio",
     value: "menu",
-    path: "/",
+    path: "/shop/[shopId]/",
   },
   {
     label: "Carrinho",
     value: "cart",
-    path: "/cart",
+    path: "/shop/[shopId]/cart",
   },
   {
     label: "Pedidos",
     value: "orders",
-    path: "/history",
+    path: "/shop/[shopId]/history",
   },
   {
     label: "Conta",
     value: "account",
-    path: "/account",
+    path: "/shop/[shopId]/account",
   },
 ];
 
@@ -58,27 +58,27 @@ export const ShopAdminNavItems: IShopNavItem[] = [
     value: "orders",
     items: [
       {
-        path: "/admin/orders/to-do",
+        path: "/dashboard/shop/[shopId]/orders/to-do",
         label: "A fazer",
         value: "to-do",
       },
       {
-        path: "/admin/orders/in-progress",
+        path: "/dashboard/shop/[shopId]/orders/in-progress",
         label: "Em andamento",
         value: "in-progress",
       },
       {
-        path: "/admin/orders/delivery",
+        path: "/dashboard/shop/[shopId]/orders/delivery",
         label: "Entregas",
         value: "delivery",
       },
       {
-        path: "/admin/orders/pick-up",
+        path: "/dashboard/shop/[shopId]/orders/pick-up",
         label: "Retiradas",
         value: "pick-up",
       },
       {
-        path: "/admin/orders/completed",
+        path: "/dashboard/shop/[shopId]/orders/completed",
         label: "Histórico",
         value: "completed",
       },
@@ -90,42 +90,36 @@ export const ShopAdminNavItems: IShopNavItem[] = [
     items: [
       {
         label: "Informações da loja",
-        value: "shopInfo",
-        path: "/admin/settings/shop-info",
+        value: "general",
+        path: "/dashboard/shop/[shopId]/settings/general",
       },
       {
         label: "Categorias",
         value: "categories",
-        path: "/admin/settings/categories",
+        path: "/dashboard/shop/[shopId]/settings/categories",
       },
       {
         label: "Produtos",
         value: "items",
-        path: "/admin/settings/items",
+        path: "/dashboard/shop/[shopId]/settings/items",
       },
       {
         label: "Adicionais",
         value: "additional",
-        path: "/admin/settings/additional",
+        path: "/dashboard/shop/[shopId]/settings/additional",
       },
     ],
   },
 ];
 
 export default function NavItemHandler() {
-  const path = usePathname();
-  const router = useRouter();
-  const [, shopId = "", rolePath = ""] = path?.split("/") || [""];
+  const { isAdmin, goTo } = useShopSegmentURL();
 
   return (
     <Accordion allowToggle className="w-full">
-      {(rolePath === "admin" ? ShopAdminNavItems : ShopNavItems).map((nav) => (
+      {(isAdmin ? ShopAdminNavItems : ShopNavItems).map((nav) => (
         <AccordionItem key={uuid()} className="w-full rounded-md border-none">
-          <AccordionButton
-            onClick={() =>
-              rolePath !== "admin" && nav.path && router.push(nav.path)
-            }
-          >
+          <AccordionButton onClick={() => nav.path && goTo(nav.path || "")}>
             <Text>{nav.label}</Text>
             <Spacer />
             {nav.items && <AccordionIcon />}
@@ -135,10 +129,13 @@ export default function NavItemHandler() {
             <AccordionPanel>
               <VStack className="items-start space-y-0 border-l-2 border-gray-400">
                 {nav.items?.map((subItem) => (
-                  <Box key={subItem.path} className="w-full p-2">
-                    <Link href={`/${shopId}/${subItem.path}`}>
-                      <Text className="ml-4">{subItem.label}</Text>
-                    </Link>
+                  <Box
+                    role="button"
+                    onClick={() => goTo(subItem.path as string)}
+                    key={subItem.path}
+                    className="w-full p-2"
+                  >
+                    <Text className="ml-4">{subItem.label}</Text>
                   </Box>
                 ))}
               </VStack>
@@ -149,28 +146,3 @@ export default function NavItemHandler() {
     </Accordion>
   );
 }
-
-// ShopAdminNavItems.map((nav) => (
-//   <AccordionItem key={uuid()} className="w-full rounded-md border-none">
-//     <AccordionButton>
-//       <Text>{nav.label}</Text>
-//       <Spacer />
-//       <AccordionIcon />
-//     </AccordionButton>
-//     <AccordionPanel>
-//       <VStack className="items-start space-y-0 border-l-2 border-gray-400">
-//         {nav.items.map((subItem) => (
-//           <Box key={subItem.path} className="w-full p-2">
-//             <Link
-//               href={`/${shopId}${rolePath === "admin" && "/admin"}/${
-//                 subItem.path
-//               }`}
-//             >
-//               <Text className="ml-4">{subItem.label}</Text>
-//             </Link>
-//           </Box>
-//         ))}
-//       </VStack>
-//     </AccordionPanel>
-//   </AccordionItem>
-// ))}
