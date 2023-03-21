@@ -10,14 +10,14 @@ import OrderCard from "@/components/cards/OrderItemCard";
 import OrderCardSkeleton from "@/components/skeletons/OrderCardSkeleton";
 import useSessionState from "@/store/useSession";
 
-import * as api from "../../../services/api";
+import * as API from "../../../../../services/api";
 
 export default function History() {
   const { session } = useSessionState();
 
   const { data, isFetched, isLoading } = useQuery({
     queryKey: ["orders"],
-    queryFn: () => api.getClientOrders(session?._id || ""),
+    queryFn: () => API.getClientOrders(session?._id || ""),
   });
 
   return (

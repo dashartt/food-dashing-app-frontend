@@ -170,7 +170,7 @@ export default function ShopGeneralSettings() {
               variant="outline"
             >
               <CardBody className="relative flex flex-col items-start">
-                <Text>Acima de {upToKm}Km</Text>
+                <Text>Acima de {upToKm || 0} Km</Text>
                 <Text>{`R$ ${formatCurrency(price)}`}</Text>
 
                 <IconButton

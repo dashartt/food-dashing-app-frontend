@@ -11,7 +11,6 @@ import {
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
-import { useRouter } from "next/navigation";
 import type { ReactNode } from "react";
 import { useEffect, useState } from "react";
 import useAnotherHalfPizzaState from "src/store/pizza/useAnotherHalfPizza";
@@ -20,6 +19,7 @@ import useShoppingCart from "src/store/useShoppingCart";
 import type { ICartItem } from "src/types";
 import { v4 as uuid } from "uuid";
 
+import useShopSegmentURL from "@/hooks/shared/useShopSegmentURL";
 import useBorderType from "@/store/pizza/useBorderType";
 import useObservationPizzaState from "@/store/pizza/useObservationPizza";
 import useAdditionals from "@/store/useAdditionals";
@@ -32,10 +32,10 @@ type Props = {
 export default function AfterAddToCartModal({ children, orderItem }: Props) {
   const [mounted, setMounted] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const router = useRouter();
+  const { router, baseURL } = useShopSegmentURL();
 
   const shoppingCart = useShoppingCart();
-  const additionals = useAdditionals();
+  const { additionals, setInitialValue } = useAdditionals();
   const { resetStuffing, isHalf } = usePizzaStuffing();
   const { resetAnotherHalf, anotherHalfPizza } = useAnotherHalfPizzaState();
   const { resetObservation, observation } = useObservationPizzaState();
@@ -47,14 +47,18 @@ export default function AfterAddToCartModal({ children, orderItem }: Props) {
     // add item to cart
     shoppingCart.addItem({
       _id: uuid(),
-      ...orderItem,
-      observation,
-      ...(orderItem.item[0]?.category.name.includes("pizza") && {
-        borderType,
-      }),
-      ...(/pizza|arabic/.test(orderItem.item[0]?.category.name || "...") && {
-        additionals: additionals.additionals,
-      }),
+      item: orderItem.item,
+      quantity: orderItem.quantity,
+      ...(observation && { observation }),
+      ...(additionals && { additionals }),
+      // ...orderItem,
+      // observation,
+      // ...(orderItem.item[0]?.category.name.includes("pizza") && {
+      //   borderType,
+      // }),
+      // ...(/pizza|arabic/.test(orderItem.item[0]?.category.name || "...") && {
+      //   additionals: additionals.additionals,
+      // }),
     });
   };
 
@@ -62,7 +66,7 @@ export default function AfterAddToCartModal({ children, orderItem }: Props) {
     resetStuffing(); // reset pizza stuffing option
     resetAnotherHalf(); // reset another chosen half
     resetObservation(); // reset observation pizza
-    additionals.setInitialValue([]); // reset selected additionals
+    setInitialValue([]); // reset selected additionals
     router.push(path);
   };
 
@@ -100,13 +104,13 @@ export default function AfterAddToCartModal({ children, orderItem }: Props) {
                 {/* Button options -----------> */}
                 <VStack className="space-y-4 py-4">
                   <Button
-                    onClick={() => afterAddGoTo("/")}
+                    onClick={() => afterAddGoTo(baseURL)}
                     className="w-52 bg-gray-default p-6 text-center font-normal text-white"
                   >
                     Voltar para o cardápio
                   </Button>
                   <Button
-                    onClick={() => afterAddGoTo("/cart")}
+                    onClick={() => afterAddGoTo(`${baseURL}/cart`)}
                     className="w-52 border border-gray-500 bg-white p-6 text-center font-normal"
                   >
                     Finalizar pedido

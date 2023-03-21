@@ -10,11 +10,11 @@ export interface ShopSettingsState {
 
 const useShopSettings = create<ShopSettingsState>()(
   persist(
-    (set, get) => ({
+    (set, _get) => ({
       shopSettings: null,
       setShopSettings: (shopSettings) => {
         set({
-          shopSettings: { ...get().shopSettings, ...shopSettings },
+          shopSettings: { ...shopSettings },
         });
       },
     }),

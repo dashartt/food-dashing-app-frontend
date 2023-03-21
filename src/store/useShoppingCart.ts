@@ -44,9 +44,9 @@ const useShoppingCart = create<ShoppingCartState>()(
         const additionals = item.additionals as IAdditional[];
 
         const additionalsPrice =
-          additionals.length === 0
+          additionals?.length === 0
             ? 0
-            : additionals.reduce((acc_, value_) => acc_ + value_.price, 0);
+            : additionals?.reduce((acc_, value_) => acc_ + value_.price, 0);
 
         const itemPrice = (item?.quantity || 1) * (item?.item[0]?.price || 1);
 
@@ -57,9 +57,9 @@ const useShoppingCart = create<ShoppingCartState>()(
           const additionals = value.additionals as IAdditional[];
 
           const additionalsPrice =
-            additionals.length === 0
+            additionals?.length === 0
               ? 0
-              : additionals.reduce((acc_, value_) => acc_ + value_.price, 0);
+              : additionals?.reduce((acc_, value_) => acc_ + value_.price, 0);
 
           const itemsPrice =
             (value.item[0]?.price || 1) * (value.quantity || 1);

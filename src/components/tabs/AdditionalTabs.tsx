@@ -8,7 +8,7 @@ import {
 } from "@chakra-ui/react";
 import { v4 as uuid } from "uuid";
 
-import type { IAdditional, IItemCategory } from "@/types/shop/menu.type";
+import type { IAdditional, IItemCategory } from "@/types/shop.type";
 
 import AdditionalCard from "../cards/shop-setup/AdditionalCard";
 

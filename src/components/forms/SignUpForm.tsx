@@ -10,7 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import zod from "zod";
 
-import useSignParams from "@/hooks/shared/useSignParams";
+import useShopSegmentURL from "@/hooks/shared/useShopSegmentURL";
 
 import { signup } from "../../services/API/user.service";
 import * as utils from "../../utils";
@@ -42,12 +42,13 @@ type Props = {
 
 export default function SignUpForm({ setTabIndex }: Props) {
   const toast = useToast();
-  const { shopId, isAdmin } = useSignParams();
+  const { isAdmin, shopId } = useShopSegmentURL();
 
   const {
     handleSubmit,
     register,
     formState: { errors },
+    reset,
   } = useForm<SignupValues>({
     resolver: zodResolver(signUpSchema),
   });
@@ -67,6 +68,7 @@ export default function SignUpForm({ setTabIndex }: Props) {
           ...utils.toastOptions,
         });
         setTabIndex(1);
+        reset();
       })
       .catch((error) =>
         toast({
@@ -114,7 +116,10 @@ export default function SignUpForm({ setTabIndex }: Props) {
         <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
       </FormControl>
 
-      <Button type="submit" className="self-end bg-gray-800 text-white">
+      <Button
+        type="submit"
+        className="self-end bg-green-500 text-white hover:bg-green-300 active:bg-green-300"
+      >
         Criar
       </Button>
     </form>

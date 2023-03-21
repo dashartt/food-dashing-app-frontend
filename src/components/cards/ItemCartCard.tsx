@@ -61,7 +61,7 @@ export default function ItemCartCard({ itemCart }: Props) {
               <HStack className="w-full justify-between">
                 <VStack className="items-start -space-y-1">
                   <Text className="mb-2 rounded-md py-1 px-2">
-                    {utils.getCategoryName(itemCart.item[0]?.category.name)}
+                    {itemCart.item[0]?.category.name}
                   </Text>
                   <Text className="text-xl">
                     {canSetOneHalf} {itemCart.item[0]?.name}
@@ -72,8 +72,8 @@ export default function ItemCartCard({ itemCart }: Props) {
                     </Text>
                   )}
 
-                  <VStack className="items-start space-y-2 pt-2">
-                    {/* Border type ---------------> */}
+                  {/* Border type ---------------> */}
+                  {/* <VStack className="items-start space-y-2 pt-2">
                     {itemCart.item[0]?.category.name.includes("pizza") && (
                       <Text>
                         {`borda:
@@ -83,28 +83,24 @@ export default function ItemCartCard({ itemCart }: Props) {
                             : itemCart.borderType
                         }`}
                       </Text>
-                    )}
-
+                    )} */}
+                  <VStack className="items-start space-y-2 pt-2">
                     {/* Observation ------------> */}
-                    {itemCart.observation !== "" && (
+                    {itemCart.observation && (
                       <Text className="leading-tight">
                         observações: {itemCart.observation}
                       </Text>
                     )}
 
                     {/* Additionals ----------------> */}
-                    {/pizza|arabic/.test(
-                      itemCart.item[0]?.category.name || "."
-                    ) &&
-                      itemCart.additionals &&
-                      itemCart.additionals?.length > 0 && (
-                        <Text className="lowercase leading-tight">
-                          {`adicionais:
+                    {itemCart.item[0]?.category.allowAdditional && (
+                      <Text className="lowercase leading-tight">
+                        {`adicionais:
                           ${itemCart.additionals
-                            .map(({ name }) => name)
+                            ?.map(({ name }) => name)
                             .join(", ")}`}
-                        </Text>
-                      )}
+                      </Text>
+                    )}
                   </VStack>
                 </VStack>
 

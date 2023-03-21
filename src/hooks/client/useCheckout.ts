@@ -1,11 +1,11 @@
 import { useToast } from "@chakra-ui/react";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import useAddressesState from "@/store/checkout/useAddresses";
 import useDeliveryState from "@/store/checkout/useDelivery";
 import usePaymentState from "@/store/checkout/usePayment";
 import useScheduleState from "@/store/checkout/useScheduleOrder";
+import useShopSettings from "@/store/shop/setup/useShopSetup";
 import useSessionState from "@/store/useSession";
 import useShoppingCart from "@/store/useShoppingCart";
 import type { IOrderItem } from "@/types";
@@ -13,11 +13,15 @@ import type { IOrderItem } from "@/types";
 import * as api from "../../services/api";
 import * as utils from "../../utils";
 import * as geoapify from "../../utils/geoapify.util";
+import useShopSegmentURL from "../shared/useShopSegmentURL";
 
 export default function useCheckout() {
   const [mounted, setMounted] = useState(false);
   const toast = useToast();
-  const router = useRouter();
+  const { baseURL, router } = useShopSegmentURL();
+  const shopAddress = useShopSettings(
+    ({ shopSettings }) => shopSettings?.shopAddress
+  );
 
   const { session } = useSessionState();
   const { address, addresses } = useAddressesState();
@@ -48,7 +52,7 @@ export default function useCheckout() {
             itemIds: item_.item.map((item__) => item__?._id),
             quantity: item_.quantity,
             ...(item_.observation && { observation: item_.observation }),
-            ...(item_.borderType !== "" && { borderType: item_?.borderType }),
+            // ...(item_.borderType !== "" && { borderType: item_?.borderType }),
             ...(item_.additionals &&
               item_.additionals.length > 0 && {
                 additionalIds: item_.additionals.map(
@@ -63,7 +67,7 @@ export default function useCheckout() {
         })
         .then((orderId) => {
           emptyCart();
-          router.push(`/order/${orderId}`);
+          router.push(`${baseURL}/order/${orderId}`);
         })
         .catch(() => {
           throw new Error("erro ao cadastrar pedido");
@@ -74,14 +78,14 @@ export default function useCheckout() {
   useEffect(() => {
     setMounted(true);
 
-    if (items.length === 0) router.push("/");
+    if (items.length === 0) router.push(baseURL);
     if (!session?._id) {
       toast({
         title: "Você ainda não tem uma conta",
         description: "Cadastra-se para continuar e confirmar seu pedido",
         ...utils.toastOptions,
       });
-      router.push("/account");
+      router.push(`${baseURL}/account`);
     }
   }, []);
 
@@ -89,7 +93,7 @@ export default function useCheckout() {
     geoapify
       .calculateDeliveryFee(
         [address?.lon || 0, address?.lat || 0],
-        [-51.3334250105599, -20.40966379938486]
+        [shopAddress?.lon || 0, shopAddress?.lat || 0]
       )
       .then((price) => {
         delivery.setPrice(price);

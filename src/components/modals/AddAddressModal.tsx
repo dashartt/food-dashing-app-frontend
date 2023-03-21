@@ -25,6 +25,7 @@ import type { IAddress } from "@/types/address.type";
 
 import * as api from "../../services/api";
 import SearchPlaceInput from "../inputs/SearchPlaceInput";
+import useShopSettings from "@/store/shop/setup/useShopSetup";
 
 type Props = {
   addressId?: string;
@@ -37,6 +38,11 @@ type Props = {
 
 export default function AddAddressModal({ addressId, defaultValues }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const shopAddress = useShopSettings(
+    ({ shopSettings }) => shopSettings?.shopAddress
+  );
+
   const { addAddress } = useAddressesState();
   const addressRef = useRef<IAddress>();
   const complementRef = useRef<HTMLInputElement>(null);
@@ -99,6 +105,8 @@ export default function AddAddressModal({ addressId, defaultValues }: Props) {
               <FormControl>
                 <FormLabel htmlFor="address">Endereço</FormLabel>
                 <Input
+                  city={shopAddress?.city || ""}
+                  stateCode={shopAddress?.state_code || ""}
                   defaultValue={addressId && defaultValues?.address}
                   id="address"
                   as={SearchPlaceInput}

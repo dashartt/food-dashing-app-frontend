@@ -1,6 +1,6 @@
 "use client";
 
-import "../../styles/global.css";
+import "../../../../../styles/global.css";
 
 import type { PropsWithChildren } from "react";
 

@@ -19,6 +19,8 @@ import MenuItemCardSimpleSkeleton from "@/components/skeletons/MenuItemCardSimpl
 import useObservationPizzaState from "@/store/pizza/useObservationPizza";
 import useAdditionals from "@/store/useAdditionals";
 import { formatCurrency } from "@/utils/format.util";
+import useShopSettings from "@/store/shop/setup/useShopSetup";
+import { IItemCategory, IMenuItem } from "@/types/shop.type";
 
 type Params = {
   params: {
@@ -26,13 +28,27 @@ type Params = {
   };
 };
 
+const canShowObservationField = (
+  product: IMenuItem,
+  categories: IItemCategory[]
+) => {
+  return categories.some((category) => category._id === product.category._id);
+};
+
 export default function MenuItem({ params }: Params) {
   const [mounted, setMounted] = useState(false);
 
-  const { data: item, isLoading } = useQuery({
-    queryKey: [`menuItem/${params.itemName}`],
-    queryFn: () => getMenuItemByName(params.itemName),
-  });
+  const product = useShopSettings(({ shopSettings }) =>
+    shopSettings?.items?.find(
+      (item) => item.name === params.itemName.replaceAll("%20", " ")
+    )
+  );
+
+  const additional = useShopSettings(({ shopSettings }) =>
+    shopSettings?.additional?.filter((a) =>
+      a.categories.some((b) => b?.name === product?.category.name)
+    )
+  );
 
   const { setObservation, observation, resetObservation } =
     useObservationPizzaState();
@@ -49,23 +65,21 @@ export default function MenuItem({ params }: Params) {
     resetObservation();
     resetStuffing();
     additionals.setInitialValue([]);
-    getDefaultPrice(item?.price || 0);
+    getDefaultPrice(product?.price || 0);
   }, []);
 
   return (
     <>
-      {mounted && (
+      {mounted && product && (
         <VStack className="items-start space-y-8">
-          {/* <Box className="space-y-6"> */}
           {/* Name and ingredients  ----------------> */}
           <VStack className="w-full items-start">
             <Text className="text-lg font-semibold">Sobre o produto</Text>
-            {isLoading && <MenuItemCardSimpleSkeleton />}
-            {item && <MenuItemCard menuItem={item} />}
+            <MenuItemCard menuItem={product} />
           </VStack>
 
           {/* Whole or half pizza option and get another half pizza */}
-          {item?.category?.name.includes("pizza") && (
+          {product?.category.allowHalf && (
             <VStack className="items-start">
               <Text className="text-lg font-semibold">Inteira ou metade?</Text>
               <PizzaFillingRadio />
@@ -82,25 +96,24 @@ export default function MenuItem({ params }: Params) {
               )}
             </VStack>
           )}
-          {/* </Box> */}
 
           {/* Pizza border type ------------------> */}
-          {item?.category?.name.includes("pizza") && (
+          {/* {item?.category?.name.includes("pizza") && (
             <VStack className="items-start text-lg font-semibold">
               <Text>Qual opção de borda?</Text>
               <PizzaBorderRadio />
             </VStack>
-          )}
+          )} */}
 
           {/* Additional container */}
-          {/pizza|arabic/.test(item?.category.name || ".") && (
+          {additional && additional.length > 0 && (
             <Box className="w-full rounded-md border border-gray-400 py-2">
-              <AdditionalsAccordion category={item?.category.name || "."} />
+              <AdditionalsAccordion category={product?.category.name || "."} />
             </Box>
           )}
 
           {/* Observation ----------------> */}
-          {item?.category.name !== "drinks" && (
+          {product?.category.allowObservation && (
             <VStack className="w-full items-start">
               <Text className="text-lg font-semibold">Observações</Text>
 
@@ -126,8 +139,8 @@ export default function MenuItem({ params }: Params) {
                   orderItem={{
                     ...{
                       item: anotherHalfPizza
-                        ? [item || null, anotherHalfPizza]
-                        : [item || null],
+                        ? [product || null, anotherHalfPizza]
+                        : [product || null],
                     },
                     quantity,
                   }}
@@ -138,7 +151,7 @@ export default function MenuItem({ params }: Params) {
               <Text className="text-xl font-semibold">
                 Total R$
                 {formatCurrency(
-                  (item?.price || 0) * quantity +
+                  (product?.price || 0) * quantity +
                     additionals.getAdditionalsPrice()
                 )}
               </Text>

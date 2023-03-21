@@ -4,6 +4,9 @@ import type { IUser } from "./user.type";
 
 export type IItemCategory = IUuid & {
   name: string;
+  allowObservation: boolean;
+  allowHalf: boolean;
+  allowAdditional: boolean;
 };
 
 export type IMenuItem = IUuid & {

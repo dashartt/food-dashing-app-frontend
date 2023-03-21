@@ -1,6 +1,5 @@
 import { FormControl, FormLabel, Input } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import InputMask from "react-input-mask";
 
 import useSessionState from "@/store/useSession";
 
@@ -32,19 +31,17 @@ export default function IdentificationForm() {
           </FormControl>
 
           <FormControl>
-            <FormLabel htmlFor="phone">Celular</FormLabel>
+            <FormLabel htmlFor="email">Email</FormLabel>
             <Input
-              as={InputMask}
-              mask="(99) 99999-9999"
-              value={session?.phone}
+              value={session?.email}
               onChange={({ target }) =>
                 setSession({
                   ...session!,
-                  phone: target.value || "",
+                  email: target.value || "",
                 })
               }
               className="border border-gray-400"
-              id="phone"
+              id="email"
             />
           </FormControl>
         </form>

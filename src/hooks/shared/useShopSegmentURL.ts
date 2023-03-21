@@ -3,19 +3,21 @@ import { usePathname, useRouter } from "next/navigation";
 export default function useShopSegmentURL() {
   const router = useRouter();
   const path = usePathname();
-  const urlParams = { isAdmin: false, shopId: "" };
+  const params = { isAdmin: false, shopId: "", baseURL: "" };
 
   if (path?.includes("shop")) {
     const [rootSegment = "", rest = ""] = path.split("shop");
 
-    urlParams.shopId = rest.split("/")[1] || "";
-    urlParams.isAdmin = !!rootSegment.includes("dashboard");
+    params.shopId = rest.split("/")[1] || "";
+    params.baseURL = `/shop/${params.shopId}/`;
+    params.isAdmin = !!rootSegment.includes("dashboard");
   }
 
   return {
-    isAdmin: urlParams.isAdmin,
-    shopId: urlParams.shopId,
+    ...params,
+    router,
+    path,
     goTo: (href: string) =>
-      router.push(href.replace("[shopId]", urlParams.shopId)),
+      router.push(href.replace("[shopId]", params.shopId)),
   };
 }

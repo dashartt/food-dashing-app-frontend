@@ -4,7 +4,7 @@ import { GoDiffAdded } from "react-icons/go";
 import { ImCheckboxChecked } from "react-icons/im";
 
 import useAdditionals from "@/store/useAdditionals";
-import type { IAdditional } from "@/types";
+import type { IAdditional } from "@/types/shop.type";
 import { formatCurrency } from "@/utils";
 
 type Props = {

@@ -8,30 +8,27 @@ import {
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useEffect } from "react";
 
 import useAnotherHalfPizzaState from "@/store/pizza/useAnotherHalfPizza";
-import { StoreCallback } from "@/utils";
+import useShopSettings from "@/store/shop/setup/useShopSetup";
 
-import MenuTabs from "../tabs/MenuTabs";
+import MenuItemsTabs from "../tabs/CreateableMenu";
 
 export default function ListPizzasModal() {
+  const categories =
+    useShopSettings(({ shopSettings }) => shopSettings?.categories)?.filter(
+      (category) => category.allowHalf
+    ) || [];
+  const items =
+    useShopSettings(({ shopSettings }) => shopSettings?.items) || [];
   const { isOpen, onOpen, onClose } = useDisclosure();
-
   const { anotherHalfPizza } = useAnotherHalfPizzaState();
-
-  useEffect(() => {
-    StoreCallback.setCallback({
-      key: "ListPizzaModal/onClose",
-      callback: onClose,
-    });
-  }, []);
 
   return (
     <>
       {!anotherHalfPizza && (
         <Button
-          className="bg-white border border-gray-400 font-normal py-6 shadow-lg"
+          className="border border-gray-400 bg-white py-6 font-normal shadow-lg"
           onClick={onOpen}
         >
           Ver opções de pizzas
@@ -44,10 +41,7 @@ export default function ListPizzasModal() {
           <ModalHeader className="">Cardápio</ModalHeader>
           <ModalCloseButton />
           <ModalBody className="relative max-h-[80vh] overflow-auto p-0">
-            <MenuTabs
-              tabListClass="sticky top-0 z-10 bg-white"
-              categories={["salty pizza", "sweet pizza"]}
-            />
+            <MenuItemsTabs menu={items} categories={categories} />
           </ModalBody>
         </ModalContent>
       </Modal>

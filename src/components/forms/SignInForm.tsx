@@ -8,16 +8,12 @@ import {
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { setCookie } from "cookies-next";
-import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-// import InputMask from "react-input-mask";
 import zod from "zod";
 
-import useSignParams from "@/hooks/shared/useSignParams";
+import useShopSegmentURL from "@/hooks/shared/useShopSegmentURL";
 import { signin } from "@/services/API/user.service";
 import useSessionState from "@/store/useSession";
-
-import * as utils from "../../utils";
 
 const signUpSchema = zod.object({
   email: zod
@@ -36,10 +32,9 @@ const signUpSchema = zod.object({
 type SignInValues = zod.TypeOf<typeof signUpSchema>;
 
 export default function SignInForm() {
-  const router = useRouter();
-  const { shopId } = useSignParams();
-  const toast = useToast();
-  const { path, setSession } = useSessionState();
+  const toast = useToast({ position: "top" });
+  const { router, baseURL } = useShopSegmentURL();
+  const { setSession } = useSessionState();
   const {
     handleSubmit,
     register,
@@ -52,9 +47,12 @@ export default function SignInForm() {
     signin({
       email: values.email,
       password: values.password,
-      ...(shopId !== "" && { shopId }),
     })
       .then((response) => {
+        toast({
+          title: response.message,
+        });
+
         setSession({
           _id: response.data?.user._id,
           fullName: response.data?.user.fullName || "",
@@ -62,22 +60,22 @@ export default function SignInForm() {
           addresses: [],
           role: response.data?.user.role || "",
         });
+
         setCookie("token", response?.data?.token);
 
         const role = response?.data?.user?.role;
-        if (role === "admin" && path.startsWith("")) router.push("/dashboard");
+        console.log(role);
 
-        // const role = response?.data.user.role;
-        // const redirectByRole = role === "client" ? "/" : "/admin/orders/to-do";
-        // const isPathEmpty = path === "";
-
-        // router.push(isPathEmpty ? redirectByRole : path);
+        if (role === "customer" && response.data) {
+          router.push(baseURL);
+        }
+        if (role === "admin" && response.data) {
+          router.push("/dashboard");
+        }
       })
       .catch((error) =>
         toast({
-          title: "Ops, ocorreu algum erro",
-          description: error.message,
-          ...utils.toastOptions,
+          title: error.message,
         })
       );
   };
@@ -108,7 +106,10 @@ export default function SignInForm() {
         <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
       </FormControl>
 
-      <Button type="submit" className="self-end bg-gray-800 text-white">
+      <Button
+        type="submit"
+        className="self-end bg-green-500 text-white hover:bg-green-300 active:bg-green-300"
+      >
         Entrar
       </Button>
     </form>

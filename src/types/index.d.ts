@@ -1,4 +1,5 @@
 import type { IAddress } from "./address.type";
+import type { IMenuItem } from "./shop.type";
 
 export type IUuid = {
   _id?: string;
@@ -19,7 +20,7 @@ export interface IAccount extends ICredentials {
 export interface IClientAccount extends Omit<IAccount, "password"> {}
 
 // MENU TYPE ---------------------->
-export interface IMenu extends Array<IMenuItem> {}
+// export interface IMenu extends Array<IMenuItem> {}
 
 // MENU ITEM CATEGORY TYPE ---------------------->
 export type IMenuItemCategory =
@@ -34,16 +35,16 @@ export interface IITemCategory {
   name: string;
 }
 
-// MENU ITEM TYPE ---------------------->
-export interface IMenuItem {
-  _id: string;
-  category: IITemCategory;
-  name: string;
-  price: number;
-  ingredients?: string;
-  quantity?: number;
-  observation?: string;
-}
+// // MENU ITEM TYPE ---------------------->
+// export interface IMenuItem {
+//   _id: string;
+//   category: IITemCategory;
+//   name: string;
+//   price: number;
+//   ingredients?: string;
+//   quantity?: number;
+//   observation?: string;
+// }
 
 // SHOPPING CART TYPE ---------------------->
 export interface ICartItems extends Array<ICartItem> {}

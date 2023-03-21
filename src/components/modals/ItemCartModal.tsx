@@ -48,8 +48,8 @@ export default function ItemCartModal({ item }: Props) {
   const onConfirm = () => {
     updateItem(item._id || "", {
       observation: obsRef.current?.value,
-      borderType: borderType === "none" ? "sem borda" : borderType,
       additionals,
+      // borderType: borderType === "none" ? "sem borda" : borderType,
     });
 
     afterConfirm();
@@ -64,7 +64,7 @@ export default function ItemCartModal({ item }: Props) {
         <ModalBody>
           <VStack className="space-y-6 items-start">
             {/* Additional container */}
-            {/pizza|arabic/.test(item.item[0]?.category.name || ".") && (
+            {item.additionals && (
               <Box className="w-full rounded-md border border-gray-400 py-2">
                 <AdditionalsAccordion
                   category={item.item[0]?.category.name || ""}
@@ -72,7 +72,7 @@ export default function ItemCartModal({ item }: Props) {
               </Box>
             )}
 
-            {item?.item[0]?.category?.name.includes("pizza") && (
+            {/* {item?.item[0]?.category?.name.includes("pizza") && (
               <VStack className="items-start text-lg font-semibold">
                 <Text>Qual opção de borda?</Text>
                 <PizzaBorderRadio
@@ -81,9 +81,9 @@ export default function ItemCartModal({ item }: Props) {
                   }
                 />
               </VStack>
-            )}
+            )} */}
             {/* Observation ----------------> */}
-            {item?.item[0]?.category.name !== "drinks" && (
+            {item.item[0]?.category.allowObservation && (
               <VStack className="w-full items-start">
                 <Text className="text-lg font-semibold">Observações</Text>
 
