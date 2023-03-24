@@ -5,6 +5,7 @@ import type { IAddress } from "@/types/address.type";
 
 interface AddressesState {
   addresses: IAddress[];
+  setAddresses: (addresses_: IAddress[]) => void;
   addAddress: (address_: IAddress) => void;
   updateAddress: (addressId: string, address: IAddress) => void;
   getAddress: (addressId: string) => IAddress | null;
@@ -18,6 +19,7 @@ const useAddressesState = create<AddressesState>()(
   persist(
     (set, get) => ({
       addresses: [],
+      setAddresses: (addresses) => set({ addresses }),
       addAddress: (address_) =>
         set((state) => ({
           addresses: [...state.addresses, address_],

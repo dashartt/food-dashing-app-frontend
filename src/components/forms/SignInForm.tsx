@@ -13,6 +13,7 @@ import zod from "zod";
 
 import useShopSegmentURL from "@/hooks/shared/useShopSegmentURL";
 import { signin } from "@/services/API/user.service";
+import useAddressesState from "@/store/checkout/useAddresses";
 import useSessionState from "@/store/useSession";
 
 const signUpSchema = zod.object({
@@ -35,6 +36,7 @@ export default function SignInForm() {
   const toast = useToast({ position: "top" });
   const { router, baseURL } = useShopSegmentURL();
   const { setSession } = useSessionState();
+  const { setAddresses } = useAddressesState();
   const {
     handleSubmit,
     register,
@@ -57,14 +59,16 @@ export default function SignInForm() {
           _id: response.data?.user._id,
           fullName: response.data?.user.fullName || "",
           email: response.data?.user.email || "",
-          addresses: [],
           role: response.data?.user.role || "",
         });
+
+        if (response.data?.user.addresses) {
+          setAddresses(response.data.user.addresses);
+        }
 
         setCookie("token", response?.data?.token);
 
         const role = response?.data?.user?.role;
-        console.log(role);
 
         if (role === "customer" && response.data) {
           router.push(baseURL);

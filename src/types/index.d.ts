@@ -78,6 +78,7 @@ export interface IOrderItem {
 }
 
 export interface IOrder {
+  shopId: string;
   clientId: string;
   addressId: string;
   items: IOrderItem[];

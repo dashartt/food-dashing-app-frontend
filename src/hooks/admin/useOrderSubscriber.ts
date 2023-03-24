@@ -1,19 +1,22 @@
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 
-import { getOrderById } from "@/services/api";
+import { getOrderById } from "@/services/API/shopApp.service";
 import Beam from "@/services/Beam";
 import Pusher from "@/services/Pusher";
 import useOrderState from "@/store/useOrder";
 import type { IAdminOrder } from "@/types";
 
+import useShopSegmentURL from "../shared/useShopSegmentURL";
+
 export default function useOrderSubscriber() {
+  const { shopId } = useShopSegmentURL();
   const { setOrder } = useOrderState();
   const [orderId, setOrderId] = useState<string>("");
 
   const order_ = useQuery({
     queryKey: [`admin/order/${orderId}`],
-    queryFn: () => getOrderById(orderId),
+    queryFn: () => getOrderById(shopId, orderId),
     enabled: false,
   });
 
@@ -24,7 +27,7 @@ export default function useOrderSubscriber() {
   }, []);
 
   useEffect(() => {
-    if (order_.isFetched) setOrder(order_.data as IAdminOrder);
+    if (order_.isFetched) setOrder(order_.data?.data as IAdminOrder);
   }, [order_.isFetched]);
 
   useEffect(() => {

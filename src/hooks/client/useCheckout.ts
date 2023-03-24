@@ -10,7 +10,7 @@ import useSessionState from "@/store/useSession";
 import useShoppingCart from "@/store/useShoppingCart";
 import type { IOrderItem } from "@/types";
 
-import * as api from "../../services/api";
+import * as API from "../../services/API/shopApp.service";
 import * as utils from "../../utils";
 import * as geoapify from "../../utils/geoapify.util";
 import useShopSegmentURL from "../shared/useShopSegmentURL";
@@ -18,13 +18,13 @@ import useShopSegmentURL from "../shared/useShopSegmentURL";
 export default function useCheckout() {
   const [mounted, setMounted] = useState(false);
   const toast = useToast();
-  const { baseURL, router } = useShopSegmentURL();
+  const { baseURL, router, shopId } = useShopSegmentURL();
   const shopAddress = useShopSettings(
     ({ shopSettings }) => shopSettings?.shopAddress
   );
 
   const { session } = useSessionState();
-  const { address, addresses } = useAddressesState();
+  const { address } = useAddressesState();
 
   const { needPayback, paymentType, paybackValue } = usePaymentState();
   const { scheduleOption } = useScheduleState();
@@ -33,41 +33,37 @@ export default function useCheckout() {
   const { emptyCart, items, getTotalPrice } = useShoppingCart();
 
   const onConfirmPurchase = async () => {
-    if (
-      !address ||
-      addresses.length === 0 ||
-      (needPayback && paybackValue === 0)
-    ) {
+    if (!address || (needPayback && paybackValue === 0)) {
       toast({
         title: "Faltam informações",
         description: "Confirme se escolheu o endereço e forma de pagamento",
         ...utils.toastOptions,
       });
     } else {
-      await api
-        .addOrder({
-          clientId: session?._id || "",
-          addressId: address?._id || "",
-          items: items.map((item_) => ({
-            itemIds: item_.item.map((item__) => item__?._id),
-            quantity: item_.quantity,
-            ...(item_.observation && { observation: item_.observation }),
-            // ...(item_.borderType !== "" && { borderType: item_?.borderType }),
-            ...(item_.additionals &&
-              item_.additionals.length > 0 && {
-                additionalIds: item_.additionals.map(
-                  (additional) => additional._id
-                ),
-              }),
-          })) as unknown as IOrderItem[],
-          paymentType,
-          isDelivery: delivery.type === "delivery",
-          ...(needPayback && { hasPayBack: needPayback }),
-          ...(paybackValue && { payback: paybackValue }),
-        })
-        .then((orderId) => {
+      await API.addOrder({
+        shopId,
+        clientId: session?._id || "",
+        addressId: address?._id || "",
+        items: items.map((item_) => ({
+          itemIds: item_.item.map((item__) => item__?._id),
+          quantity: item_.quantity,
+          ...(item_.observation && { observation: item_.observation }),
+          // ...(item_.borderType !== "" && { borderType: item_?.borderType }),
+          ...(item_.additionals &&
+            item_.additionals.length > 0 && {
+              additionalIds: item_.additionals.map(
+                (additional) => additional._id
+              ),
+            }),
+        })) as unknown as IOrderItem[],
+        paymentType,
+        isDelivery: delivery.type === "delivery",
+        ...(needPayback && { hasPayBack: needPayback }),
+        ...(paybackValue && { payback: paybackValue }),
+      })
+        .then((response) => {
           emptyCart();
-          router.push(`${baseURL}/order/${orderId}`);
+          router.push(`${baseURL}/order/${response.data?.orderId}`);
         })
         .catch(() => {
           throw new Error("erro ao cadastrar pedido");

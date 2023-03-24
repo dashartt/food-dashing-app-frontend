@@ -2,7 +2,6 @@ import { Box, Card, CardBody, Text, VStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
 import useSessionState from "@/store/useSession";
-import { formatPhone } from "@/utils";
 
 import IdentificationCardSkeleton from "../skeletons/IdentificationCardSkeleton";
 
@@ -28,8 +27,8 @@ export default function IdentificationCard() {
               </Box>
 
               <Box>
-                <Text className="font-bold">Celular</Text>
-                <Text>{formatPhone(session?.phone || "")}</Text>
+                <Text className="font-bold">Email</Text>
+                <Text>{session?.email}</Text>
               </Box>
             </VStack>
           </CardBody>

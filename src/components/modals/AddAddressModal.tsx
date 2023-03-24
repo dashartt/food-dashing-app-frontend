@@ -15,17 +15,19 @@ import {
   Textarea,
   Tooltip,
   useDisclosure,
+  useToast,
   VStack,
 } from "@chakra-ui/react";
 import { useRef } from "react";
 import { BsQuestionCircle } from "react-icons/bs";
 
 import useAddressesState from "@/store/checkout/useAddresses";
+import useShopSettings from "@/store/shop/setup/useShopSetup";
+import useSessionState from "@/store/useSession";
 import type { IAddress } from "@/types/address.type";
 
-import * as api from "../../services/api";
+import * as API from "../../services/API/user.service";
 import SearchPlaceInput from "../inputs/SearchPlaceInput";
-import useShopSettings from "@/store/shop/setup/useShopSetup";
 
 type Props = {
   addressId?: string;
@@ -37,7 +39,9 @@ type Props = {
 };
 
 export default function AddAddressModal({ addressId, defaultValues }: Props) {
+  const toast = useToast({ position: "top" });
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { session } = useSessionState();
 
   const shopAddress = useShopSettings(
     ({ shopSettings }) => shopSettings?.shopAddress
@@ -76,12 +80,13 @@ export default function AddAddressModal({ addressId, defaultValues }: Props) {
       }),
     };
 
-    api.addAddress({ ...data }).then((addressId_) => {
+    API.addAddress(session?._id!, { ...data }).then((response) => {
+      toast({
+        title: response.message,
+      });
       addAddress({
-        _id: addressId_ || "",
         ...data,
       });
-      // setAddress(addressId_ || "");
 
       onClose();
     });

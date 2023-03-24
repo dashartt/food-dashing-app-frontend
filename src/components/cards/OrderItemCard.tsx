@@ -1,7 +1,7 @@
 import { Box, Card, CardBody, HStack, Text, VStack } from "@chakra-ui/react";
-import { usePathname, useRouter } from "next/navigation";
 import { v4 as uuid } from "uuid";
 
+import useShopSegmentURL from "@/hooks/shared/useShopSegmentURL";
 import type { IAdminOrder } from "@/types";
 import { formatDate } from "@/utils";
 
@@ -19,18 +19,17 @@ export default function OrderCard({
   isAdmin = false,
   date = false,
 }: Props) {
-  const router = useRouter();
-  const path = usePathname();
+  const { router, path, baseURL } = useShopSegmentURL();
 
   const goToOrderDetails = () => {
     if (/history/.test(path || ".") && !isAdmin)
-      router.push(`/order/${order?._id}`);
+      router.push(`${baseURL}/order/${order?._id}`);
   };
 
   if (!order) return <OrderCardSkeleton />;
   return (
     <Card
-      className="h-fit min-w-[20rem] w-full max-w-xs rounded-md border border-gray-400 bg-white shadow-lg"
+      className="h-fit w-full min-w-[20rem] max-w-xs rounded-md border border-gray-400 bg-white shadow-lg"
       onClick={goToOrderDetails}
       {...(!isAdmin && { role: "button" })}
     >
@@ -64,7 +63,7 @@ export default function OrderCard({
                     return (
                       <Box
                         key={order_._id}
-                        className="px-2 border-b-2 border-gray-300 last:border-none py-2"
+                        className="border-b-2 border-gray-300 p-2 last:border-none"
                       >
                         <HStack>
                           <Text>{order_.quantity}x</Text>
@@ -81,9 +80,9 @@ export default function OrderCard({
                           <Text>Observações: {order_?.observation}</Text>
                         )}
 
-                        {/pizza/.test(order_?.itemIds[0].categoryId.name) && (
+                        {/* {/pizza/.test(order_?.itemIds[0].categoryId.name) && (
                           <Text>Borda: {order_.borderType}</Text>
-                        )}
+                        )} */}
 
                         {order_?.additionalIds.length > 0 && (
                           <Text>
@@ -108,7 +107,7 @@ export default function OrderCard({
           </HStack>
 
           {/*  ADDRESS NAME  --------------------------> */}
-          <VStack className="items-start -space-y-1 mb-1">
+          <VStack className="mb-1 items-start -space-y-1">
             <Text className="font-bold">Endereço:</Text>
             <Text>{`${order?.addressId?.street}, ${
               order?.addressId?.housenumber

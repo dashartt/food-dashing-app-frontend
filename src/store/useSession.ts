@@ -5,7 +5,7 @@ interface ISession {
   _id?: string;
   fullName: string;
   email: string;
-  addresses: string[] | [];
+  addresses?: string[] | [];
   role: string;
 }
 

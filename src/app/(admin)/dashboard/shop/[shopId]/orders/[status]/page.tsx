@@ -17,7 +17,7 @@ export default function OrdersPage({ params }: { params: { status: string } }) {
   return (
     <>
       {mounted && (
-        <Box className="m-6">
+        <Box>
           <OrdersList
             isLoading={ordersQuery.isLoading}
             status={params.status}

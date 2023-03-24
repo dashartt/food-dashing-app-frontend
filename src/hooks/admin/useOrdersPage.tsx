@@ -6,7 +6,8 @@ import { useEffect, useState } from "react";
 import useOrderState from "@/store/useOrder";
 import type { IAdminOrder } from "@/types";
 
-import { getOrders } from "../../services/api";
+import * as API from "../../services/API/shop.service";
+import useShopSegmentURL from "../shared/useShopSegmentURL";
 
 type Props = {
   queryKey: string[];
@@ -15,13 +16,19 @@ type Props = {
 
 export default function useOrdersPage({ queryKey, status }: Props) {
   const [mounted, setMounted] = useState(false);
+  const { shopId } = useShopSegmentURL();
   const { setOrders } = useOrderState();
 
   const today = status !== "completed";
 
   const orders_ = useQuery({
     queryKey,
-    queryFn: () => getOrders({ today, status }),
+    queryFn: () =>
+      API.getShopOrders({
+        shopId,
+        ordersStatus: status,
+        ordersToday: today,
+      }),
     enabled: false,
   });
 
@@ -33,7 +40,8 @@ export default function useOrdersPage({ queryKey, status }: Props) {
 
   // when orders fetched, set orders state ---------------------
   useEffect(() => {
-    if (orders_.isFetched) setOrders(orders_.data as IAdminOrder[]);
+    if (orders_.isFetched) setOrders(orders_.data?.data as IAdminOrder[]);
+    console.log(orders_.data);
   }, [orders_.isFetched]);
 
   return {

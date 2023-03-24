@@ -1,5 +1,6 @@
 import axios from "axios";
 
+import type { IAddress } from "@/types/address.type";
 import type { IApiResponse, ISignInResponse } from "@/types/api.type";
 import type { ISignIn, ISignUp } from "@/types/auth.type";
 
@@ -29,14 +30,8 @@ export const verifyAuth = async (token: string) =>
       return error.response?.data;
     });
 
-// {
-
-//   const response = await fetch(`${API_URL}/user/signin`, {
-//     headers: { "Content-Type": "application/json" },
-//     method: "POST",
-//     mode: "cors",
-//     body: JSON.stringify(values),
-//   });
-//   const responseData = await response.json();
-//   return responseData;
-// };
+export const addAddress = async (userId: string, values: IAddress) =>
+  axios
+    .post(`${API_URL}/user/${userId}/address`, values)
+    .then((response) => response.data as IApiResponse)
+    .catch((error) => error.response.data as IApiResponse);

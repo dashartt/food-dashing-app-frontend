@@ -15,13 +15,16 @@ interface OrderState {
 const useOrderState = create<OrderState>()((set, get) => ({
   orders: [],
   getOrders: ({ today }: { today: boolean }) =>
-    get().orders.filter(({ createdAt }) => {
-      const currentDay = moment().startOf("day");
-      const orderDay = moment(createdAt).startOf("day");
-      return today ? currentDay.isSame(orderDay) : true;
-    }),
+    get().orders.length > 0
+      ? get().orders?.filter(({ createdAt }) => {
+          const currentDay = moment().startOf("day");
+          const orderDay = moment(createdAt).startOf("day");
+          return today ? currentDay.isSame(orderDay) : true;
+        })
+      : [],
   setOrders: (orders) => set({ orders }),
-  setOrder: (order) => set((state) => ({ orders: [...state.orders, order] })),
+  setOrder: (order) =>
+    set({ orders: get().orders.length > 0 ? [...get().orders, order] : [] }),
   updateOrderStatus: (_id, status) =>
     set((state) => ({
       orders: state.orders.map((order) =>
