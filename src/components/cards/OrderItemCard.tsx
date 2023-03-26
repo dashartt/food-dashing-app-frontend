@@ -2,14 +2,14 @@ import { Box, Card, CardBody, HStack, Text, VStack } from "@chakra-ui/react";
 import { v4 as uuid } from "uuid";
 
 import useShopSegmentURL from "@/hooks/shared/useShopSegmentURL";
-import type { IAdminOrder } from "@/types";
+import type { IOrder } from "@/types";
 import { formatDate } from "@/utils";
 
 import OrderStatus from "../selects/OrderStatus";
 import OrderCardSkeleton from "../skeletons/OrderCardSkeleton";
 
 type Props = {
-  order: IAdminOrder | null;
+  order: IOrder | null;
   isAdmin?: boolean;
   date?: boolean;
 };
@@ -56,37 +56,37 @@ export default function OrderCard({
             </HStack>
             <Box className="w-full py-2">
               <Box className="rounded-md border border-gray-400 p-2">
-                {order?.orderItemsId &&
-                  order?.orderItemsId.length > 0 &&
-                  order?.orderItemsId.map((order_) => {
-                    const canSetOneHalf = order_.itemIds.length > 1 ? "½" : "-";
+                {order?.items &&
+                  order?.items.length > 0 &&
+                  order?.items.map((item) => {
+                    const canSetOneHalf = item.item.length > 1 ? "½" : "";
                     return (
                       <Box
-                        key={order_._id}
+                        key={item._id}
                         className="border-b-2 border-gray-300 p-2 last:border-none"
                       >
                         <HStack>
-                          <Text>{order_.quantity}x</Text>
+                          <Text>{item.quantity}x</Text>
                           <VStack className="items-start -space-y-1">
-                            {order_.itemIds.map((items_) => (
+                            {item.item.map((item_) => (
                               <Text className="font-bold" key={uuid()}>
-                                {canSetOneHalf} {items_.name}
+                                {canSetOneHalf} {item_?.name}
                               </Text>
                             ))}
                           </VStack>
                         </HStack>
 
-                        {order_.observation && (
-                          <Text>Observações: {order_?.observation}</Text>
+                        {item.observation && (
+                          <Text>Observações: {item?.observation}</Text>
                         )}
 
                         {/* {/pizza/.test(order_?.itemIds[0].categoryId.name) && (
                           <Text>Borda: {order_.borderType}</Text>
                         )} */}
 
-                        {order_?.additionalIds.length > 0 && (
+                        {item?.additional && item?.additional.length > 0 && (
                           <Text>
-                            {`Adicionais: ${order_?.additionalIds
+                            {`Adicionais: ${item?.additional
                               .map((additional) => additional.name)
                               .join(", ")}`}
                           </Text>
@@ -103,17 +103,17 @@ export default function OrderCard({
           {/*  CLIENT NAME  --------------------------> */}
           <HStack>
             <Text className="font-bold">Cliente:</Text>
-            <Text>{order?.clientId?.fullName}</Text>
+            <Text>{order?.client?.fullName}</Text>
           </HStack>
 
           {/*  ADDRESS NAME  --------------------------> */}
           <VStack className="mb-1 items-start -space-y-1">
             <Text className="font-bold">Endereço:</Text>
-            <Text>{`${order?.addressId?.street}, ${
-              order?.addressId?.housenumber
-            } ${order?.addressId?.complement || ""} `}</Text>
-            <Text>{order?.addressId?.suburb}</Text>
-            <Text>{order?.addressId?.referencePoint}</Text>
+            <Text>{`${order?.address?.street}, ${order?.address?.housenumber} ${
+              order?.address?.complement || ""
+            } `}</Text>
+            <Text>{order?.address?.suburb}</Text>
+            <Text>{order?.address?.referencePoint}</Text>
           </VStack>
 
           <HStack>

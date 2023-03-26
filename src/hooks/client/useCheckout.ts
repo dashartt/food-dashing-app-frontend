@@ -8,7 +8,7 @@ import useScheduleState from "@/store/checkout/useScheduleOrder";
 import useShopSettings from "@/store/shop/setup/useShopSetup";
 import useSessionState from "@/store/useSession";
 import useShoppingCart from "@/store/useShoppingCart";
-import type { IOrderItem } from "@/types";
+import type { ICartItem } from "@/types";
 
 import * as API from "../../services/API/shopApp.service";
 import * as utils from "../../utils";
@@ -41,21 +41,18 @@ export default function useCheckout() {
       });
     } else {
       await API.addOrder({
-        shopId,
-        clientId: session?._id || "",
-        addressId: address?._id || "",
-        items: items.map((item_) => ({
-          itemIds: item_.item.map((item__) => item__?._id),
-          quantity: item_.quantity,
-          ...(item_.observation && { observation: item_.observation }),
-          // ...(item_.borderType !== "" && { borderType: item_?.borderType }),
-          ...(item_.additionals &&
-            item_.additionals.length > 0 && {
-              additionalIds: item_.additionals.map(
-                (additional) => additional._id
-              ),
-            }),
-        })) as unknown as IOrderItem[],
+        shop: { _id: shopId },
+        client: { _id: session?._id },
+        address,
+        items: items.map((item) => ({
+          item: item.item,
+          quantity: item.quantity,
+          ...((item.additional?.length || 0) > 0 && {
+            additional: item.additional,
+          }),
+          ...(item.borderType && { borderType: item.borderType }),
+          ...(item.observation && { observation: item.observation }),
+        })) as unknown as ICartItem[],
         paymentType,
         isDelivery: delivery.type === "delivery",
         ...(needPayback && { hasPayBack: needPayback }),

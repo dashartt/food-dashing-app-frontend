@@ -14,7 +14,7 @@ import useAddressesState from "@/store/checkout/useAddresses";
 import useSessionState from "@/store/useSession";
 import type { IAddress } from "@/types/address.type";
 
-import * as api from "../../services/api";
+// import * as api from "../../services/api";
 
 type Props = {
   address: IAddress | null;
@@ -34,7 +34,7 @@ export default function AddressCard({
 
   const onRemoveAddress = async (_id_: string) => {
     removeAddress(_id_);
-    await api.removeAddress(_id_);
+    // await api.removeAddress(_id_);
   };
 
   const onClickAddressCard = () => {

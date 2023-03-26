@@ -8,7 +8,9 @@ import { useEffect, useState } from "react";
 import OrderCard from "@/components/cards/OrderItemCard";
 import OrderStatusStepper from "@/components/stepper/OrderStatusStepper";
 import useShopSegmentURL from "@/hooks/shared/useShopSegmentURL";
-import type { IAdminOrder } from "@/types";
+import Beam from "@/services/Beam";
+import Pusher from "@/services/Pusher";
+import type { IOrder } from "@/types";
 
 import * as API from "../../../../../../services/API/shopApp.service";
 
@@ -21,7 +23,7 @@ type Props = {
 export default function OrderPage({ params }: Props) {
   const [mounted, setMounted] = useState(false);
   const { shopId } = useShopSegmentURL();
-  const [order, setOrder] = useState<IAdminOrder | null>();
+  const [order, setOrder] = useState<IOrder | null>();
 
   const query = useQuery({
     queryKey: [`/shops?shopId=${shopId}&orderId=${params.orderId}`],
@@ -33,11 +35,11 @@ export default function OrderPage({ params }: Props) {
     if (!params.orderId) notFound();
     query.refetch();
     setMounted(true);
-    // Pusher.subscribe("client");
-    // Beam.subscribe("update-order-status");
-    // Pusher.onEvent("update-order-status", (status: string) =>
-    //   setOrder((state) => (state ? { ...state, status } : state))
-    // );
+    Pusher.subscribe("client");
+    Beam.subscribe("update-order-status");
+    Pusher.onEvent("update-order-status", (status: string) =>
+      setOrder((state) => (state ? { ...state, status } : state))
+    );
   }, []);
 
   useEffect(() => {

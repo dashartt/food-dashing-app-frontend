@@ -1,17 +1,15 @@
 import axios from "axios";
 
-import type { IAdminOrder, IOrder, IOrderSearchParams } from "@/types";
+import type { IOrder, IOrderSearchParams } from "@/types";
 import type { IApiResponse } from "@/types/api.type";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL as string;
 
-export const updateOrderStatus = async (orderId: string, status: string) => {
-  await fetch(`${API_URL}/orders/${orderId}?status=${status}`, {
-    headers: { "Content-Type": "application/json" },
-    method: "PATCH",
-    mode: "cors",
-  });
-};
+export const updateOrderStatus = async (orderId: string, status: string) =>
+  axios
+    .patch(`${API_URL}/orders/${orderId}?status=${status}`)
+    .then((response) => response.data as IApiResponse)
+    .catch((error) => error.response.data as IApiResponse);
 
 export const addOrder = async (orderDTO: IOrder) =>
   axios
@@ -32,7 +30,7 @@ export const getOrders = async ({ today, status }: IOrderSearchParams) => {
 
   if (!response.ok) return null;
 
-  const orders = (await response.json()) as IAdminOrder[];
+  const orders = (await response.json()) as IOrder[];
 
   return orders;
 };
@@ -40,11 +38,11 @@ export const getOrders = async ({ today, status }: IOrderSearchParams) => {
 export const getClientOrders = async (shopId: string, clientId: string) =>
   axios
     .get(`${API_URL}/shops?shopId=${shopId}&userId=${clientId}`)
-    .then((response) => response.data as IApiResponse<IAdminOrder[]>)
+    .then((response) => response.data as IApiResponse<IOrder[]>)
     .catch((error) => error.response.data as IApiResponse);
 
 export const getOrderById = async (shopId: string, orderId: string) =>
   axios
     .get(`${API_URL}/shops?shopId=${shopId}&orderId=${orderId}`)
-    .then((response) => response.data as IApiResponse<IAdminOrder>)
+    .then((response) => response.data as IApiResponse<IOrder>)
     .catch((error) => error.response.data as IApiResponse);

@@ -1,5 +1,6 @@
 import type { IAddress } from "./address.type";
-import type { IMenuItem } from "./shop.type";
+import type { IMenuItem, IShopSettings } from "./shop.type";
+import type { IUser } from "./user.type";
 
 export type IUuid = {
   _id?: string;
@@ -64,74 +65,37 @@ export interface ICartItem {
   quantity?: number;
   borderType?: string;
   observation?: string;
-  additionals?: IAdditional[] | [];
+  additional?: IAdditional[];
 }
 
 // CHECKOUT TYPE ---------------------->
 
 export interface IOrderItem {
-  itemIds: string[];
+  item: string[];
   quantity?: number;
   observation?: string;
   borderType?: string;
-  additionalIds?: string[];
+  additional?: IAdditional[];
 }
 
-export interface IOrder {
-  shopId: string;
-  clientId: string;
-  addressId: string;
-  items: IOrderItem[];
+export interface IOrder extends IUuid, ITimestamps {
+  shop: Partial<IShopSettings>;
+  client: Partial<IUser>;
+  address: Partial<IAddress>;
+  items: ICartItem[];
   paymentType: string;
   isDelivery: boolean;
   hasPayBack?: boolean;
   payback?: number;
+  orderCount?: number;
+  status?: string;
 }
 
 export interface IPaymentType extends String<"card" | "cash"> {}
 
-// ADMIN ORDER TYPE --------------------->
-
-export interface IAdminOrder extends ITimestamps {
-  _id: string;
-  clientId: {
-    _id: string;
-    fullName: string;
-    phone: string;
-    addressesId: string[];
-  };
-  addressId: IAddress;
-  orderItemsId: [
-    {
-      _id: string;
-      itemIds: [
-        {
-          _id: string;
-          name: string;
-          price: number;
-          ingredients: string;
-          categoryId: {
-            _id: string;
-            name: string;
-          };
-        }
-      ];
-      quantity: number;
-      observation?: string;
-      borderType?: string;
-      additionalIds: IAdditional[];
-    }
-  ];
-  status: string;
-  orderCount: number;
-  isDelivery: boolean;
-  paymentType: string;
-  payback: number;
-}
-
 export interface ITimestamps {
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface IOrderSearchParams {
