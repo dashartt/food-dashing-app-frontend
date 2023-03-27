@@ -21,7 +21,7 @@ import useShoppingCart from "@/store/useShoppingCart";
 import type { ICartItem } from "@/types";
 
 import AdditionalsAccordion from "../accordions/AdditionalsAccordion";
-import PizzaBorderRadio from "../radios/PizzaBorderRadio";
+// import PizzaBorderRadio from "../radios/PizzaBorderRadio";
 
 type Props = {
   item: ICartItem;
@@ -31,14 +31,14 @@ export default function ItemCartModal({ item }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { updateItem } = useShoppingCart();
-  const { borderType, setBorderType } = useBorderType();
+  const { setBorderType } = useBorderType();
   const { setInitialValue, additionals } = useAdditionals();
   const obsRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     onOpen();
-    if (item.additionals && item.additionals?.length > 0)
-      setInitialValue(item.additionals);
+    if (item.additional && item.additional?.length > 0)
+      setInitialValue(item.additional);
   }, []);
 
   const afterConfirm = () => {
@@ -48,7 +48,7 @@ export default function ItemCartModal({ item }: Props) {
   const onConfirm = () => {
     updateItem(item._id || "", {
       observation: obsRef.current?.value,
-      additionals,
+      additional: additionals,
       // borderType: borderType === "none" ? "sem borda" : borderType,
     });
 
@@ -64,7 +64,7 @@ export default function ItemCartModal({ item }: Props) {
         <ModalBody>
           <VStack className="space-y-6 items-start">
             {/* Additional container */}
-            {item.additionals && (
+            {item.additional && (
               <Box className="w-full rounded-md border border-gray-400 py-2">
                 <AdditionalsAccordion
                   category={item.item[0]?.category.name || ""}

@@ -1,7 +1,7 @@
 import create from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
-import type { IDeliveryFeeByDistance } from "@/types/shop/settings.type";
+import type { IDeliveryFeeByDistance } from "@/types/shop.type";
 
 export interface DeliveryFeeState {
   deliveryFees: IDeliveryFeeByDistance[];

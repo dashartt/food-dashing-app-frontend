@@ -1,7 +1,7 @@
 import create from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
-import type { IAdditional } from "@/types/shop/menu";
+import type { IAdditional } from "@/types/shop.type";
 
 export interface AdditionalState {
   additional: IAdditional[] | [];

@@ -1,6 +1,6 @@
 import create from "zustand";
 
-import type { IMenuItem } from "@/types";
+import type { IMenuItem } from "@/types/shop.type";
 
 interface AnotherHalfPizzaState {
   anotherHalfPizza: IMenuItem | null;

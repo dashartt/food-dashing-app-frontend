@@ -17,7 +17,7 @@ export default function OrdersList({ status, isLoading }: Props) {
   const { getOrders } = useOrderState();
   const orders_ = getOrders({ today: status !== "completed" })
     .filter((order) => order.status === status)
-    .sort(({ orderCount: current }, { orderCount: next }) => current - next);
+    .sort(({ orderCount: current }, { orderCount: next }) => current! - next!);
 
   return (
     <>

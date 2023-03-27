@@ -17,7 +17,7 @@ export type IMenuItem = IUuid & {
 };
 
 export type IAdditional = IUuid & {
-  categories: Partial<IItemCategory[]>;
+  categories: Partial<IItemCategory>[];
   name: string;
   price: number;
 };

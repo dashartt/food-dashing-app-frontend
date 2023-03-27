@@ -1,13 +1,13 @@
 import moment from "moment";
 import create from "zustand";
 
-import type { IAdminOrder } from "@/types";
+import type { IOrder } from "@/types";
 
 interface OrderState {
-  orders: IAdminOrder[] | [];
-  getOrders: (options: { today: boolean }) => IAdminOrder[];
-  setOrders: (orders: IAdminOrder[]) => void;
-  setOrder: (order: IAdminOrder) => void;
+  orders: IOrder[] | [];
+  getOrders: (options: { today: boolean }) => IOrder[];
+  setOrders: (orders: IOrder[]) => void;
+  setOrder: (order: IOrder) => void;
   updateOrderStatus: (_id: string, status: string) => void;
   getOrderStatus: (_id: string) => string;
 }

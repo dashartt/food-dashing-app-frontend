@@ -3,7 +3,7 @@ import type {
   IRouteMatrix,
 } from "@/types/geoapify.type";
 
-import * as geoapify from "../services/geoapify.service";
+import * as geoapify from "../services/Geoapify.service";
 import { formatMetersToKilometers } from "./format.util";
 
 // get distance in km between two addressess ------------------------->

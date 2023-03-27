@@ -2,10 +2,10 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 
 import { getOrderById } from "@/services/API/shopApp.service";
-import Beam from "@/services/Beam";
-import Pusher from "@/services/Pusher";
+import Beam from "@/services/Beam.service";
+import Pusher from "@/services/Pusher.service";
 import useOrderState from "@/store/useOrder";
-import type { IAdminOrder } from "@/types";
+import type { IOrder } from "@/types";
 
 import useShopSegmentURL from "../shared/useShopSegmentURL";
 
@@ -27,7 +27,7 @@ export default function useOrderSubscriber() {
   }, []);
 
   useEffect(() => {
-    if (order_.isFetched) setOrder(order_.data?.data as IAdminOrder);
+    if (order_.isFetched) setOrder(order_.data?.data as IOrder);
   }, [order_.isFetched]);
 
   useEffect(() => {

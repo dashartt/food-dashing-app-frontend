@@ -116,7 +116,7 @@ export default function NavItemHandler() {
   const { isAdmin, goTo } = useShopSegmentURL();
 
   return (
-    <Accordion allowToggle className="w-full">
+    <Accordion allowMultiple allowToggle className="w-full">
       {(isAdmin ? ShopAdminNavItems : ShopNavItems).map((nav) => (
         <AccordionItem key={uuid()} className="w-full rounded-md border-none">
           <AccordionButton onClick={() => nav.path && goTo(nav.path || "")}>

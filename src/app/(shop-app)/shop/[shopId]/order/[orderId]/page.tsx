@@ -8,8 +8,8 @@ import { useEffect, useState } from "react";
 import OrderCard from "@/components/cards/OrderItemCard";
 import OrderStatusStepper from "@/components/stepper/OrderStatusStepper";
 import useShopSegmentURL from "@/hooks/shared/useShopSegmentURL";
-import Beam from "@/services/Beam";
-import Pusher from "@/services/Pusher";
+import Beam from "@/services/Beam.service";
+import Pusher from "@/services/Pusher.service";
 import type { IOrder } from "@/types";
 
 import * as API from "../../../../../../services/API/shopApp.service";

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import type { IAdminOrder } from "@/types";
+import type { IOrder } from "@/types";
 import type {
   IApiResponse,
   ICheckDataDuplicityResponse,
@@ -54,7 +54,7 @@ export const getShopOrders = async ({
     .get(
       `${API_URL}/shops?shopId=${shopId}&getOrders=true&ordersToday=${ordersToday}&ordersStatus=${ordersStatus}`
     )
-    .then((response) => response.data as IApiResponse<IAdminOrder[]>)
+    .then((response) => response.data as IApiResponse<IOrder[]>)
     .catch((error) => error.response.data as IApiResponse);
 
 // CHECK DATA DUPLICITY -------------->

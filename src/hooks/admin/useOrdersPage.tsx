@@ -1,10 +1,8 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 
 import useOrderState from "@/store/useOrder";
-import type { IAdminOrder } from "@/types";
+import type { IOrder } from "@/types";
 
 import * as API from "../../services/API/shop.service";
 import useShopSegmentURL from "../shared/useShopSegmentURL";
@@ -40,8 +38,7 @@ export default function useOrdersPage({ queryKey, status }: Props) {
 
   // when orders fetched, set orders state ---------------------
   useEffect(() => {
-    if (orders_.isFetched) setOrders(orders_.data?.data as IAdminOrder[]);
-    console.log(orders_.data);
+    if (orders_.isFetched) setOrders(orders_.data?.data as IOrder[]);
   }, [orders_.isFetched]);
 
   return {

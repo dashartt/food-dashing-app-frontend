@@ -1,4 +1,4 @@
-import { AlertStatus, useToast } from "@chakra-ui/react";
+import type { AlertStatus } from "@chakra-ui/react";
 import {
   Alert,
   AlertIcon,
@@ -6,7 +6,6 @@ import {
   Button,
   FormControl,
   FormLabel,
-  HStack,
   Input,
   Select,
   Text,
@@ -19,9 +18,9 @@ import { useForm } from "react-hook-form";
 
 import SearchPlaceInput from "@/components/inputs/SearchPlaceInput";
 import { checkShopNameDuplicity } from "@/services/API/shop.service";
-import useSessionState from "@/store/useSession";
+// import useSessionState from "@/store/useSession";
 import type { IShopSettings } from "@/types/shop.type";
-import { addShop } from "@/services/API/shop.service";
+// import { addShop } from "@/services/API/shop.service";
 
 type IOnCheckShopNameAPI = {
   status: string;
@@ -29,10 +28,10 @@ type IOnCheckShopNameAPI = {
 } | null;
 
 export default function AddShop() {
-  const toast = useToast();
+  // const toast = useToast();
   const [checkShopNameResponse, setCheckShopNameResponse] =
     useState<IOnCheckShopNameAPI>(null);
-  const { session } = useSessionState();
+  // const { session } = useSessionState();
   const methodsForm = useForm<Partial<IShopSettings>>();
 
   const onCheckShopName = (shopName: string) => {
@@ -64,7 +63,7 @@ export default function AddShop() {
   };
 
   return (
-    <Box className="rounded-md bg-white p-10 max-w-fit">
+    <Box className="max-w-fit rounded-md bg-white p-10">
       <Text className="mb-4 text-4xl">Adicionar loja</Text>
       <VStack className=" items-start space-y-6">
         <VStack className="items-start">

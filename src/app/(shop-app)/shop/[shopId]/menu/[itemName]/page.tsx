@@ -1,9 +1,7 @@
 "use client";
 
 import { Box, HStack, Text, Textarea, VStack } from "@chakra-ui/react";
-import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { getMenuItemByName } from "src/services/api";
 import useAnotherHalfPizzaState from "src/store/pizza/useAnotherHalfPizza";
 import usePizzaPrice from "src/store/pizza/usePizzaPrice";
 import usePizzaStuffing from "src/store/pizza/usePizzaStuffing";
@@ -13,26 +11,16 @@ import MenuItemCard from "@/components/cards/MenuItemCard";
 import QuantityInput from "@/components/inputs/QuantityInput";
 import AfterAddToCartModal from "@/components/modals/AfterAddToCartModal";
 import ListPizzasModal from "@/components/modals/ListPizzaModal";
-import PizzaBorderRadio from "@/components/radios/PizzaBorderRadio";
 import PizzaFillingRadio from "@/components/radios/PizzaFillingRadio";
-import MenuItemCardSimpleSkeleton from "@/components/skeletons/MenuItemCardSimpleSkeleton.";
 import useObservationPizzaState from "@/store/pizza/useObservationPizza";
+import useShopSettings from "@/store/shop/setup/useShopSetup";
 import useAdditionals from "@/store/useAdditionals";
 import { formatCurrency } from "@/utils/format.util";
-import useShopSettings from "@/store/shop/setup/useShopSetup";
-import { IItemCategory, IMenuItem } from "@/types/shop.type";
 
 type Params = {
   params: {
     itemName: string;
   };
-};
-
-const canShowObservationField = (
-  product: IMenuItem,
-  categories: IItemCategory[]
-) => {
-  return categories.some((category) => category._id === product.category._id);
 };
 
 export default function MenuItem({ params }: Params) {

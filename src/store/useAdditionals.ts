@@ -9,7 +9,7 @@ interface AdditionalsState {
   addAdditional: (additional: IAdditional) => void;
   removeAdditional: (_id: string) => void;
   getAdditionalsPrice: () => number;
-  setInitialValue: (additionals: IAdditional[] | []) => void;
+  setInitialValue: (additionals: IAdditional[]) => void;
 }
 
 const useAdditionals = create<AdditionalsState>()(

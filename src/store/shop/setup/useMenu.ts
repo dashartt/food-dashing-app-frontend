@@ -1,7 +1,7 @@
 import create from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
-import type { IMenuItem } from "@/types/shop/menu.type";
+import type { IMenuItem } from "@/types/shop.type";
 
 export interface DeliveryOptionState {
   menu: IMenuItem[] | [];

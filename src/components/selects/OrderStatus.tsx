@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import useOrderState from "@/store/useOrder";
 
-import * as api from "../../services/api";
+import * as API from "../../services/API/shopApp.service";
 
 type Props = {
   orderId: string;
@@ -57,7 +57,7 @@ export default function OrderStatus({
     setStatus(target.value);
     updateOrderStatus(orderId, target.value);
 
-    api.updateOrderStatus(orderId, target.value).catch((_error) => {
+    API.updateOrderStatus(orderId, target.value).catch((_error) => {
       throw new Error("erro ao atualizar o status do pedido");
     });
   };

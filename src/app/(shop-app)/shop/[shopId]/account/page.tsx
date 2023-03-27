@@ -1,55 +1,13 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-
 "use client";
 
-import { Box, Button, HStack, Text, useToast, VStack } from "@chakra-ui/react";
-import { useRouter } from "next/navigation";
+import { Box, Button, HStack, Text, VStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import IdentificationForm from "src/components/forms/IdentificationForm";
-import useAddressesState from "src/store/checkout/useAddresses";
 
-import AddressCard from "@/components/cards/AddressCard";
 import AddAddressModal from "@/components/modals/AddAddressModal";
-import useSessionState from "@/store/useSession";
-import type { IAddress } from "@/types/address.type";
-
-import * as API from "../../../../../services/API/user.service";
-import * as utils from "../../../../../utils";
 
 export default function Identification() {
   const [mounted, setMounted] = useState(false);
-
-  const toast = useToast();
-  const { session, setSession } = useSessionState();
-  const { addresses } = useAddressesState();
-
-  const onConfirmRegistration = async () => {
-    // if (!session?.fullName || !session.phone || addresses.length === 0) {
-    // toast({
-    //   title: "Faltam informações",
-    //   description:
-    //     "Preencha todas as informações: nome, celular e adicione 1 endereço",
-    //   ...utils.toastOptions,
-    // });
-    // } else if (!session._id) {}
-    // } else {
-    // await API
-    //   .updateClientAccount({
-    //     addressesId: addresses.map((address) => address._id || ""),
-    //     fullName: session.fullName,
-    //     _id: session._id || "",
-    //     phone: session.phone.replace(/[^\d]/g, ""),
-    //   })
-    //   .then((response) => {
-    //     if (response?.isSuccess) {
-    //       toast({
-    //         title: response.message,
-    //         ...utils.toastOptions,
-    //       });
-    //     }
-    //   });
-    // }
-  };
 
   useEffect(() => {
     setMounted(true);
@@ -72,7 +30,7 @@ export default function Identification() {
               <AddAddressModal />
             </HStack>
 
-            <Box className="m-4 space-y-4">
+            {/* <Box className="m-4 space-y-4">
               {addresses.length === 0 ? (
                 <Text>Nenhum endereço cadastrado</Text>
               ) : (
@@ -84,12 +42,12 @@ export default function Identification() {
                   />
                 ))
               )}
-            </Box>
+            </Box> */}
           </Box>
 
           <Box className="mt-4 w-full p-4">
             <Button
-              onClick={onConfirmRegistration}
+              onClick={() => {}}
               className="w-full bg-gray-default text-white"
             >
               Confirmar

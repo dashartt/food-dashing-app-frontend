@@ -36,28 +36,7 @@ export interface IITemCategory {
   name: string;
 }
 
-// // MENU ITEM TYPE ---------------------->
-// export interface IMenuItem {
-//   _id: string;
-//   category: IITemCategory;
-//   name: string;
-//   price: number;
-//   ingredients?: string;
-//   quantity?: number;
-//   observation?: string;
-// }
-
-// SHOPPING CART TYPE ---------------------->
-export interface ICartItems extends Array<ICartItem> {}
-
 // SHOPPING CART ITEM TYPE ---------------------->
-
-export interface IAdditional {
-  _id?: string;
-  name: string;
-  price: number;
-  categoryId: string;
-}
 
 export interface ICartItem {
   _id?: string;

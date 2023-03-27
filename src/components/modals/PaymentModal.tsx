@@ -18,15 +18,13 @@ import ReactInputMask from "react-input-mask";
 
 import useShoppingCart from "@/store/useShoppingCart";
 
-import * as api from "../../services/api";
-
 export default function PaymentModal() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { getTotalPrice, items } = useShoppingCart();
   const emailRef = useRef<HTMLInputElement>(null);
   const cpfRef = useRef<HTMLInputElement>(null);
 
-  const [responsePayment, setResponsePayment] = useState(false);
+  const [responsePayment] = useState(false);
 
   const onSubmit: FormEventHandler = (event) => {
     event.preventDefault();
@@ -54,20 +52,21 @@ export default function PaymentModal() {
       },
       notification_url: "https://eorpjcvcjvhqnq6.m.pipedream.net",
     };
+    console.log(details);
 
-    api
-      .makePayment(details)
-      .then((response) => {
-        console.log(response);
-        setResponsePayment(response);
-        window.open(
-          response.point_of_interaction.transaction_data.ticket_url || "",
-          "_blank"
-        );
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    // api
+    //   .makePayment(details)
+    //   .then((response) => {
+    //     console.log(response);
+    //     setResponsePayment(response);
+    //     window.open(
+    //       response.point_of_interaction.transaction_data.ticket_url || "",
+    //       "_blank"
+    //     );
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   };
 
   const getStatusPayment = () => {

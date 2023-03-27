@@ -20,7 +20,7 @@ import type { ICartItem } from "src/types";
 import { v4 as uuid } from "uuid";
 
 import useShopSegmentURL from "@/hooks/shared/useShopSegmentURL";
-import useBorderType from "@/store/pizza/useBorderType";
+// import useBorderType from "@/store/pizza/useBorderType";
 import useObservationPizzaState from "@/store/pizza/useObservationPizza";
 import useAdditionals from "@/store/useAdditionals";
 
@@ -39,7 +39,7 @@ export default function AfterAddToCartModal({ children, orderItem }: Props) {
   const { resetStuffing, isHalf } = usePizzaStuffing();
   const { resetAnotherHalf, anotherHalfPizza } = useAnotherHalfPizzaState();
   const { resetObservation, observation } = useObservationPizzaState();
-  const { borderType } = useBorderType();
+  // const { borderType } = useBorderType();
 
   const onAddItem = () => {
     onOpen(); // open modal to continue buying or finish purchase

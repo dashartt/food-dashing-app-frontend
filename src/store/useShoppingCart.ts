@@ -1,7 +1,8 @@
 import create from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
-import type { IAdditional, ICartItem } from "@/types";
+import type { ICartItem } from "@/types";
+import type { IAdditional } from "@/types/shop.type";
 
 interface ShoppingCartState {
   items: ICartItem[];
@@ -41,7 +42,7 @@ const useShoppingCart = create<ShoppingCartState>()(
       },
       getTotalItemPrice: (_id: string) => {
         const item = get().getItemById(_id) as ICartItem;
-        const additionals = item.additionals as IAdditional[];
+        const additionals = item.additional as IAdditional[];
 
         const additionalsPrice =
           additionals?.length === 0
@@ -54,7 +55,7 @@ const useShoppingCart = create<ShoppingCartState>()(
       },
       getTotalPrice: () =>
         get().items.reduce((acc, value) => {
-          const additionals = value.additionals as IAdditional[];
+          const additionals = value.additional as IAdditional[];
 
           const additionalsPrice =
             additionals?.length === 0

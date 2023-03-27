@@ -28,7 +28,7 @@ export default function ShopAdditionalSettings() {
   const additionalForm = useForm<IAdditional>();
   const { ref: additionalRegisterRef, ...rest } =
     additionalForm.register("categories");
-  const categoriesInputRef = useRef<ISelectInput>();
+  const categoriesInputRef = useRef<ISelectInput | null>(null);
 
   const onAddAdditional = () => {
     API.saveShopSettings(shopId, {
@@ -59,7 +59,7 @@ export default function ShopAdditionalSettings() {
             <SelectInput
               ref={(ref) => {
                 additionalRegisterRef(ref);
-                categoriesInputRef.current = ref;
+                categoriesInputRef.current = ref as unknown as ISelectInput;
               }}
               id="additionalCategory"
               backspaceRemovesValue={false}
@@ -67,12 +67,13 @@ export default function ShopAdditionalSettings() {
               isDisabled={state.shopSettings?.categories?.length === 0}
               {...rest}
               onChange={(value) =>
-                additionalForm.setValue("categories", [
-                  ...value.map((a) => ({
-                    _id: a.value,
-                    name: a.label,
-                  })),
-                ])
+                additionalForm.setValue(
+                  "categories",
+                  value.map((category) => ({
+                    _id: category.value,
+                    name: category.label,
+                  }))
+                )
               }
               options={state.shopSettings?.categories?.map((category) => ({
                 label: category?.name,

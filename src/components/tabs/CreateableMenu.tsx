@@ -13,7 +13,7 @@ import type { IItemCategory, IMenuItem } from "@/types/shop.type";
 import MenuItemCard from "../cards/MenuItemCard";
 
 type Props = {
-  categories: IItemCategory[];
+  categories: Partial<IItemCategory>[];
   menu: IMenuItem[];
 };
 

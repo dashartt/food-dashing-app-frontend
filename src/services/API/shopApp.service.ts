@@ -46,3 +46,18 @@ export const getOrderById = async (shopId: string, orderId: string) =>
     .get(`${API_URL}/shops?shopId=${shopId}&orderId=${orderId}`)
     .then((response) => response.data as IApiResponse<IOrder>)
     .catch((error) => error.response.data as IApiResponse);
+
+// export const makePayment = async (details: any) => {
+//   const token = process.env.NEXT_PUBLIC_MERCADOPAGO_ACCESS_TOKEN as string;
+//   const response = await fetch("https://api.mercadopago.com/v1/payments", {
+//     headers: {
+//       "Content-Type": "application/json",
+//       Authorization: `Bearer ${token}`,
+//     },
+//     method: "POST",
+//     body: JSON.stringify(details),
+//   });
+
+//   const responseData = await response.json();
+//   return responseData;
+// };

@@ -13,7 +13,7 @@ import type { IAdditional, IItemCategory } from "@/types/shop.type";
 import AdditionalCard from "../cards/shop-setup/AdditionalCard";
 
 type Props = {
-  categories: IItemCategory[];
+  categories: Partial<IItemCategory>[];
   additional: IAdditional[];
 };
 

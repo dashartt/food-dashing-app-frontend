@@ -43,7 +43,7 @@ export default function ItemCartCard({ itemCart }: Props) {
   const onClickEditModal = () => setEditModalVisible((prev) => !prev);
 
   const onRemoveItem = () => {
-    if (itemCart.additionals && itemCart.additionals?.length > 0)
+    if (itemCart.additional && itemCart.additional?.length > 0)
       setInitialValue([]);
     shoppingCart.removeItem(itemCart._id || "");
   };
@@ -96,7 +96,7 @@ export default function ItemCartCard({ itemCart }: Props) {
                     {itemCart.item[0]?.category.allowAdditional && (
                       <Text className="lowercase leading-tight">
                         {`adicionais:
-                          ${itemCart.additionals
+                          ${itemCart.additional
                             ?.map(({ name }) => name)
                             .join(", ")}`}
                       </Text>
