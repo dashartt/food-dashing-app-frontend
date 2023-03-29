@@ -2,11 +2,13 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
+const AP_URL = process.env.NEXT_PUBLIC_API_URL as string;
+
 // This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
   const token = request.cookies.get("token")?.value || "";
 
-  const response = await fetch("http://localhost:3003/user/auth", {
+  const response = await fetch(`${AP_URL}/user/auth`, {
     headers: {
       Authorization: token,
     },
