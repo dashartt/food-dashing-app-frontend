@@ -39,8 +39,8 @@ type IOnCheckDataAPI = {
 } | null;
 
 export default function AddShopModal() {
+  const toast = useToast({ position: "top" });
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const toast = useToast();
   const [checkShopNameResponse, setCheckShopNameResponse] =
     useState<IOnCheckDataAPI>(null);
 
@@ -68,7 +68,6 @@ export default function AddShopModal() {
     }).then(({ data, message }) => {
       toast({
         title: message,
-        position: "top",
         status: data ? "success" : "error",
       });
 
@@ -105,9 +104,6 @@ export default function AddShopModal() {
 
           <ModalBody>
             <VStack className="items-start space-y-6">
-              <Button
-                onClick={() => console.log(methodsForm.getValues())}
-              ></Button>
               <VStack className="items-start">
                 <FormControl>
                   <FormLabel htmlFor="storeName">Nome da loja</FormLabel>

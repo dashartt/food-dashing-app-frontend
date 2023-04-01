@@ -58,6 +58,7 @@ export default function LadingPage() {
                         key={shop._id}
                         variant="outline"
                         role="button"
+                        className="border border-gray-400"
                         onClick={() =>
                           router.push(`/dashboard/shop/${shop._id}`)
                         }

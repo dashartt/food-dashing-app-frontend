@@ -69,13 +69,15 @@ export default function SignInForm() {
         setCookie("token", response?.data?.token);
 
         const role = response?.data?.user?.role;
-
-        if (role === "customer" && response.data) {
-          router.push(baseURL);
+        if (response.data) {
+          router.push(role === "customer" ? baseURL : "/dashboard");
         }
-        if (role === "admin" && response.data) {
-          router.push("/dashboard");
-        }
+        // if (role === "customer" && response.data) {
+        //   router.push(baseURL);
+        // }
+        // if (role === "admin" && response.data) {
+        //   router.push("/dashboard");
+        // }
       })
       .catch((error) =>
         toast({
