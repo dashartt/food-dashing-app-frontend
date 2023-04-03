@@ -9,4 +9,5 @@ export default function ShopAdminPage() {
   useEffect(() => {
     router.push(`${baseURL}/orders/to-do`);
   }, []);
+  return <></>;
 }
