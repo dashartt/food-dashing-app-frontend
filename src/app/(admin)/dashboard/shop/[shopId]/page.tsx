@@ -1,10 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+
+import useShopSegmentURL from "@/hooks/shared/useShopSegmentURL";
 
 export default function ShopAdminPage() {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-
-  return <>{mounted && <p>shop admin page</p>}</>;
+  const { router, baseURL } = useShopSegmentURL();
+  useEffect(() => {
+    router.push(`${baseURL}/orders/to-do`);
+  }, []);
 }

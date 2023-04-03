@@ -22,6 +22,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { City, State } from "country-state-city";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { DebounceInput } from "react-debounce-input";
 import { useForm } from "react-hook-form";
@@ -39,6 +40,7 @@ type IOnCheckDataAPI = {
 } | null;
 
 export default function AddShopModal() {
+  const router = useRouter();
   const toast = useToast({ position: "top" });
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [checkShopNameResponse, setCheckShopNameResponse] =
@@ -73,6 +75,7 @@ export default function AddShopModal() {
 
       if (data) {
         onClose();
+        router.refresh();
       }
     });
   };
