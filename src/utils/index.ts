@@ -7,28 +7,44 @@ const StringMask = require("string-mask");
 export const setHeaderTitle = (path_: string) => {
   const adminPathsAndTiles = [
     {
-      path: "/admin/orders/to-do/",
+      path: "/orders/to-do/",
       title: "Pedidos a fazer",
     },
     {
-      path: "/admin/orders/in-progress/",
+      path: "/orders/in-progress/",
       title: "Pedidos em andamento",
     },
     {
-      path: "/admin/orders/delivery/",
+      path: "/orders/delivery/",
       title: "Pedidos para entregas",
     },
     {
-      path: "/admin/orders/pick-up/",
+      path: "/orders/pick-up/",
       title: "Pedidos para retirar no local",
     },
     {
-      path: "/admin/orders/oven/",
+      path: "/orders/oven/",
       title: "Pedidos no forno",
     },
     {
-      path: "/admin/orders/completed/",
+      path: "/orders/completed/",
       title: "Histórico de pedidos",
+    },
+    {
+      path: "/settings/general",
+      title: "Informações gerais",
+    },
+    {
+      path: "/settings/categories",
+      title: "Categorias",
+    },
+    {
+      path: "/settings/additional",
+      title: "Adicionais",
+    },
+    {
+      path: "/settings/items",
+      title: "Produtos do cardápio",
     },
   ];
   const clientPathsAndTitles = [

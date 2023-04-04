@@ -2,6 +2,8 @@ import type { FlexProps } from "@chakra-ui/react";
 import { Flex, IconButton } from "@chakra-ui/react";
 import { FiMenu } from "react-icons/fi";
 
+import PageTitleHeader from "@/components/header/PageTitleHeader";
+
 // import PageTitleHeader from "@/components/header/PageTitleHeader";
 
 interface MobileProps extends FlexProps {
@@ -10,10 +12,10 @@ interface MobileProps extends FlexProps {
 export default function MobileNav({ onOpen, ...rest }: MobileProps) {
   return (
     <Flex
-      className="mx-auto max-w-md h-20 items-center justify-between bg-white"
+      className="mx-auto h-20 max-w-md items-center justify-between bg-white"
       {...rest}
     >
-      {/* <PageTitleHeader /> */}
+      <PageTitleHeader />
       <IconButton
         onClick={onOpen}
         aria-label="Abrir menu"
