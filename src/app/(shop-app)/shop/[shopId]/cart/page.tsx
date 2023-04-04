@@ -51,7 +51,7 @@ export default function ShoppingCart() {
               </Text>
               <Button
                 onClick={() => router.push(`${baseURL}/checkout`)}
-                className="bg-gray-default text-white"
+                className="bg-blue-500 active:bg-blue-300 hover:bg-blue-300 text-white"
               >
                 Confirmar
               </Button>

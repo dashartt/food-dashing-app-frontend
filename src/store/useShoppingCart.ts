@@ -42,30 +42,30 @@ const useShoppingCart = create<ShoppingCartState>()(
       },
       getTotalItemPrice: (_id: string) => {
         const item = get().getItemById(_id) as ICartItem;
-        const additionals = item.additional as IAdditional[];
+        const additional = item.additional as IAdditional[];
 
-        const additionalsPrice =
-          additionals?.length === 0
-            ? 0
-            : additionals?.reduce((acc_, value_) => acc_ + value_.price, 0);
+        const additionalPrice =
+          additional && additional.length > 0
+            ? additional.reduce((acc_, value_) => acc_ + value_.price, 0)
+            : 0;
 
         const itemPrice = (item?.quantity || 1) * (item?.item[0]?.price || 1);
 
-        return itemPrice + additionalsPrice;
+        return itemPrice + additionalPrice;
       },
       getTotalPrice: () =>
         get().items.reduce((acc, value) => {
-          const additionals = value.additional as IAdditional[];
+          const additional = value.additional as IAdditional[];
 
-          const additionalsPrice =
-            additionals?.length === 0
-              ? 0
-              : additionals?.reduce((acc_, value_) => acc_ + value_.price, 0);
+          const additionalPrice =
+            additional && additional?.length > 0
+              ? additional?.reduce((acc_, value_) => acc_ + value_.price, 0)
+              : 0;
 
           const itemsPrice =
             (value.item[0]?.price || 1) * (value.quantity || 1);
 
-          return acc + itemsPrice + additionalsPrice;
+          return acc + itemsPrice + additionalPrice;
         }, 0) as number,
 
       emptyCart: () => set({ items: [] }),

@@ -2,8 +2,6 @@ import type { BoxProps } from "@chakra-ui/react";
 import { Box, CloseButton, VStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
-import SidebarContentSkeleton from "@/components/skeletons/sidebar-menu/SidebarContentSkeleton";
-
 import NavItemHandler from "../nav/LinkItems";
 
 interface SidebarContentProps extends BoxProps {
@@ -23,7 +21,6 @@ export default function SidebarContent({
 
   return (
     <>
-      {!mounted && <SidebarContentSkeleton />}
       {mounted && (
         <Box
           className="relative h-screen w-full border-r-2 border-gray-200 bg-white md:w-96"

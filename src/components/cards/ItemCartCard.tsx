@@ -93,14 +93,16 @@ export default function ItemCartCard({ itemCart }: Props) {
                     )}
 
                     {/* Additionals ----------------> */}
-                    {itemCart.item[0]?.category.allowAdditional && (
-                      <Text className="lowercase leading-tight">
-                        {`adicionais:
+                    {itemCart.item[0]?.category.allowAdditional &&
+                      itemCart.additional &&
+                      itemCart.additional.length > 0 && (
+                        <Text className="lowercase leading-tight">
+                          {`adicionais:
                           ${itemCart.additional
                             ?.map(({ name }) => name)
                             .join(", ")}`}
-                      </Text>
-                    )}
+                        </Text>
+                      )}
                   </VStack>
                 </VStack>
 

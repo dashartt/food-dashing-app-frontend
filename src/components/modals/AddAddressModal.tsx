@@ -84,9 +84,8 @@ export default function AddAddressModal({ addressId, defaultValues }: Props) {
       toast({
         title: response.message,
       });
-      addAddress({
-        ...data,
-      });
+
+      addAddress({ ...data });
 
       onClose();
     });
@@ -160,7 +159,7 @@ export default function AddAddressModal({ addressId, defaultValues }: Props) {
           <ModalFooter>
             <Button
               onClick={onConfirmAddress}
-              className="bg-gray-default text-white"
+              className="bg-blue-500 active:bg-blue-300 hover:bg-blue-300 text-white"
             >
               Confirmar
             </Button>

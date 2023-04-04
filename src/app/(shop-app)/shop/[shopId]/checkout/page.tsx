@@ -126,7 +126,7 @@ export default function Checkout() {
           <Box className="w-full ">
             <Button
               onClick={checkout.onConfirmPurchase}
-              className="w-full bg-gray-default text-white"
+              className="w-full bg-blue-500 active:bg-blue-300 hover:bg-blue-300 text-white"
             >
               Confirmar
             </Button>

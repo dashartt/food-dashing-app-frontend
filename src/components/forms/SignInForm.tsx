@@ -34,7 +34,7 @@ type SignInValues = zod.TypeOf<typeof signUpSchema>;
 
 export default function SignInForm() {
   const toast = useToast({ position: "top" });
-  const { router, baseURL } = useShopSegmentURL();
+  const { router, baseURL, path } = useShopSegmentURL();
   const { setSession } = useSessionState();
   const { setAddresses } = useAddressesState();
   const {
@@ -69,15 +69,8 @@ export default function SignInForm() {
         setCookie("token", response?.data?.token);
 
         const role = response?.data?.user?.role;
-        if (response.data) {
-          router.push(role === "customer" ? baseURL : "/dashboard");
-        }
-        // if (role === "customer" && response.data) {
-        //   router.push(baseURL);
-        // }
-        // if (role === "admin" && response.data) {
-        //   router.push("/dashboard");
-        // }
+
+        router.push(role === "admin" && path === "/" ? "/dashboard" : baseURL);
       })
       .catch((error) =>
         toast({

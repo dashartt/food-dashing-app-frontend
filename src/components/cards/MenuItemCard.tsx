@@ -26,14 +26,14 @@ export default function MenuItemCard({
   asButton = false,
   canRemove = false,
 }: Props) {
-  const { baseURL, path, router } = useShopSegmentURL();
+  const { baseURL, path, goToPath } = useShopSegmentURL();
 
   const [canDeleteHalf, setCanDeleteHalf] = useBoolean();
   const { getAnotherHalf, resetAnotherHalf } = useAnotherHalfPizzaState();
 
   const clickHandler = () => {
     if (baseURL === path) {
-      router.push(`${baseURL}/menu/${menuItem?.name}`);
+      goToPath(`menu/${menuItem?.name}`);
     }
     if (path?.includes("/menu/")) {
       getAnotherHalf(menuItem);
@@ -49,7 +49,7 @@ export default function MenuItemCard({
       {...(asButton && { role: "button" })}
       onClick={clickHandler}
       variant="outline"
-      className="w-full max-w-sm border border-gray-400 bg-white shadow-lg"
+      className="w-full min-w-[20rem] max-w-sm border border-gray-400 bg-white shadow-lg"
     >
       <CardBody className="space-y-2 relative">
         <Heading size="md" className="font-normal">

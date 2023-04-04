@@ -81,7 +81,7 @@ export default function AfterAddToCartModal({ children, orderItem }: Props) {
           <Button
             disabled={!anotherHalfPizza && isHalf}
             onClick={onAddItem}
-            className="space-x-4 bg-gray-default py-6 text-white"
+            className="space-x-4 bg-blue-500  active:bg-blue-300 hover:bg-blue-300 py-6 text-white"
           >
             {children}
           </Button>
@@ -105,7 +105,7 @@ export default function AfterAddToCartModal({ children, orderItem }: Props) {
                 <VStack className="space-y-4 py-4">
                   <Button
                     onClick={() => afterAddGoTo(baseURL)}
-                    className="w-52 bg-gray-default p-6 text-center font-normal text-white"
+                    className="w-52 bg-blue-500 active:bg-blue-300 hover:bg-blue-300 p-6 text-center font-normal text-white"
                   >
                     Voltar para o cardápio
                   </Button>

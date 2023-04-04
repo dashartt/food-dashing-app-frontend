@@ -18,7 +18,7 @@ export default function RadioCard(props: RadioCardProp) {
         {...checkbox}
         className="cursor-pointer rounded-md border border-gray-400 px-5 py-3 shadow-lg"
         _checked={{
-          bg: "gray.default",
+          bg: "blue.400",
           color: "white",
         }}
         _focus={{

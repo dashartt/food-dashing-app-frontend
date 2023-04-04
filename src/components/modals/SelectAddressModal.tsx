@@ -10,10 +10,8 @@ import {
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
-import { useEffect } from "react";
 
 import useAddressesState from "@/store/checkout/useAddresses";
-import { StoreCallback } from "@/utils";
 
 import AddressCard from "../cards/AddressCard";
 
@@ -21,13 +19,6 @@ export default function SelectAddressModal() {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { address, addresses } = useAddressesState();
-
-  useEffect(() => {
-    StoreCallback.setCallback({
-      key: "SelectAddressModal/onClose",
-      callback: onClose,
-    });
-  }, []);
 
   return (
     <>
