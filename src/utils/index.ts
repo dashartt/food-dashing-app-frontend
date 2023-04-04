@@ -50,7 +50,7 @@ export const setHeaderTitle = (path_: string) => {
   const clientPathsAndTitles = [
     {
       path: "/about",
-      title: "Sobre a Pizzaria",
+      title: "Sobre o estabelecimento",
     },
     {
       path: "/order/",

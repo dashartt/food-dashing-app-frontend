@@ -117,71 +117,72 @@ export default function ShopGeneralSettings() {
 
       <Box className="w-full items-start space-y-6 rounded-md border border-gray-400 p-4">
         <Text className="text-center text-xl">Taxas de entrega</Text>
+        <Box className="max-w-xs space-y-10 mx-auto">
+          {methodsForm.watch("deliveryFees")?.length === 0 && (
+            <Alert status="warning" className="rounded-md">
+              <AlertIcon className="self-start" />
+              Se não tiver variação de taxa, adicione o valor padrão. Se tiver,
+              informe o menor valor da taxa
+            </Alert>
+          )}
 
-        {methodsForm.watch("deliveryFees")?.length === 0 && (
-          <Alert status="warning" className="rounded-md">
-            <AlertIcon className="self-start" />
-            Se não tiver variação de taxa, adicione o valor padrão. Se tiver,
-            informe o menor valor da taxa
-          </Alert>
-        )}
+          <form className="w-full flex justify-between space-x-2">
+            <FormControl className="flex flex-col items-start">
+              <FormLabel htmlFor="upToKmDistance" className="w-full">
+                Acima de (km)
+              </FormLabel>
+              <Input
+                id="upToKmDistance"
+                {...deliveryFeeForm.register("upToKm", { valueAsNumber: true })}
+                type="number"
+                {...(methodsForm.watch("deliveryFees").length === 0 && {
+                  disabled: true,
+                })}
+                step={0.1}
+                className="w-24 border border-gray-400"
+              />
+            </FormControl>
 
-        <form className="w-full flex justify-between space-x-2">
-          <FormControl className="flex flex-col items-start">
-            <FormLabel htmlFor="upToKmDistance" className="w-full">
-              Acima de (km)
-            </FormLabel>
-            <Input
-              id="upToKmDistance"
-              {...deliveryFeeForm.register("upToKm", { valueAsNumber: true })}
-              type="number"
-              {...(methodsForm.watch("deliveryFees").length === 0 && {
-                disabled: true,
-              })}
-              step={0.1}
-              className="w-24 border border-gray-400"
+            <FormControl className="flex flex-col items-start">
+              <FormLabel htmlFor="deliveryFee">Valor</FormLabel>
+              <Input
+                id="deliveryFee"
+                {...deliveryFeeForm.register("price", { valueAsNumber: true })}
+                type="number"
+                className="w-24 border border-gray-400"
+              />
+            </FormControl>
+
+            <IconButton
+              onClick={onAddDeliveryFee}
+              aria-label="Adicionar taxa de entrega por km de distância"
+              className="m-0 self-end bg-blue-500 p-0 text-2xl hover:bg-blue-300 active:bg-blue-300"
+              icon={<AiOutlinePlus className="text-white" />}
             />
-          </FormControl>
+          </form>
 
-          <FormControl className="flex flex-col items-start">
-            <FormLabel htmlFor="deliveryFee">Valor</FormLabel>
-            <Input
-              id="deliveryFee"
-              {...deliveryFeeForm.register("price", { valueAsNumber: true })}
-              type="number"
-              className="w-24 border border-gray-400"
-            />
-          </FormControl>
+          <VStack className="items-start space-y-2">
+            {methodsForm.watch("deliveryFees")?.map(({ upToKm, price }) => (
+              <Card
+                key={`${upToKm}-${price}`}
+                className="w-full min-w-[15rem] border border-gray-400"
+                variant="outline"
+              >
+                <CardBody className="relative flex flex-col items-start">
+                  <Text>Acima de {upToKm || 0} Km</Text>
+                  <Text>{`R$ ${formatCurrency(price)}`}</Text>
 
-          <IconButton
-            onClick={onAddDeliveryFee}
-            aria-label="Adicionar taxa de entrega por km de distância"
-            className="m-0 self-end bg-blue-500 p-0 text-2xl hover:bg-blue-300 active:bg-blue-300"
-            icon={<AiOutlinePlus className="text-white" />}
-          />
-        </form>
-
-        <VStack className="items-start space-y-2">
-          {methodsForm.watch("deliveryFees")?.map(({ upToKm, price }) => (
-            <Card
-              key={`${upToKm}-${price}`}
-              className="w-full min-w-[15rem] border border-gray-400"
-              variant="outline"
-            >
-              <CardBody className="relative flex flex-col items-start">
-                <Text>Acima de {upToKm || 0} Km</Text>
-                <Text>{`R$ ${formatCurrency(price)}`}</Text>
-
-                <IconButton
-                  className="absolute top-2 right-2 bg-white hover:bg-gray-300 active:bg-gray-300"
-                  onClick={() => onRemoveDeliveryFee({ price, upToKm })}
-                  aria-label="Excluir taxa de entrega"
-                  icon={<MdClose className="text-xl" />}
-                />
-              </CardBody>
-            </Card>
-          ))}
-        </VStack>
+                  <IconButton
+                    className="absolute top-2 right-2 bg-white hover:bg-gray-300 active:bg-gray-300"
+                    onClick={() => onRemoveDeliveryFee({ price, upToKm })}
+                    aria-label="Excluir taxa de entrega"
+                    icon={<MdClose className="text-xl" />}
+                  />
+                </CardBody>
+              </Card>
+            ))}
+          </VStack>
+        </Box>
       </Box>
 
       <Button
