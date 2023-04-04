@@ -1,14 +1,16 @@
 import { Box } from "@chakra-ui/react";
 import type { PropsWithChildren } from "react";
 
+import PageTitleHeader from "@/components/header/PageTitleHeader";
+
 // import PageTitleHeader from "@/components/header/PageTitleHeader";
 
 export default function ContentBesideSidebar({ children }: PropsWithChildren) {
   return (
-    <Box className="mx-auto max-w-sm lg:max-w-fit p-4">
-      {/* <Box className="mb-10 p-4 hidden lg:block w-full sticky top-0 z-10 bg-white">
+    <Box className="mx-auto max-w-sm p-4 lg:max-w-fit">
+      <Box className="sticky top-0 z-10 mb-10 hidden w-full bg-white p-4 lg:block">
         <PageTitleHeader />
-      </Box> */}
+      </Box>
       {children}
     </Box>
   );
