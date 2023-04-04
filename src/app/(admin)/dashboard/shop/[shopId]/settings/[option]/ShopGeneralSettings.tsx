@@ -66,7 +66,6 @@ export default function ShopGeneralSettings() {
         title: response.message,
         position: "top",
       });
-      console.log(response);
 
       if (response.message.includes("registradas") && response.data) {
         state.setShopSettings(response.data);
@@ -120,7 +119,7 @@ export default function ShopGeneralSettings() {
         <Text className="text-center text-xl">Taxas de entrega</Text>
 
         {methodsForm.watch("deliveryFees")?.length === 0 && (
-          <Alert status="info" className="rounded-md">
+          <Alert status="warning" className="rounded-md">
             <AlertIcon className="self-start" />
             Se não tiver variação de taxa, adicione o valor padrão. Se tiver,
             informe o menor valor da taxa
@@ -157,7 +156,7 @@ export default function ShopGeneralSettings() {
           <IconButton
             onClick={onAddDeliveryFee}
             aria-label="Adicionar taxa de entrega por km de distância"
-            className="m-0 self-end bg-gray-default p-0 text-2xl hover:bg-gray-600 active:bg-gray-600"
+            className="m-0 self-end bg-blue-500 p-0 text-2xl hover:bg-blue-300 active:bg-blue-300"
             icon={<AiOutlinePlus className="text-white" />}
           />
         </form>
@@ -187,7 +186,7 @@ export default function ShopGeneralSettings() {
 
       <Button
         onClick={onSubmitSettings}
-        className="w-32 self-end bg-gray-default text-white hover:bg-gray-600 active:bg-gray-600"
+        className="w-32 self-end bg-blue-500 text-white hover:bg-blue-300 active:bg-blue-300"
       >
         Confirmar
       </Button>

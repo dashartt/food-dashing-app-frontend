@@ -28,6 +28,12 @@ export const saveShopSettings = (
     .catch((error) => error.response.data as IApiResponse);
 
 // GETTERS SHOP INFO ---------------------->
+export const getAllPlatformShops = async () =>
+  axios
+    .get(`${API_URL}/shops/?allPlatformShops=true`)
+    .then((response) => response.data as IApiResponse<IShopSettings[]>)
+    .catch((error) => error.response.data as IApiResponse<IShopSettings[]>);
+
 export const getShopsByOwnerId = async (ownerId: string) =>
   axios
     .get(`${API_URL}/shops/?ownerId=${ownerId}`)
