@@ -55,7 +55,6 @@ export default function AboutPage() {
             </Text>
             <VStack className="w-full items-start space-y-0 rounded-md border border-gray-400 p-4 shadow-lg">
               <Text>Cartões: crédito e débito</Text>
-              <Text>Pix: (18) 98137-1989</Text>
               <Text>Dinheiro</Text>
             </VStack>
           </Box>

@@ -19,7 +19,7 @@ type Props = {
 
 export default function MenuItemsTabs({ categories, menu }: Props) {
   return (
-    <Tabs className="w-full">
+    <Tabs className="w-full lg:min-w-[30rem] border border-gray-400 rounded-md p-4">
       <TabList className="max-w-full overflow-x-auto overflow-y-hidden pb-4">
         {categories.map((category) => (
           <Tab

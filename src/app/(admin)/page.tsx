@@ -1,36 +1,24 @@
 "use client";
 
-import {
-  Box,
-  Card,
-  CardBody,
-  Container,
-  Heading,
-  HStack,
-  Icon,
-  Text,
-  VStack,
-  Wrap,
-} from "@chakra-ui/react";
+import { Box, Container, Heading, Text, Wrap } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
-import { MdArrowForwardIos } from "react-icons/md";
+import { v4 as uuid } from "uuid";
 
+import ShopCard from "@/components/cards/ShopCard";
+import ShopCardSkeleton from "@/components/skeletons/ShopCardSkeleton";
 import SignTabs from "@/components/tabs/SignTabs";
 
 import * as API from "../../services/API/shop.service";
 
 export default function LadingPage() {
-  const router = useRouter();
-
   const query = useQuery({
     queryKey: ["food-dashing-app/shops"],
     queryFn: API.getAllPlatformShops,
   });
 
   return (
-    <Box className="overflow-y-auto max-h-screen flex min-h-screen flex-col items-center bg-gradient-to-r from-green-400 to-blue-500 py-10">
-      <Container className="space-y-14 mx-auto">
+    <Box className="flex max-h-screen min-h-screen flex-col items-center overflow-y-auto bg-gradient-to-r from-green-400 to-blue-500 py-10">
+      <Container className="mx-auto space-y-14">
         <Box>
           <Heading className="text-3xl text-white md:text-5xl">
             Food Dashing App
@@ -42,31 +30,21 @@ export default function LadingPage() {
 
         <Box className="mx-auto space-y-4">
           <Heading className="text-xl text-white md:text-xl">
-            Lojas cadastradas
+            Quem está em nossa plataforma
           </Heading>
           <Wrap spacingX={6}>
             {query.data?.data?.map((shop) => (
-              <Card
-                key={shop._id}
-                variant="outline"
-                role="button"
-                className="bg-white w-full max-w-sm"
-                onClick={() => router.push(`/shop/${shop._id}`)}
-              >
-                <CardBody>
-                  <HStack className="space-x-6 justify-between">
-                    <VStack className="items-start">
-                      <Text>{shop.shopName}</Text>
-                      <Text>
-                        {`${shop.shopAddress?.city} -
-                              ${shop.shopAddress?.state_code}`}
-                      </Text>
-                    </VStack>
-                    <Icon as={MdArrowForwardIos} />
-                  </HStack>
-                </CardBody>
-              </Card>
+              <ShopCard key={shop._id as string} shop={shop} />
             ))}
+
+            {query.isLoading &&
+              Array(4)
+                .fill(0)
+                .map(() => <ShopCardSkeleton key={uuid()} />)}
+
+            {!query.isLoading && query.data?.data?.length === 0 && (
+              <Text className="text-white">Nenhuma loja por agora 😢</Text>
+            )}
           </Wrap>
         </Box>
 

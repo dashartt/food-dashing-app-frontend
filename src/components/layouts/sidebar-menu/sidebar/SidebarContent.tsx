@@ -1,6 +1,8 @@
 import type { BoxProps } from "@chakra-ui/react";
-import { Box, CloseButton, VStack } from "@chakra-ui/react";
+import { Box, CloseButton, Text, VStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+
+import useShopSettings from "@/store/shop/setup/useShopSetup";
 
 import NavItemHandler from "../nav/LinkItems";
 
@@ -16,7 +18,7 @@ export default function SidebarContent({
   ...rest
 }: SidebarContentProps) {
   const [mounted, setMounted] = useState(false);
-
+  const shopName = useShopSettings((state) => state.shopSettings?.shopName);
   useEffect(() => setMounted(true), []);
 
   return (
@@ -31,7 +33,10 @@ export default function SidebarContent({
             onClick={onClose}
             className="absolute top-2 right-2"
           />
-          <VStack className="mt-16 w-full items-start px-4">
+          <VStack className="w-full items-start p-8">
+            <Text className="border-b-2 border-black text-2xl mb-4">
+              {shopName}
+            </Text>
             <NavItemHandler />
           </VStack>
         </Box>
